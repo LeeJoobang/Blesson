@@ -8,6 +8,8 @@ class MainViewController: BaseViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view = mainView
+        navigationItem.title = "학생정보"
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         mainView.backgroundColor = Constants.BaseColor.background
         mainView.tableView.delegate = self
         mainView.tableView.dataSource = self
@@ -56,6 +58,4 @@ extension MainViewController: UISearchResultsUpdating, UISearchBarDelegate{
         self.navigationItem.searchController = searchController
         self.navigationItem.hidesSearchBarWhenScrolling = false
     }
-    
-    
 }

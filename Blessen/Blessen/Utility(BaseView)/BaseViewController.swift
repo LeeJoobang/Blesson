@@ -8,7 +8,6 @@ class BaseViewController: UIViewController { // final 키워드를 붙일 수 �
         setConstraints()
     }
     
-    
     func configure() {}
     
     func setConstraints() {}
