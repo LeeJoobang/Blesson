@@ -1,6 +1,6 @@
 import UIKit
 
-class SettingView: BaseView{
+class RegisterView: BaseView{
     
     let tableView: UITableView = {
         let view = UITableView()
@@ -17,6 +17,7 @@ class SettingView: BaseView{
     }
     
     override func configure() {
+        
         [tableView].forEach {
             self.addSubview($0)
         }
@@ -29,6 +30,9 @@ class SettingView: BaseView{
             make.trailing.equalTo(0)
             make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom)
         }
+
     }
+    
+    
     
 }

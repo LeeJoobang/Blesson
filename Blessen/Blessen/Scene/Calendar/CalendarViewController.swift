@@ -8,16 +8,14 @@ class CalendarViewController: BaseViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view = calendarView
-        calendarView.backgroundColor = .blue
+        calendarView.backgroundColor = Constants.BaseColor.background
         calendarView.tableView.delegate = self
         calendarView.tableView.dataSource = self
         
         self.calendarView.tableView.register(CalendarTableViewCell.self, forCellReuseIdentifier: CalendarTableViewCell.reuseIdentifier)
         
         navigationItem.title = "캘린더"
-        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
-
-        
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
     }
     
     override func configure(){

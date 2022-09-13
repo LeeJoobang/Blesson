@@ -8,6 +8,7 @@ class BaseTabBarController: UITabBarController {
         
         self.tabBar.tintColor = Constants.BaseColor.background
         self.tabBar.unselectedItemTintColor = .black
+        self.tabBar.selectedImageTintColor = .black
         self.tabBar.backgroundColor = .white
         self.tabBar.isTranslucent = false
         

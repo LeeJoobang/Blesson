@@ -15,9 +15,7 @@ class SettingViewController: BaseViewController{
         self.settingView.tableView.register(SettingViewTableCell.self, forCellReuseIdentifier: SettingViewTableCell.reuseIdentifier)
         
         navigationItem.title = "설정"
-        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
-
-        
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
     }
     
     override func configure(){
@@ -29,11 +27,14 @@ class SettingViewController: BaseViewController{
 
 extension SettingViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SettingViewTableCell.reuseIdentifier, for: indexPath) as! SettingViewTableCell
+        let settingList = ["BackUp", "Restore", "Message"]
+        
+        cell.setData(data: settingList[indexPath.row])
         return cell
     }
     

@@ -16,7 +16,7 @@ class MainView: BaseView{
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func configureUI() {
+    override func configure() {
         
         [tableView].forEach {
             self.addSubview($0)

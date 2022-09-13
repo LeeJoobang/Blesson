@@ -1,18 +1,19 @@
 import UIKit
 import SnapKit
 
-class SettingViewTableCell: BaseTableViewCell {
+class RegisterTableViewCell: BaseTableViewCell {
     let totalView: UIView = {
         let view = UIView()
         view.backgroundColor = .yellow
         return view
     }()
-        
+    
     let nameLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .orange
         label.tintColor = .white
         label.textAlignment = .center
+        label.text = "이주영"
 
         label.font = UIFont(name: "Halvetica", size: 15)
         label.numberOfLines = 1
@@ -20,9 +21,22 @@ class SettingViewTableCell: BaseTableViewCell {
         return label
     }()
     
-    let detailButton: UIButton = {
+    let countLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = .orange
+        label.tintColor = .white
+        label.textAlignment = .center
+        label.text = "1/10"
+        
+        label.font = UIFont(name: "Halvetica", size: 15)
+        label.numberOfLines = 1
+        label.sizeToFit()
+        return label
+    }()
+    
+    let messageButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+        button.setImage(UIImage(systemName: "message"), for: .normal)
         button.backgroundColor = .orange
         button.tintColor = .systemBlue
         button.sizeToFit()
@@ -32,6 +46,7 @@ class SettingViewTableCell: BaseTableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
+
     }
     
     required init?(coder: NSCoder) {
@@ -39,17 +54,15 @@ class SettingViewTableCell: BaseTableViewCell {
     }
     
     override func configure() {
-        [nameLabel, detailButton].forEach {
+        [nameLabel, countLabel, messageButton].forEach {
             self.totalView.addSubview($0)
         }
+        
         self.contentView.addSubview(totalView)
     }
     
-    func setData(data: String){
-        nameLabel.text = data
-    }
-    
     override func setConstraints() {
+        
         totalView.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide.snp.top)
             make.leading.equalTo(20)
@@ -63,12 +76,20 @@ class SettingViewTableCell: BaseTableViewCell {
             make.leading.equalTo(0)
         }
         
-        detailButton.snp.makeConstraints { make in
+        messageButton.snp.makeConstraints { make in
             make.top.equalTo(nameLabel.snp.top)
             make.bottom.equalTo(nameLabel.snp.bottom)
             make.trailing.equalTo(totalView.snp.trailing).offset(20)
-            make.width.equalTo(detailButton.snp.height)
+            make.width.equalTo(messageButton.snp.height)
         }
         
+        countLabel.snp.makeConstraints { make in
+            make.top.equalTo(nameLabel.snp.top)
+            make.bottom.equalTo(nameLabel.snp.bottom)
+            make.trailing.equalTo(messageButton.snp.leading).offset(-20)
+            make.width.equalTo(countLabel.snp.height)
+        }
+
+
     }
 }

@@ -9,7 +9,7 @@ class MainViewController: BaseViewController{
         super.viewDidLoad()
         self.view = mainView
         navigationItem.title = "학생정보"
-        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
         mainView.backgroundColor = Constants.BaseColor.background
         mainView.tableView.delegate = self
         mainView.tableView.dataSource = self
@@ -17,6 +17,8 @@ class MainViewController: BaseViewController{
         self.mainView.tableView.register(MainTableViewCell.self, forCellReuseIdentifier: MainTableViewCell.reuseIdentifier)
         
         setupSearchController()
+        setupToolbar()
+
     }
     
     override func configure(){
@@ -24,6 +26,28 @@ class MainViewController: BaseViewController{
     
     override func setConstraints() {
     }
+    
+    func setupToolbar(){
+        let toolbar = UIToolbar()
+        view.addSubview(toolbar)
+        
+        toolbar.translatesAutoresizingMaskIntoConstraints = false
+        toolbar.leadingAnchor.constraint(equalToSystemSpacingAfter: view.safeAreaLayoutGuide.leadingAnchor, multiplier: 0).isActive = true
+        toolbar.bottomAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.bottomAnchor, multiplier: 0).isActive = true
+        toolbar.trailingAnchor.constraint(equalToSystemSpacingAfter: view.safeAreaLayoutGuide.trailingAnchor, multiplier: 0).isActive = true
+        
+        let toolbarItem = UIBarButtonItem(image: UIImage(systemName: "plus.circle"), style: .plain, target: self, action: #selector(registerButtonClicked))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        toolbarItem.tintColor = .black
+        toolbar.barTintColor = UIColor.white
+        toolbar.setItems([flexibleSpace, toolbarItem], animated: true)
+    }
+    
+    @objc func registerButtonClicked(){
+        let vc = RegisterViewController()
+        transition(vc, transitionStyle: .present)
+    }
+    
 }
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource{
@@ -38,6 +62,12 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = DetailViewController()
+        transition(vc, transitionStyle: .push)
+
     }
     
 }
