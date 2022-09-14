@@ -4,43 +4,27 @@ import SnapKit
 class RegisterTableViewCell: BaseTableViewCell {
     let totalView: UIView = {
         let view = UIView()
-        view.backgroundColor = .yellow
+        view.backgroundColor = Constants.BaseColor.background
         return view
     }()
     
-    let nameLabel: UILabel = {
+    let itemLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .orange
-        label.tintColor = .white
-        label.textAlignment = .center
-        label.text = "이주영"
-
+        label.backgroundColor = Constants.BaseColor.background
+//        label.backgroundColor = .red
+        label.textAlignment = .left
         label.font = UIFont(name: "Halvetica", size: 15)
         label.numberOfLines = 1
         label.sizeToFit()
         return label
     }()
     
-    let countLabel: UILabel = {
-        let label = UILabel()
-        label.backgroundColor = .orange
-        label.tintColor = .white
-        label.textAlignment = .center
-        label.text = "1/10"
-        
-        label.font = UIFont(name: "Halvetica", size: 15)
-        label.numberOfLines = 1
-        label.sizeToFit()
-        return label
-    }()
-    
-    let messageButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(systemName: "message"), for: .normal)
-        button.backgroundColor = .orange
-        button.tintColor = .systemBlue
-        button.sizeToFit()
-        return button
+    let itemTextField: UnderLineTextField = {
+        let text = UnderLineTextField()
+        text.backgroundColor = Constants.BaseColor.background
+        text.textAlignment = .left
+        text.textColor = .black
+        return text
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -53,8 +37,14 @@ class RegisterTableViewCell: BaseTableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // 셀간 간격
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0))
+    }
+    
     override func configure() {
-        [nameLabel, countLabel, messageButton].forEach {
+        [itemLabel, itemTextField].forEach {
             self.totalView.addSubview($0)
         }
         
@@ -67,29 +57,21 @@ class RegisterTableViewCell: BaseTableViewCell {
             make.top.equalTo(self.safeAreaLayoutGuide.snp.top)
             make.leading.equalTo(20)
             make.height.equalTo(contentView.snp.height)
-            make.trailing.equalTo(-40)
+            make.trailing.equalTo(-20)
         }
         
-        nameLabel.snp.makeConstraints { make in
+        itemLabel.snp.makeConstraints { make in
             make.top.equalTo(self.totalView.snp.top)
-            make.bottom.equalTo(self.totalView.snp.bottom)
-            make.leading.equalTo(0)
+            make.height.equalTo(self.totalView.snp.height).multipliedBy(0.4)
+            make.leading.equalTo(self.totalView.snp.leading)
+            make.width.equalTo(self.totalView.snp.width)
         }
         
-        messageButton.snp.makeConstraints { make in
-            make.top.equalTo(nameLabel.snp.top)
-            make.bottom.equalTo(nameLabel.snp.bottom)
-            make.trailing.equalTo(totalView.snp.trailing).offset(20)
-            make.width.equalTo(messageButton.snp.height)
+        itemTextField.snp.makeConstraints { make in
+            make.top.equalTo(itemLabel.snp.bottom)
+            make.height.equalTo(self.totalView.snp.height).multipliedBy(0.6)
+            make.leading.equalTo(self.totalView.snp.leading)
+            make.width.equalTo(self.totalView.snp.width)
         }
-        
-        countLabel.snp.makeConstraints { make in
-            make.top.equalTo(nameLabel.snp.top)
-            make.bottom.equalTo(nameLabel.snp.bottom)
-            make.trailing.equalTo(messageButton.snp.leading).offset(-20)
-            make.width.equalTo(countLabel.snp.height)
-        }
-
-
     }
 }

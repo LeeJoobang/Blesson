@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		373E58DC28D1BDFD00F9EEF5 /* LessonInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E58DB28D1BDFD00F9EEF5 /* LessonInfo.swift */; };
+		373E58DE28D1BE1E00F9EEF5 /* ProgressInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E58DD28D1BE1E00F9EEF5 /* ProgressInfo.swift */; };
 		3783425D28CF20A700237B99 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3783425C28CF20A700237B99 /* AppDelegate.swift */; };
 		3783425F28CF20A700237B99 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3783425E28CF20A700237B99 /* SceneDelegate.swift */; };
 		3783426128CF20A700237B99 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3783426028CF20A700237B99 /* ViewController.swift */; };
@@ -33,6 +35,8 @@
 		37C24A8828D0E0D300B2A415 /* RegisterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C24A8728D0E0D300B2A415 /* RegisterTableViewCell.swift */; };
 		37C24A8A28D0E1DA00B2A415 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C24A8928D0E1DA00B2A415 /* DetailView.swift */; };
 		37C24A8C28D0E1F800B2A415 /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C24A8B28D0E1F800B2A415 /* DetailTableViewCell.swift */; };
+		37F632E328D1CED80016CF5A /* RegisterImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F632E228D1CED80016CF5A /* RegisterImageCell.swift */; };
+		37F632E528D205380016CF5A /* UnderLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F632E428D205380016CF5A /* UnderLineTextField.swift */; };
 		37FDEA9F28D05523002CE136 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 37FDEA9E28D05523002CE136 /* SnapKit */; };
 		37FDEAA128D056AF002CE136 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FDEAA028D056AF002CE136 /* BaseViewController.swift */; };
 		37FDEAA328D056D0002CE136 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FDEAA228D056D0002CE136 /* BaseView.swift */; };
@@ -41,6 +45,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		373E58DB28D1BDFD00F9EEF5 /* LessonInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonInfo.swift; sourceTree = "<group>"; };
+		373E58DD28D1BE1E00F9EEF5 /* ProgressInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressInfo.swift; sourceTree = "<group>"; };
 		3783425928CF20A700237B99 /* Blessen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blessen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3783425C28CF20A700237B99 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3783425E28CF20A700237B99 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -69,6 +75,8 @@
 		37C24A8728D0E0D300B2A415 /* RegisterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterTableViewCell.swift; sourceTree = "<group>"; };
 		37C24A8928D0E1DA00B2A415 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		37C24A8B28D0E1F800B2A415 /* DetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
+		37F632E228D1CED80016CF5A /* RegisterImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterImageCell.swift; sourceTree = "<group>"; };
+		37F632E428D205380016CF5A /* UnderLineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderLineTextField.swift; sourceTree = "<group>"; };
 		37FDEAA028D056AF002CE136 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		37FDEAA228D056D0002CE136 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		37FDEAA428D0576B002CE136 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
@@ -197,6 +205,7 @@
 		3783427828CF248000237B99 /* CustomView */ = {
 			isa = PBXGroup;
 			children = (
+				37F632E428D205380016CF5A /* UnderLineTextField.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -205,6 +214,8 @@
 			isa = PBXGroup;
 			children = (
 				3783427A28CF4EF900237B99 /* MemberInfo.swift */,
+				373E58DB28D1BDFD00F9EEF5 /* LessonInfo.swift */,
+				373E58DD28D1BE1E00F9EEF5 /* ProgressInfo.swift */,
 			);
 			path = Realm;
 			sourceTree = "<group>";
@@ -215,6 +226,7 @@
 				37C24A8028D0D98700B2A415 /* RegisterViewController.swift */,
 				37C24A8528D0DFBE00B2A415 /* RegisterView.swift */,
 				37C24A8728D0E0D300B2A415 /* RegisterTableViewCell.swift */,
+				37F632E228D1CED80016CF5A /* RegisterImageCell.swift */,
 			);
 			path = Main_Register;
 			sourceTree = "<group>";
@@ -318,6 +330,8 @@
 				37C24A7028D0871800B2A415 /* BaseTabBarController.swift in Sources */,
 				37BC2E0E28D05AFC007B49EE /* MainView.swift in Sources */,
 				37C24A7628D0899700B2A415 /* CalendarTableViewCell.swift in Sources */,
+				373E58DE28D1BE1E00F9EEF5 /* ProgressInfo.swift in Sources */,
+				37F632E528D205380016CF5A /* UnderLineTextField.swift in Sources */,
 				37BC2E0C28D05A70007B49EE /* MainViewController.swift in Sources */,
 				37C24A7C28D08A7800B2A415 /* SettingTableViewCell.swift in Sources */,
 				3783426128CF20A700237B99 /* ViewController.swift in Sources */,
@@ -325,10 +339,12 @@
 				3783425D28CF20A700237B99 /* AppDelegate.swift in Sources */,
 				37FDEAA328D056D0002CE136 /* BaseView.swift in Sources */,
 				37BC2E1228D05DB4007B49EE /* Transition+Extension.swift in Sources */,
+				37F632E328D1CED80016CF5A /* RegisterImageCell.swift in Sources */,
 				37FDEAA528D0576B002CE136 /* BaseTableViewCell.swift in Sources */,
 				3783425F28CF20A700237B99 /* SceneDelegate.swift in Sources */,
 				3783427B28CF4EF900237B99 /* MemberInfo.swift in Sources */,
 				37C24A7828D08A6000B2A415 /* SettingViewController.swift in Sources */,
+				373E58DC28D1BDFD00F9EEF5 /* LessonInfo.swift in Sources */,
 				37C24A8628D0DFBE00B2A415 /* RegisterView.swift in Sources */,
 				37C24A8828D0E0D300B2A415 /* RegisterTableViewCell.swift in Sources */,
 				37FDEAA728D05824002CE136 /* Constants.swift in Sources */,

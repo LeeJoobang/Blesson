@@ -27,6 +27,7 @@ class MainViewController: BaseViewController{
     override func setConstraints() {
     }
     
+    // MARK: +버튼 toolbar 사용
     func setupToolbar(){
         let toolbar = UIToolbar()
         view.addSubview(toolbar)
@@ -43,6 +44,7 @@ class MainViewController: BaseViewController{
         toolbar.setItems([flexibleSpace, toolbarItem], animated: true)
     }
     
+    // MARK: +버튼 클릭시 RegisterViewController 이동
     @objc func registerButtonClicked(){
         let vc = RegisterViewController()
         transition(vc, transitionStyle: .present)
@@ -50,9 +52,10 @@ class MainViewController: BaseViewController{
     
 }
 
+// MARK: TableView 정보
 extension MainViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 100
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -72,6 +75,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
     
 }
 
+// MARK: searchbar 등록
 extension MainViewController: UISearchResultsUpdating, UISearchBarDelegate{
     func updateSearchResults(for searchController: UISearchController) {
         guard let text = searchController.searchBar.text else { return }
