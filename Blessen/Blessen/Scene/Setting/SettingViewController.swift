@@ -42,4 +42,17 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource{
         return 50
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        switch indexPath.row{
+        case 0...1:
+            print("backup & restore")
+        case 2:
+            let vc = MessageViewController()
+            transition(vc, transitionStyle: .push)
+        default:
+            fatalError()
+        }
+    }
+
 }

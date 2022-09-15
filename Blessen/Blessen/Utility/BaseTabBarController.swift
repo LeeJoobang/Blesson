@@ -1,11 +1,12 @@
 import Foundation
 import UIKit
 
-class BaseTabBarController: UITabBarController {
+class BaseTabBarController: UITabBarController, UITabBarControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.delegate = self
         self.tabBar.tintColor = Constants.BaseColor.background
         self.tabBar.unselectedItemTintColor = .black
         self.tabBar.selectedImageTintColor = .black
@@ -28,8 +29,6 @@ class BaseTabBarController: UITabBarController {
         settingVC.tabBarItem.image = UIImage(systemName: "gearshape")
         
         viewControllers = [mainVC, calendarVC, settingVC]
-        
     }
-
 
 }
