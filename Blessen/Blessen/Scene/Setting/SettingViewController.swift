@@ -33,8 +33,8 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SettingViewTableCell.reuseIdentifier, for: indexPath) as! SettingViewTableCell
         let settingList = ["BackUp", "Restore", "Message"]
-        
-        cell.setData(data: settingList[indexPath.row])
+        let settingImageList = ["bell", "arrowshape.turn.up.backward", "message"]
+        cell.setData(data: settingList[indexPath.row], image: settingImageList[indexPath.row])
         return cell
     }
     

@@ -4,7 +4,7 @@ class SettingView: BaseView{
     
     let tableView: UITableView = {
         let view = UITableView()
-        view.backgroundColor = .red
+        view.backgroundColor = .white
         return view
     }()
     

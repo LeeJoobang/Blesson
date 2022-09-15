@@ -4,31 +4,35 @@ import SnapKit
 class SettingViewTableCell: BaseTableViewCell {
     let totalView: UIView = {
         let view = UIView()
-        view.backgroundColor = .yellow
+        view.backgroundColor = Constants.BaseColor.background
         return view
     }()
-        
+    
+    let leftImage: UIImageView = {
+        let image = UIImageView()
+        image.tintColor = Constants.BaseColor.text
+        image.contentMode = .center
+        return image
+    }()
+    
     let nameLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .orange
-        label.tintColor = .white
+        label.backgroundColor = Constants.BaseColor.background
         label.textAlignment = .center
-
         label.font = UIFont(name: "Halvetica", size: 15)
         label.numberOfLines = 1
         label.sizeToFit()
         return label
     }()
     
-    let detailButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
-        button.backgroundColor = .orange
-        button.tintColor = .systemBlue
-        button.sizeToFit()
-        return button
+    let rightImage: UIImageView = {
+        let image = UIImageView()
+        image.tintColor = Constants.BaseColor.text
+        image.image = UIImage(systemName: "chevron.right")
+        image.contentMode = .center
+        return image
     }()
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
@@ -39,14 +43,15 @@ class SettingViewTableCell: BaseTableViewCell {
     }
     
     override func configure() {
-        [nameLabel, detailButton].forEach {
+        [leftImage, nameLabel, rightImage].forEach {
             self.totalView.addSubview($0)
         }
         self.contentView.addSubview(totalView)
     }
     
-    func setData(data: String){
+    func setData(data: String, image: String){
         nameLabel.text = data
+        leftImage.image = UIImage(systemName: image)
     }
     
     override func setConstraints() {
@@ -57,18 +62,24 @@ class SettingViewTableCell: BaseTableViewCell {
             make.trailing.equalTo(-40)
         }
         
-        nameLabel.snp.makeConstraints { make in
+        leftImage.snp.makeConstraints { make in
             make.top.equalTo(self.totalView.snp.top)
             make.bottom.equalTo(self.totalView.snp.bottom)
             make.leading.equalTo(0)
+            make.width.equalTo(self.leftImage.snp.height)
         }
         
-        detailButton.snp.makeConstraints { make in
+        nameLabel.snp.makeConstraints { make in
+            make.top.equalTo(self.totalView.snp.top)
+            make.bottom.equalTo(self.totalView.snp.bottom)
+            make.leading.equalTo(leftImage.snp.trailing).offset(10)
+        }
+        
+        rightImage.snp.makeConstraints { make in
             make.top.equalTo(nameLabel.snp.top)
             make.bottom.equalTo(nameLabel.snp.bottom)
             make.trailing.equalTo(totalView.snp.trailing).offset(20)
-            make.width.equalTo(detailButton.snp.height)
+            make.width.equalTo(rightImage.snp.height)
         }
-        
     }
 }
