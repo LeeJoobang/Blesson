@@ -20,7 +20,7 @@ class WriteViewController: BaseViewController{
     }
     
     func addrightBarButtonItem(){
-        let saveButton = UIBarButtonItem(image: UIImage(systemName: "pencil"), style: .plain, target: self, action: #selector(saveButtonClicked))
+        let saveButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(saveButtonClicked))
         saveButton.tintColor = Constants.BaseColor.text
         navigationItem.rightBarButtonItems = [saveButton]
     }
@@ -47,8 +47,8 @@ class WriteViewController: BaseViewController{
     }
     
     @objc func saveButtonClicked(){
+        view.endEditing(true)
         print("저장")
-        dismiss(animated: true)
     }
     
     @objc func backButtonClicked(){
