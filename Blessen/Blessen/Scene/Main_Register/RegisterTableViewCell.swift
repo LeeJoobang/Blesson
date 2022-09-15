@@ -11,7 +11,6 @@ class RegisterTableViewCell: BaseTableViewCell {
     let itemLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = Constants.BaseColor.background
-//        label.backgroundColor = .red
         label.textAlignment = .left
         label.font = UIFont(name: "Halvetica", size: 15)
         label.numberOfLines = 1
