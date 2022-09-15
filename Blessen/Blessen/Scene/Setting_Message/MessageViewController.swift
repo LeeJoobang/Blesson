@@ -41,11 +41,14 @@ class MessageViewController: BaseViewController{
 
 extension MessageViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MessageViewTableCell.reuseIdentifier, for: indexPath) as! MessageViewTableCell
+        let image = "checkmark.square"
+        cell.checkBoxButton.setImage(UIImage(systemName: image), for: .normal)
+        cell.messageLabel.text = "TestTestTestTestTestTestTestTestTestTestTestTest"
         return cell
     }
     

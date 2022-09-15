@@ -19,12 +19,14 @@ class WriteViewController: BaseViewController{
         writeView.writeTextView.becomeFirstResponder()
     }
     
+    // MARK: 완료버튼 - endediting, save text
     func addrightBarButtonItem(){
         let saveButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(saveButtonClicked))
         saveButton.tintColor = Constants.BaseColor.text
         navigationItem.rightBarButtonItems = [saveButton]
     }
     
+    // MARK: 뒤로가기 - save text, dismiss
     func addleftBarButtonItems(){
         let backImageButton = UIButton.init(type: .custom)
         backImageButton.tintColor = Constants.BaseColor.text

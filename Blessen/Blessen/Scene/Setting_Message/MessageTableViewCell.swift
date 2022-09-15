@@ -5,21 +5,20 @@ class MessageViewTableCell: BaseTableViewCell {
     let totalView: UIView = {
         let view = UIView()
         view.backgroundColor = Constants.BaseColor.background
-        view.backgroundColor = .orange
         return view
     }()
     
     let checkBoxButton: UIButton = {
         let check = UIButton()
-        check.backgroundColor = .systemGray3
-        check.tintColor = .black
+        check.backgroundColor = Constants.BaseColor.background
+        check.tintColor = Constants.BaseColor.text
         return check
     }()
 
-    let nameLabel: UILabel = {
+    let messageLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = Constants.BaseColor.background
-        label.textAlignment = .center
+        label.textAlignment = .left
         label.font = UIFont(name: "Halvetica", size: 15)
         label.numberOfLines = 1
         label.sizeToFit()
@@ -44,7 +43,7 @@ class MessageViewTableCell: BaseTableViewCell {
     }
     
     override func configure() {
-        [checkBoxButton, nameLabel, rightImage].forEach {
+        [checkBoxButton, messageLabel, rightImage].forEach {
             self.totalView.addSubview($0)
         }
         self.contentView.addSubview(totalView)
@@ -65,16 +64,17 @@ class MessageViewTableCell: BaseTableViewCell {
             make.width.equalTo(self.checkBoxButton.snp.height)
         }
         
-        nameLabel.snp.makeConstraints { make in
+        messageLabel.snp.makeConstraints { make in
             make.top.equalTo(self.totalView.snp.top)
             make.bottom.equalTo(self.totalView.snp.bottom)
-            make.leading.equalTo(checkBoxButton.snp.trailing).offset(10)
+            make.leading.equalTo(checkBoxButton.snp.trailing).offset(0)
+            make.trailing.equalTo(rightImage.snp.leading).offset(0)
         }
         
         rightImage.snp.makeConstraints { make in
-            make.top.equalTo(nameLabel.snp.top)
-            make.bottom.equalTo(nameLabel.snp.bottom)
-            make.trailing.equalTo(totalView.snp.trailing).offset(20)
+            make.top.equalTo(messageLabel.snp.top)
+            make.bottom.equalTo(messageLabel.snp.bottom)
+            make.trailing.equalTo(totalView.snp.trailing)
             make.width.equalTo(rightImage.snp.height)
         }
     }

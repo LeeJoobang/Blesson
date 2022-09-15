@@ -4,9 +4,9 @@ class WriteView: BaseView{
     
     let writeTextView: UITextView = {
         let view = UITextView()
-        view.backgroundColor = UIColor.black
+        view.backgroundColor = Constants.BaseColor.background
+        view.textColor = Constants.BaseColor.text
         view.font = .systemFont(ofSize: 16)
-        view.textColor = .white
         view.text = """
         동해물과 백두산이동해물과 백두산이동해물과 백두산이동해물과 백두산이동해물과 백두산이동해물과 백두산이
                 동해물과 백두산이동해물과 백두산이동해물과 백두산이동해물과 백두산이동해물과 백두산이
