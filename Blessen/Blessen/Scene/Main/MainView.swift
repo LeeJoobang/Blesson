@@ -5,7 +5,7 @@ class MainView: BaseView{
     // MARK: TableView
     let tableView: UITableView = {
         let view = UITableView()
-        view.backgroundColor = .red
+        view.backgroundColor = .white
         return view
     }()
     

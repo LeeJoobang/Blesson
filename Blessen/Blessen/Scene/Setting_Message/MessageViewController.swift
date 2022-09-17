@@ -13,7 +13,11 @@ class MessageViewController: BaseViewController{
         messageView.tableView.dataSource = self
         
         self.messageView.tableView.register(MessageViewTableCell.self, forCellReuseIdentifier: MessageViewTableCell.reuseIdentifier)
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     override func configure(){
@@ -21,7 +25,7 @@ class MessageViewController: BaseViewController{
         self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
         
         let backButton = UIBarButtonItem()
-        backButton.title = "message"
+        backButton.title = "Message"
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
         self.navigationController?.navigationBar.topItem?.backBarButtonItem?.tintColor = .black
     
@@ -35,7 +39,7 @@ class MessageViewController: BaseViewController{
     
     @objc func writeButtonClicked(){
         let vc = WriteViewController()
-        transition(vc, transitionStyle: .presentFullNavigation)
+        transition(vc, transitionStyle: .push)
     }
 }
 
