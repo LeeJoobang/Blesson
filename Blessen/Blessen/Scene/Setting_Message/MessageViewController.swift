@@ -28,10 +28,9 @@ class MessageViewController: BaseViewController{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = false
-        
         tasks = localRealm.objects(MessageList.self)
         messageView.tableView.reloadData()
-        //        tasks = repository.fetch()
+        tasks = repository.fetch()
     }
     
     override func configure(){
@@ -47,10 +46,18 @@ class MessageViewController: BaseViewController{
         saveButton.tintColor = .black
         navigationItem.rightBarButtonItems = [saveButton]
     }
+
     
     @objc func writeButtonClicked(){
-        let vc = WriteViewController()
-        transition(vc, transitionStyle: .push)
+        switch tasks.count {
+        case 0...4:
+            let vc = WriteViewController()
+            transition(vc, transitionStyle: .push)
+        case 5:
+            showAlertMessage(title: "5개의 메세지까지 저장됩니다.", button: "확인")
+        default:
+            fatalError()
+        }
     }
 }
 
@@ -62,7 +69,6 @@ extension MessageViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MessageViewTableCell.reuseIdentifier, for: indexPath) as! MessageViewTableCell
         let image = tasks[indexPath.row].check ? "checkmark.square" : "square"
-        
         cell.messageLabel.text = tasks[indexPath.row].content
         cell.checkBoxButton.setImage(UIImage(systemName: image), for: .normal)
         cell.checkBoxButton.addTarget(self, action: #selector(checkboxButtonClicked), for: .touchUpInside)
@@ -74,11 +80,21 @@ extension MessageViewController: UITableViewDelegate, UITableViewDataSource{
         return 50
     }
     
+    // MARK: row 삭제
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete{
+            self.repository.deleteData(data: self.tasks[indexPath.row])
+        }
+        self.messageView.tableView.reloadData()
+    }
+
     @objc func checkboxButtonClicked(_ sender: UIButton){
         let task = tasks[sender.tag]
-        try! localRealm.write {
-            task.check.toggle()
-        }
+        repository.updateCheck(item: task)
         messageView.tableView.reloadData()
     }
 }

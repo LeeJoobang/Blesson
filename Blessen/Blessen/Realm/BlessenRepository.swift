@@ -5,7 +5,7 @@ protocol BlessenRepositoryType {
     func fetch() -> Results<MessageList>
     func fetchSort(_ sort: String) -> Results<MessageList>
     func fetchFilter() -> Results<MessageList>
-    func updateFavorite(item: MessageList)
+    func updateCheck(item: MessageList)
     func deleteItem(item: MessageList)
 }
 
@@ -25,10 +25,16 @@ class BlessenRepository: BlessenRepositoryType {
         return localRealm.objects(MessageList.self).filter("diaryTitle CONTAINS[c] 'a'")
     }
     
-    func updateFavorite(item: MessageList){
+    func updateCheck(item: MessageList){
         try! localRealm.write {
             item.check.toggle()
             print("realm update succed, reload Rows 필요")
+        }
+    }
+    
+    func deleteData(data: MessageList){
+        try! localRealm.write{
+            localRealm.delete(data)
         }
     }
     
@@ -37,7 +43,6 @@ class BlessenRepository: BlessenRepositoryType {
             localRealm.delete(item)
         }
         removeImageFromDocument(filename: "\(item.objectID).jpg") // filemanager에 있는 애를 데려옴.
-
     }
     
     func removeImageFromDocument(filename: String) {

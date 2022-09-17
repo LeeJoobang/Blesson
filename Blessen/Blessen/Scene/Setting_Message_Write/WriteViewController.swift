@@ -19,7 +19,6 @@ class WriteViewController: BaseViewController{
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-
         if self.isMovingFromParent {
             print("저장")
         }
@@ -59,7 +58,6 @@ class WriteViewController: BaseViewController{
             try localRealm.write{
                 localRealm.add(task)
                 print("Realm Succeed")
-
             }
         } catch let error {
             print(error)
