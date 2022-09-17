@@ -1,15 +1,20 @@
 import UIKit
 import SnapKit
+import RealmSwift
 
 class WriteViewController: BaseViewController{
     
     var writeView = WriteView()
+
+    private let localRealm = try! Realm()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view = writeView
         addleftBarButtonItem()
         addrightBarButtonItem()
+        print("Realm is located at:", localRealm.configuration.fileURL!)
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -36,7 +41,6 @@ class WriteViewController: BaseViewController{
     }
     
     // MARK: 뒤로가기 - save text, dismiss
-    
     func addleftBarButtonItem(){
         let backButton = UIBarButtonItem()
         backButton.tintColor = Constants.BaseColor.text
@@ -46,7 +50,20 @@ class WriteViewController: BaseViewController{
     
     @objc func saveButtonClicked(){
         view.endEditing(true)
-        print("저장")
+        guard let writeText = writeView.writeTextView.text else { return }
+
+        let tasks = localRealm.objects(MessageList.self)
+        let task = MessageList(content: writeText)
+        
+        do {
+            try localRealm.write{
+                localRealm.add(task)
+                print("Realm Succeed")
+
+            }
+        } catch let error {
+            print(error)
+        }
     }
 }
 

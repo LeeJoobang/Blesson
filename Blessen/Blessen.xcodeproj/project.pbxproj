@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		37031F3128D59BBA0080D8D9 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 37031F3028D59BBA0080D8D9 /* Realm */; };
+		37031F3328D59BBA0080D8D9 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 37031F3228D59BBA0080D8D9 /* RealmSwift */; };
+		37031F3528D59CEE0080D8D9 /* MessageList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37031F3428D59CEE0080D8D9 /* MessageList.swift */; };
+		37031F3928D59F540080D8D9 /* BlessenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37031F3828D59F540080D8D9 /* BlessenRepository.swift */; };
 		373E58DC28D1BDFD00F9EEF5 /* LessonInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E58DB28D1BDFD00F9EEF5 /* LessonInfo.swift */; };
 		373E58DE28D1BE1E00F9EEF5 /* ProgressInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E58DD28D1BE1E00F9EEF5 /* ProgressInfo.swift */; };
 		3783425D28CF20A700237B99 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3783425C28CF20A700237B99 /* AppDelegate.swift */; };
@@ -51,6 +55,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		37031F3428D59CEE0080D8D9 /* MessageList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageList.swift; sourceTree = "<group>"; };
+		37031F3828D59F540080D8D9 /* BlessenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlessenRepository.swift; sourceTree = "<group>"; };
 		373E58DB28D1BDFD00F9EEF5 /* LessonInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonInfo.swift; sourceTree = "<group>"; };
 		373E58DD28D1BE1E00F9EEF5 /* ProgressInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressInfo.swift; sourceTree = "<group>"; };
 		3783425928CF20A700237B99 /* Blessen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blessen.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -99,6 +105,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37031F3328D59BBA0080D8D9 /* RealmSwift in Frameworks */,
+				37031F3128D59BBA0080D8D9 /* Realm in Frameworks */,
 				37FDEA9F28D05523002CE136 /* SnapKit in Frameworks */,
 				37B0D20328D3421F001B1BEE /* IQKeyboardManagerSwift in Frameworks */,
 			);
@@ -182,12 +190,12 @@
 		3783427528CF243200237B99 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
-				37B0D1FA28D316A1001B1BEE /* Setting_Write */,
+				37B0D1FA28D316A1001B1BEE /* Setting_Message_Write */,
+				37B0D1F128D30697001B1BEE /* Setting_Message */,
+				3783427228CF231100237B99 /* Setting */,
 				3783427028CF219B00237B99 /* Main */,
 				37C24A7D28D0D93300B2A415 /* Main_Register */,
 				37C24A8228D0D9AC00B2A415 /* Main_Detail */,
-				3783427228CF231100237B99 /* Setting */,
-				37B0D1F128D30697001B1BEE /* Setting_Message */,
 				3783427128CF22EB00237B99 /* Calendar */,
 			);
 			path = Scene;
@@ -230,6 +238,8 @@
 				3783427A28CF4EF900237B99 /* MemberInfo.swift */,
 				373E58DB28D1BDFD00F9EEF5 /* LessonInfo.swift */,
 				373E58DD28D1BE1E00F9EEF5 /* ProgressInfo.swift */,
+				37031F3428D59CEE0080D8D9 /* MessageList.swift */,
+				37031F3828D59F540080D8D9 /* BlessenRepository.swift */,
 			);
 			path = Realm;
 			sourceTree = "<group>";
@@ -244,13 +254,13 @@
 			path = Setting_Message;
 			sourceTree = "<group>";
 		};
-		37B0D1FA28D316A1001B1BEE /* Setting_Write */ = {
+		37B0D1FA28D316A1001B1BEE /* Setting_Message_Write */ = {
 			isa = PBXGroup;
 			children = (
 				37B0D1FB28D316B1001B1BEE /* WriteViewController.swift */,
 				37B0D1FD28D316BD001B1BEE /* WriteView.swift */,
 			);
-			path = Setting_Write;
+			path = Setting_Message_Write;
 			sourceTree = "<group>";
 		};
 		37C24A7D28D0D93300B2A415 /* Main_Register */ = {
@@ -293,6 +303,8 @@
 			packageProductDependencies = (
 				37FDEA9E28D05523002CE136 /* SnapKit */,
 				37B0D20228D3421F001B1BEE /* IQKeyboardManagerSwift */,
+				37031F3028D59BBA0080D8D9 /* Realm */,
+				37031F3228D59BBA0080D8D9 /* RealmSwift */,
 			);
 			productName = Blessen;
 			productReference = 3783425928CF20A700237B99 /* Blessen.app */;
@@ -325,6 +337,7 @@
 			packageReferences = (
 				37FDEA9D28D05523002CE136 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				37B0D20128D3421F001B1BEE /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+				37031F2F28D59BBA0080D8D9 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = 3783425A28CF20A700237B99 /* Products */;
 			projectDirPath = "";
@@ -365,6 +378,7 @@
 				37C24A7428D0891D00B2A415 /* CalendarView.swift in Sources */,
 				37C24A8A28D0E1DA00B2A415 /* DetailView.swift in Sources */,
 				37C24A7028D0871800B2A415 /* BaseTabBarController.swift in Sources */,
+				37031F3928D59F540080D8D9 /* BlessenRepository.swift in Sources */,
 				37BC2E0E28D05AFC007B49EE /* MainView.swift in Sources */,
 				37B0D1FC28D316B1001B1BEE /* WriteViewController.swift in Sources */,
 				37C24A7628D0899700B2A415 /* CalendarTableViewCell.swift in Sources */,
@@ -381,6 +395,7 @@
 				37F632E328D1CED80016CF5A /* RegisterImageCell.swift in Sources */,
 				37FDEAA528D0576B002CE136 /* BaseTableViewCell.swift in Sources */,
 				3783425F28CF20A700237B99 /* SceneDelegate.swift in Sources */,
+				37031F3528D59CEE0080D8D9 /* MessageList.swift in Sources */,
 				3783427B28CF4EF900237B99 /* MemberInfo.swift in Sources */,
 				37C24A7828D08A6000B2A415 /* SettingViewController.swift in Sources */,
 				37B0D1F328D306CC001B1BEE /* MessageViewController.swift in Sources */,
@@ -610,6 +625,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		37031F2F28D59BBA0080D8D9 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
 		37B0D20128D3421F001B1BEE /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
@@ -629,6 +652,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		37031F3028D59BBA0080D8D9 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 37031F2F28D59BBA0080D8D9 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		37031F3228D59BBA0080D8D9 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 37031F2F28D59BBA0080D8D9 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
 		37B0D20228D3421F001B1BEE /* IQKeyboardManagerSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 37B0D20128D3421F001B1BEE /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
