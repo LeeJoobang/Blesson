@@ -13,7 +13,6 @@ class DetailViewController: BaseViewController{
         detailView.tableView.dataSource = self
         
         self.detailView.tableView.register(DetailTableViewCell.self, forCellReuseIdentifier: DetailTableViewCell.reuseIdentifier)
-        
     }
     
     override func configure(){

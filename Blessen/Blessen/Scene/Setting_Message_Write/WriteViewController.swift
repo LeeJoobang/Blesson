@@ -50,10 +50,8 @@ class WriteViewController: BaseViewController{
     @objc func saveButtonClicked(){
         view.endEditing(true)
         guard let writeText = writeView.writeTextView.text else { return }
-
         let tasks = localRealm.objects(MessageList.self)
         let task = MessageList(content: writeText)
-        
         do {
             try localRealm.write{
                 localRealm.add(task)

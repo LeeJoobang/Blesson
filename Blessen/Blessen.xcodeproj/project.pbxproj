@@ -11,15 +11,15 @@
 		37031F3328D59BBA0080D8D9 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 37031F3228D59BBA0080D8D9 /* RealmSwift */; };
 		37031F3528D59CEE0080D8D9 /* MessageList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37031F3428D59CEE0080D8D9 /* MessageList.swift */; };
 		37031F3928D59F540080D8D9 /* BlessenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37031F3828D59F540080D8D9 /* BlessenRepository.swift */; };
-		373E58DC28D1BDFD00F9EEF5 /* LessonInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E58DB28D1BDFD00F9EEF5 /* LessonInfo.swift */; };
-		373E58DE28D1BE1E00F9EEF5 /* ProgressInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E58DD28D1BE1E00F9EEF5 /* ProgressInfo.swift */; };
+		373E58DC28D1BDFD00F9EEF5 /* Lesson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E58DB28D1BDFD00F9EEF5 /* Lesson.swift */; };
+		373E58DE28D1BE1E00F9EEF5 /* Progress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E58DD28D1BE1E00F9EEF5 /* Progress.swift */; };
 		3783425D28CF20A700237B99 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3783425C28CF20A700237B99 /* AppDelegate.swift */; };
 		3783425F28CF20A700237B99 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3783425E28CF20A700237B99 /* SceneDelegate.swift */; };
 		3783426128CF20A700237B99 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3783426028CF20A700237B99 /* ViewController.swift */; };
 		3783426428CF20A700237B99 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3783426228CF20A700237B99 /* Main.storyboard */; };
 		3783426628CF20A900237B99 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3783426528CF20A900237B99 /* Assets.xcassets */; };
 		3783426928CF20A900237B99 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3783426728CF20A900237B99 /* LaunchScreen.storyboard */; };
-		3783427B28CF4EF900237B99 /* MemberInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3783427A28CF4EF900237B99 /* MemberInfo.swift */; };
+		3783427B28CF4EF900237B99 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3783427A28CF4EF900237B99 /* Student.swift */; };
 		37B0D1F328D306CC001B1BEE /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B0D1F228D306CC001B1BEE /* MessageViewController.swift */; };
 		37B0D1F528D306DB001B1BEE /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B0D1F428D306DB001B1BEE /* MessageView.swift */; };
 		37B0D1F728D306F0001B1BEE /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B0D1F628D306F0001B1BEE /* MessageTableViewCell.swift */; };
@@ -57,8 +57,8 @@
 /* Begin PBXFileReference section */
 		37031F3428D59CEE0080D8D9 /* MessageList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageList.swift; sourceTree = "<group>"; };
 		37031F3828D59F540080D8D9 /* BlessenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlessenRepository.swift; sourceTree = "<group>"; };
-		373E58DB28D1BDFD00F9EEF5 /* LessonInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonInfo.swift; sourceTree = "<group>"; };
-		373E58DD28D1BE1E00F9EEF5 /* ProgressInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressInfo.swift; sourceTree = "<group>"; };
+		373E58DB28D1BDFD00F9EEF5 /* Lesson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson.swift; sourceTree = "<group>"; };
+		373E58DD28D1BE1E00F9EEF5 /* Progress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Progress.swift; sourceTree = "<group>"; };
 		3783425928CF20A700237B99 /* Blessen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blessen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3783425C28CF20A700237B99 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3783425E28CF20A700237B99 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -67,7 +67,7 @@
 		3783426528CF20A900237B99 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3783426828CF20A900237B99 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3783426A28CF20A900237B99 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3783427A28CF4EF900237B99 /* MemberInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberInfo.swift; sourceTree = "<group>"; };
+		3783427A28CF4EF900237B99 /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		37B0D1F228D306CC001B1BEE /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		37B0D1F428D306DB001B1BEE /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		37B0D1F628D306F0001B1BEE /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
@@ -235,9 +235,9 @@
 		3783427928CF24CD00237B99 /* Realm */ = {
 			isa = PBXGroup;
 			children = (
-				3783427A28CF4EF900237B99 /* MemberInfo.swift */,
-				373E58DB28D1BDFD00F9EEF5 /* LessonInfo.swift */,
-				373E58DD28D1BE1E00F9EEF5 /* ProgressInfo.swift */,
+				3783427A28CF4EF900237B99 /* Student.swift */,
+				373E58DB28D1BDFD00F9EEF5 /* Lesson.swift */,
+				373E58DD28D1BE1E00F9EEF5 /* Progress.swift */,
 				37031F3428D59CEE0080D8D9 /* MessageList.swift */,
 				37031F3828D59F540080D8D9 /* BlessenRepository.swift */,
 			);
@@ -382,7 +382,7 @@
 				37BC2E0E28D05AFC007B49EE /* MainView.swift in Sources */,
 				37B0D1FC28D316B1001B1BEE /* WriteViewController.swift in Sources */,
 				37C24A7628D0899700B2A415 /* CalendarTableViewCell.swift in Sources */,
-				373E58DE28D1BE1E00F9EEF5 /* ProgressInfo.swift in Sources */,
+				373E58DE28D1BE1E00F9EEF5 /* Progress.swift in Sources */,
 				37F632E528D205380016CF5A /* UnderLineTextField.swift in Sources */,
 				37BC2E0C28D05A70007B49EE /* MainViewController.swift in Sources */,
 				37C24A7C28D08A7800B2A415 /* SettingTableViewCell.swift in Sources */,
@@ -396,10 +396,10 @@
 				37FDEAA528D0576B002CE136 /* BaseTableViewCell.swift in Sources */,
 				3783425F28CF20A700237B99 /* SceneDelegate.swift in Sources */,
 				37031F3528D59CEE0080D8D9 /* MessageList.swift in Sources */,
-				3783427B28CF4EF900237B99 /* MemberInfo.swift in Sources */,
+				3783427B28CF4EF900237B99 /* Student.swift in Sources */,
 				37C24A7828D08A6000B2A415 /* SettingViewController.swift in Sources */,
 				37B0D1F328D306CC001B1BEE /* MessageViewController.swift in Sources */,
-				373E58DC28D1BDFD00F9EEF5 /* LessonInfo.swift in Sources */,
+				373E58DC28D1BDFD00F9EEF5 /* Lesson.swift in Sources */,
 				37C24A8628D0DFBE00B2A415 /* RegisterView.swift in Sources */,
 				37C24A8828D0E0D300B2A415 /* RegisterTableViewCell.swift in Sources */,
 				37FDEAA728D05824002CE136 /* Constants.swift in Sources */,
@@ -558,7 +558,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -587,7 +587,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

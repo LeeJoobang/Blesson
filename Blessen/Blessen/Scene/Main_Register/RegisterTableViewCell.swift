@@ -2,6 +2,7 @@ import UIKit
 import SnapKit
 
 class RegisterTableViewCell: BaseTableViewCell {
+    
     let totalView: UIView = {
         let view = UIView()
         view.backgroundColor = Constants.BaseColor.background
@@ -51,7 +52,6 @@ class RegisterTableViewCell: BaseTableViewCell {
     }
     
     override func setConstraints() {
-        
         totalView.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide.snp.top)
             make.leading.equalTo(20)

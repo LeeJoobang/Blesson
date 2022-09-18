@@ -1,5 +1,7 @@
 import UIKit
 import SnapKit
+import RealmSwift
+import SwiftUI
 
 class RegisterViewController: BaseViewController{
     
@@ -7,6 +9,12 @@ class RegisterViewController: BaseViewController{
 
     let registetList = ["이름", "주소", "연락처", "레슨시작일", "레슨횟수", "레슨비"]
     let placeholderList = ["이름을 입력하세요.", "주소를 입력하세요.", "'-'를 제외하고 입력하세요.", "레슨시작일을 입력하세요.", "ex) 10 or 20", "ex)500000"]
+    var registData = Array(repeating: "", count: 6)
+//    var registData = [String]()
+
+    let localRealm = try! Realm()
+    var studentTasks: Results<Student>!
+    var lessonTasks: Results<Lesson>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,12 +30,14 @@ class RegisterViewController: BaseViewController{
         self.registerView.tableView.register(RegisterTableViewCell.self, forCellReuseIdentifier: RegisterTableViewCell.reuseIdentifier)
     }
     
-    override func setConstraints() {
-    }
-    
-    @objc func saveButtonClicked(){
-        dismiss(animated: true)
-        print("저장")
+    @objc func saveButtonClicked(_ sender: Any){
+        print(registData)        
+        let filterData = registData.filter { $0 == "" }
+        if filterData.count == 0 {
+            dismiss(animated: true)
+        } else {
+            showAlertMessage(title: "학생 정보를 입력해주세요.", button: "확인")
+        }
     }
 }
 
@@ -55,8 +65,11 @@ extension RegisterViewController: UITableViewDelegate, UITableViewDataSource{
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: RegisterTableViewCell.reuseIdentifier, for: indexPath) as! RegisterTableViewCell
+            cell.itemTextField.delegate = self
             cell.itemLabel.text = registetList[indexPath.row]
             cell.itemTextField.attributedPlaceholder = NSAttributedString(string: placeholderList[indexPath.row], attributes: [NSAttributedString.Key.foregroundColor : UIColor.gray])
+            cell.itemTextField.tag = indexPath.row
+
             return cell
         default:
             fatalError()
@@ -70,5 +83,26 @@ extension RegisterViewController: UITableViewDelegate, UITableViewDataSource{
             return 60
         }
     }
+}
+
+extension RegisterViewController: UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
     
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField.text == ""{
+            showAlertMessage(title: "데이터를 입력해주세요.", button: "확인")
+        } else {
+            guard let text = textField.text else { return }
+            registData[textField.tag] = ""
+            registData[textField.tag].append(text)
+            textField.resignFirstResponder()
+        }
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.text = ""
+    }
 }

@@ -1,7 +1,7 @@
 import Foundation
 import RealmSwift
 
-protocol BlessenRepositoryType {
+fileprivate protocol BlessenRepositoryType: AnyObject {
     func fetch() -> Results<MessageList>
     func fetchSort(_ sort: String) -> Results<MessageList>
     func fetchFilter() -> Results<MessageList>
@@ -9,7 +9,7 @@ protocol BlessenRepositoryType {
     func deleteItem(item: MessageList)
 }
 
-class BlessenRepository: BlessenRepositoryType {
+final class BlessenRepository: BlessenRepositoryType {
     
     let localRealm = try! Realm()
     
@@ -42,12 +42,12 @@ class BlessenRepository: BlessenRepositoryType {
         try! localRealm.write{
             localRealm.delete(item)
         }
-        removeImageFromDocument(filename: "\(item.objectID).jpg") // filemanager에 있는 애를 데려옴.
+        removeImageFromDocument(filename: "\(item.objectID).jpg")
     }
     
     func removeImageFromDocument(filename: String) {
-        guard let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return } // document 경로를 가져올 수 있따.
-        // ex) file:///Users/joobanglee/Library/Developer/CoreSimulator/Devices/EE7FB4FC-8C3C-477D-BE12-92617771247F/data/Containers/Data/Application/1A88C18A-E6C7-41A1-800C-0A5E2419A6C8/Documents/ 여기까지 보여준당
+        guard let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+        
         let fileURL = documentDirectory.appendingPathComponent(filename)
     
         do {

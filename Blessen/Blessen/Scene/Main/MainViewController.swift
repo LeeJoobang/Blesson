@@ -19,7 +19,6 @@ class MainViewController: BaseViewController{
         
         setupSearchController()
         setupToolbar()
-
     }
     
     override func configure(){
@@ -56,7 +55,7 @@ class MainViewController: BaseViewController{
 // MARK: TableView 정보
 extension MainViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 100
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

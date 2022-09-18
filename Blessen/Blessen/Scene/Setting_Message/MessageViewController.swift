@@ -1,12 +1,14 @@
 import UIKit
 import SnapKit
 import RealmSwift
+import RadioGroup
 
 class MessageViewController: BaseViewController{
     
     var messageView = MessageView()
     let localRealm = try! Realm()
     let repository = BlessenRepository()
+    var checkList = [Bool]()
     
     var tasks: Results<MessageList>! {
         didSet {
@@ -94,6 +96,14 @@ extension MessageViewController: UITableViewDelegate, UITableViewDataSource{
 
     @objc func checkboxButtonClicked(_ sender: UIButton){
         let task = tasks[sender.tag]
+        
+        for item in tasks{
+            // 여기서 버튼의 값은 item.check이다.
+            // 만약 item.check의 값을 우선적으로 1개다 그럼 그것을 바꾸고, 0개면 거기에 값을 바꿔주고, true의 값이 2개가 되려고 하면 안된다는 메세지를 띄우는 식으로 작성을 해보자.
+            
+            print(item.check)
+        }
+
         repository.updateCheck(item: task)
         messageView.tableView.reloadData()
     }
