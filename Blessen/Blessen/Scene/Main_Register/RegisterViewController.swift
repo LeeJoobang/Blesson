@@ -31,9 +31,36 @@ class RegisterViewController: BaseViewController{
     }
     
     @objc func saveButtonClicked(_ sender: Any){
-        print(registData)        
+        print(registData)
         let filterData = registData.filter { $0 == "" }
         if filterData.count == 0 {
+            let studentTasks = localRealm.objects(Student.self)
+            let lessonTasks = localRealm.objects(Lesson.self)
+            
+            let studentTask = Student(name: registData[0], address: registData[1], phoneNumber: registData[2])
+            do {
+                try localRealm.write{
+                    localRealm.add(studentTask)
+                    print("Realm Succeed")
+                }
+            } catch let error {
+                print(error)
+            }
+            print(studentTask.objectID)
+            
+            let lessonTask = Lesson(objectID: studentTask.objectID, lessonFee: registData[5], totalCount: registData[4], startDate: registData[3])
+
+            do {
+                try localRealm.write{
+                    localRealm.add(lessonTask)
+                    print("Realm Succeed")
+                }
+            } catch let error {
+                print(error)
+            }
+
+            
+            
             dismiss(animated: true)
         } else {
             showAlertMessage(title: "학생 정보를 입력해주세요.", button: "확인")
