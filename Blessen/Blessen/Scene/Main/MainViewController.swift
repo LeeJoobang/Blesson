@@ -5,7 +5,22 @@ import RealmSwift
 class MainViewController: BaseViewController{
     
     var mainView = MainView()
+    let localRealm = try! Realm()
+    let studentRepository = StudentRepository()
+    let lessonRepository = LessonRepository()
 
+    var studentTasks: Results<Student>! {
+        didSet {
+            self.mainView.tableView.reloadData()
+        }
+    }
+    
+    var lessonTasks: Results<Lesson>! {
+        didSet {
+            self.mainView.tableView.reloadData()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view = mainView
@@ -14,12 +29,24 @@ class MainViewController: BaseViewController{
         mainView.backgroundColor = Constants.BaseColor.background
         mainView.tableView.delegate = self
         mainView.tableView.dataSource = self
-        
         self.mainView.tableView.register(MainTableViewCell.self, forCellReuseIdentifier: MainTableViewCell.reuseIdentifier)
-        
         setupSearchController()
         setupToolbar()
+        print("Realm is located at:", localRealm.configuration.fileURL!)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        studentTasks = localRealm.objects(Student.self)
+        lessonTasks = localRealm.objects(Lesson.self)
+        
+        mainView.tableView.reloadData()
+
+        studentTasks = studentRepository.fetch()
+        lessonTasks = lessonRepository.fetch()
+
+    }
+
     
     override func configure(){
     }
@@ -55,11 +82,17 @@ class MainViewController: BaseViewController{
 // MARK: TableView 정보
 extension MainViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return studentTasks.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.reuseIdentifier, for: indexPath) as! MainTableViewCell
+        
+        cell.nameLabel.text = studentTasks[indexPath.row].name
+        cell.countLabel.text = "\\\(lessonTasks[indexPath.row].lessonCount)"
+        cell.messageButton.setImage(UIImage(systemName: "message"), for: .normal)
+        cell.messageButton.addTarget(self, action: #selector(messageButtonClicked), for: .touchUpInside)
+        
         return cell
     }
     
@@ -70,6 +103,10 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = DetailViewController()
         transition(vc, transitionStyle: .push)
+    }
+    
+    @objc func messageButtonClicked(){
+        print("message button Clicked")
     }
     
 }

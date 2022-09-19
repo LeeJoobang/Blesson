@@ -16,6 +16,7 @@ class SettingViewController: BaseViewController{
         
         navigationItem.title = "설정"
         self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
+        
     }
     
     override func configure(){
@@ -43,7 +44,6 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         switch indexPath.row{
         case 0...1:
             print("backup & restore")

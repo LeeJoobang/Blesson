@@ -6,20 +6,27 @@ import SwiftUI
 class RegisterViewController: BaseViewController{
     
     var registerView = RegisterView()
-
+    
     let registetList = ["이름", "주소", "연락처", "레슨시작일", "레슨횟수", "레슨비"]
     let placeholderList = ["이름을 입력하세요.", "주소를 입력하세요.", "'-'를 제외하고 입력하세요.", "레슨시작일을 입력하세요.", "ex) 10 or 20", "ex)500000"]
     var registData = Array(repeating: "", count: 6)
-//    var registData = [String]()
-
     let localRealm = try! Realm()
     var studentTasks: Results<Student>!
     var lessonTasks: Results<Lesson>!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view = registerView
         registerView.saveButton.addTarget(self, action: #selector(saveButtonClicked), for: .touchUpInside)
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        presentingViewController?.viewWillDisappear(true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        presentingViewController?.viewWillAppear(true)
     }
     
     override func configure(){
@@ -31,9 +38,9 @@ class RegisterViewController: BaseViewController{
     }
     
     @objc func saveButtonClicked(_ sender: Any){
-        print(registData)
         let filterData = registData.filter { $0 == "" }
         if filterData.count == 0 {
+            // studentTasks 정리
             let studentTasks = localRealm.objects(Student.self)
             let lessonTasks = localRealm.objects(Lesson.self)
             
@@ -46,10 +53,8 @@ class RegisterViewController: BaseViewController{
             } catch let error {
                 print(error)
             }
-            print(studentTask.objectID)
             
-            let lessonTask = Lesson(objectID: studentTask.objectID, lessonFee: registData[5], totalCount: registData[4], startDate: registData[3])
-
+            let lessonTask = Lesson(foreignID: studentTask.objectID, lessonFee: registData[5], totalCount: registData[4], startDate: registData[3])
             do {
                 try localRealm.write{
                     localRealm.add(lessonTask)
@@ -58,10 +63,11 @@ class RegisterViewController: BaseViewController{
             } catch let error {
                 print(error)
             }
-
-            
-            
+            print("======studentTask:\(studentTask)")
+            print("======LessonTask:\(lessonTask)")
             dismiss(animated: true)
+            
+            
         } else {
             showAlertMessage(title: "학생 정보를 입력해주세요.", button: "확인")
         }
@@ -96,7 +102,7 @@ extension RegisterViewController: UITableViewDelegate, UITableViewDataSource{
             cell.itemLabel.text = registetList[indexPath.row]
             cell.itemTextField.attributedPlaceholder = NSAttributedString(string: placeholderList[indexPath.row], attributes: [NSAttributedString.Key.foregroundColor : UIColor.gray])
             cell.itemTextField.tag = indexPath.row
-
+            
             return cell
         default:
             fatalError()

@@ -4,13 +4,13 @@ import SnapKit
 class MainTableViewCell: BaseTableViewCell {
     let totalView: UIView = {
         let view = UIView()
-        view.backgroundColor = .yellow
+        view.backgroundColor = .systemGray6
         return view
     }()
     
     let nameLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .orange
+        label.backgroundColor = .systemGray6
         label.tintColor = .white
         label.textAlignment = .center
         label.text = "이주영"
@@ -23,11 +23,9 @@ class MainTableViewCell: BaseTableViewCell {
     
     let countLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .orange
+        label.backgroundColor = .systemGray6
         label.tintColor = .white
         label.textAlignment = .center
-        label.text = "1/10"
-        
         label.font = UIFont(name: "Halvetica", size: 15)
         label.numberOfLines = 1
         label.sizeToFit()
@@ -37,8 +35,8 @@ class MainTableViewCell: BaseTableViewCell {
     let messageButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "message"), for: .normal)
-        button.backgroundColor = .orange
-        button.tintColor = .systemBlue
+        button.backgroundColor = .systemGray6
+        button.tintColor = .systemGreen
         button.sizeToFit()
         return button
     }()
