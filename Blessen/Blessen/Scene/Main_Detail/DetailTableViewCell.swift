@@ -18,12 +18,11 @@ class DetailTableViewCell: BaseTableViewCell {
         return label
     }()
     
-    let itemTextView: UITextView = {
-        let text = UITextView()
+    let itemTextField: UnderLineTextField = {
+        let text = UnderLineTextField()
         text.backgroundColor = Constants.BaseColor.background
-        text.textColor = Constants.BaseColor.text
-        text.font = .systemFont(ofSize: 16)
-        text.text = ""
+        text.textAlignment = .left
+        text.textColor = .black
         return text
     }()
     
@@ -44,7 +43,7 @@ class DetailTableViewCell: BaseTableViewCell {
     }
     
     override func configure() {
-        [itemLabel, itemTextView].forEach {
+        [itemLabel, itemTextField].forEach {
             self.totalView.addSubview($0)
         }
         
@@ -66,7 +65,7 @@ class DetailTableViewCell: BaseTableViewCell {
             make.width.equalTo(self.totalView.snp.width)
         }
         
-        itemTextView.snp.makeConstraints { make in
+        itemTextField.snp.makeConstraints { make in
             make.top.equalTo(itemLabel.snp.bottom)
             make.height.equalTo(self.totalView.snp.height).multipliedBy(0.6)
             make.leading.equalTo(self.totalView.snp.leading)

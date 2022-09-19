@@ -2,7 +2,7 @@ import UIKit
 import RealmSwift
 
 class Student: Object {
-    @Persisted(primaryKey: true) var objectID: ObjectId //
+    @Persisted(primaryKey: true) var objectID: ObjectId 
 
     @Persisted var name: String
     @Persisted var address: String
