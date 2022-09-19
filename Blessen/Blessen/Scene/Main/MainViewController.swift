@@ -87,9 +87,9 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.reuseIdentifier, for: indexPath) as! MainTableViewCell
-        
+        // count label의 기본값은 0으로 처리한다.
         cell.nameLabel.text = studentTasks[indexPath.row].name
-        cell.countLabel.text = "\\\(lessonTasks[indexPath.row].lessonCount)"
+        cell.countLabel.text = "\(0)\\\(lessonTasks[indexPath.row].lessonCount)"
         cell.messageButton.setImage(UIImage(systemName: "message"), for: .normal)
         cell.messageButton.addTarget(self, action: #selector(messageButtonClicked), for: .touchUpInside)
         

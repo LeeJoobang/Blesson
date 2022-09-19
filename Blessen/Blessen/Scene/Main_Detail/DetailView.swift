@@ -4,7 +4,7 @@ class DetailView: BaseView{
     
     let tableView: UITableView = {
         let view = UITableView()
-        view.backgroundColor = .red
+        view.backgroundColor = Constants.BaseColor.background
         return view
     }()
     

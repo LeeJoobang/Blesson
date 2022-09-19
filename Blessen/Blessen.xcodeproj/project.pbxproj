@@ -11,6 +11,8 @@
 		37031F3328D59BBA0080D8D9 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 37031F3228D59BBA0080D8D9 /* RealmSwift */; };
 		37031F3528D59CEE0080D8D9 /* MessageList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37031F3428D59CEE0080D8D9 /* MessageList.swift */; };
 		37031F3928D59F540080D8D9 /* BlessenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37031F3828D59F540080D8D9 /* BlessenRepository.swift */; };
+		370F145828D8C0F800AF6F5F /* DetailImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370F145728D8C0F800AF6F5F /* DetailImageCell.swift */; };
+		370F145A28D8CC9500AF6F5F /* DetailProgressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370F145928D8CC9500AF6F5F /* DetailProgressCell.swift */; };
 		373E58DC28D1BDFD00F9EEF5 /* Lesson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E58DB28D1BDFD00F9EEF5 /* Lesson.swift */; };
 		373E58DE28D1BE1E00F9EEF5 /* Progress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E58DD28D1BE1E00F9EEF5 /* Progress.swift */; };
 		3783425D28CF20A700237B99 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3783425C28CF20A700237B99 /* AppDelegate.swift */; };
@@ -57,6 +59,8 @@
 /* Begin PBXFileReference section */
 		37031F3428D59CEE0080D8D9 /* MessageList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageList.swift; sourceTree = "<group>"; };
 		37031F3828D59F540080D8D9 /* BlessenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlessenRepository.swift; sourceTree = "<group>"; };
+		370F145728D8C0F800AF6F5F /* DetailImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageCell.swift; sourceTree = "<group>"; };
+		370F145928D8CC9500AF6F5F /* DetailProgressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailProgressCell.swift; sourceTree = "<group>"; };
 		373E58DB28D1BDFD00F9EEF5 /* Lesson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson.swift; sourceTree = "<group>"; };
 		373E58DD28D1BE1E00F9EEF5 /* Progress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Progress.swift; sourceTree = "<group>"; };
 		3783425928CF20A700237B99 /* Blessen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blessen.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -280,6 +284,8 @@
 				37C24A8328D0D9D300B2A415 /* DetailViewController.swift */,
 				37C24A8928D0E1DA00B2A415 /* DetailView.swift */,
 				37C24A8B28D0E1F800B2A415 /* DetailTableViewCell.swift */,
+				370F145728D8C0F800AF6F5F /* DetailImageCell.swift */,
+				370F145928D8CC9500AF6F5F /* DetailProgressCell.swift */,
 			);
 			path = Main_Detail;
 			sourceTree = "<group>";
@@ -377,12 +383,14 @@
 				37FDEAA128D056AF002CE136 /* BaseViewController.swift in Sources */,
 				37C24A7428D0891D00B2A415 /* CalendarView.swift in Sources */,
 				37C24A8A28D0E1DA00B2A415 /* DetailView.swift in Sources */,
+				370F145A28D8CC9500AF6F5F /* DetailProgressCell.swift in Sources */,
 				37C24A7028D0871800B2A415 /* BaseTabBarController.swift in Sources */,
 				37031F3928D59F540080D8D9 /* BlessenRepository.swift in Sources */,
 				37BC2E0E28D05AFC007B49EE /* MainView.swift in Sources */,
 				37B0D1FC28D316B1001B1BEE /* WriteViewController.swift in Sources */,
 				37C24A7628D0899700B2A415 /* CalendarTableViewCell.swift in Sources */,
 				373E58DE28D1BE1E00F9EEF5 /* Progress.swift in Sources */,
+				370F145828D8C0F800AF6F5F /* DetailImageCell.swift in Sources */,
 				37F632E528D205380016CF5A /* UnderLineTextField.swift in Sources */,
 				37BC2E0C28D05A70007B49EE /* MainViewController.swift in Sources */,
 				37C24A7C28D08A7800B2A415 /* SettingTableViewCell.swift in Sources */,

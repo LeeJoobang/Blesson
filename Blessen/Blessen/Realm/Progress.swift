@@ -2,7 +2,6 @@ import UIKit
 import RealmSwift
 
 class Progress: Object {
-
     @Persisted(primaryKey: true) var objectID: ObjectId
 
     @Persisted var foreignID: ObjectId

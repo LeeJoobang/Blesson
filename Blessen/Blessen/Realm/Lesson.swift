@@ -7,23 +7,18 @@ class Lesson: Object {
     
     @Persisted var foreignID: ObjectId
     @Persisted var lessonFee: String
-    @Persisted var lessonCount: Int
-    @Persisted var totalCount: String
+    @Persisted var lessonCount: String
+    @Persisted var totalCount: Int
     @Persisted var startDate: String
-
-    convenience init(foreignID: ObjectId, lessonFee: String, totalCount: String, startDate: String) {
-        self.init()
-        self.foreignID = foreignID
-        self.lessonCount = 0
-        self.lessonFee = lessonFee
-        self.totalCount = totalCount
-        self.startDate = startDate
-    }
     
-    convenience init(foreignID: ObjectId, lessonCount: Int) {
+
+    convenience init(foreignID: ObjectId, lessonFee: String, startDate: String, lessonCount: String) {
         self.init()
         self.foreignID = foreignID
         self.lessonCount = lessonCount
+        self.lessonFee = lessonFee
+        self.totalCount = 0
+        self.startDate = startDate
     }
 }
 

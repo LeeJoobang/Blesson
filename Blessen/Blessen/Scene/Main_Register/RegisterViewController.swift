@@ -54,7 +54,7 @@ class RegisterViewController: BaseViewController{
                 print(error)
             }
             
-            let lessonTask = Lesson(foreignID: studentTask.objectID, lessonFee: registData[5], totalCount: registData[4], startDate: registData[3])
+            let lessonTask = Lesson(foreignID: studentTask.objectID, lessonFee: registData[5], startDate: registData[3], lessonCount: registData[4])
             do {
                 try localRealm.write{
                     localRealm.add(lessonTask)
@@ -63,11 +63,7 @@ class RegisterViewController: BaseViewController{
             } catch let error {
                 print(error)
             }
-            print("======studentTask:\(studentTask)")
-            print("======LessonTask:\(lessonTask)")
             dismiss(animated: true)
-            
-            
         } else {
             showAlertMessage(title: "학생 정보를 입력해주세요.", button: "확인")
         }
