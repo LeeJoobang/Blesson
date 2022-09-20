@@ -37,7 +37,6 @@ class DetailViewController: BaseViewController{
         self.detailView.tableView.register(DetailTableViewCell.self, forCellReuseIdentifier: DetailTableViewCell.reuseIdentifier)
         self.detailView.tableView.register(DetailImageCell.self, forCellReuseIdentifier: DetailImageCell.reuseIdentifier)
         self.detailView.tableView.register(DetailProgressCell.self, forCellReuseIdentifier: DetailProgressCell.reuseIdentifier)
-
     }
     
     override func setConstraints() {
@@ -71,7 +70,6 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: DetailTableViewCell.reuseIdentifier, for: indexPath) as! DetailTableViewCell
             cell.itemLabel.text = detailList[indexPath.row]
-
             return cell
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: DetailProgressCell.reuseIdentifier, for: indexPath) as! DetailProgressCell
@@ -82,10 +80,15 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
+        switch indexPath.section {
+        case 0:
             return 100
-        } else {
+        case 1:
             return 60
+        case 2:
+            return 80
+        default:
+            fatalError()
         }
     }
     
