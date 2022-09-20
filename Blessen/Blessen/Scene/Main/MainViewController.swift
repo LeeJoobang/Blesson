@@ -109,6 +109,19 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
         print("message button Clicked")
     }
     
+    // MARK: delete 하기
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete{
+            self.studentRepository.deleteData(data: self.studentTasks[indexPath.row])
+            self.lessonRepository.deleteData(data: self.lessonTasks[indexPath.row])
+        }
+        self.mainView.tableView.reloadData()
+    }
+    
 }
 
 // MARK: searchbar 등록
