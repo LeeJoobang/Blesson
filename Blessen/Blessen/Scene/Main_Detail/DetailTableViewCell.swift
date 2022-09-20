@@ -18,7 +18,7 @@ class DetailTableViewCell: BaseTableViewCell {
         return label
     }()
     
-    let itemTextField: UnderLineTextField = {
+    var itemTextField: UnderLineTextField = {
         let text = UnderLineTextField()
         text.backgroundColor = Constants.BaseColor.background
         text.textAlignment = .left
@@ -29,7 +29,6 @@ class DetailTableViewCell: BaseTableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
-
     }
     
     required init?(coder: NSCoder) {
@@ -71,6 +70,11 @@ class DetailTableViewCell: BaseTableViewCell {
             make.leading.equalTo(self.totalView.snp.leading)
             make.width.equalTo(self.totalView.snp.width)
         }
+    }
+    
+    func setDetailInformation(studentData: Student, lessonData: Lesson, index: Int){
+        print(studentData)
+        print(lessonData)
     }
 
 }

@@ -6,27 +6,18 @@ class DetailViewController: BaseViewController{
     
     var detailView = DetailView()
     let detailList = ["이름", "주소", "연락처", "레슨시작일", "누적금액", "누적횟수", "레슨비"]
-
     let localRealm = try! Realm()
     let studentRepository = StudentRepository()
     let lessonRepository = LessonRepository()
-
-    var studentTasks: Results<Student>! {
-        didSet {
-            self.detailView.tableView.reloadData()
-        }
-    }
-    
-    var lessonTasks: Results<Lesson>! {
-        didSet {
-            self.detailView.tableView.reloadData()
-        }
-    }
+    var lesssonTask: Lesson!
+    var studentTask: Student!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view = detailView
-        
+        print(lesssonTask)
+        print(studentTask)
+
     }
     
     override func configure(){
@@ -44,7 +35,6 @@ class DetailViewController: BaseViewController{
 }
 
 extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
@@ -70,6 +60,24 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: DetailTableViewCell.reuseIdentifier, for: indexPath) as! DetailTableViewCell
             cell.itemLabel.text = detailList[indexPath.row]
+            switch indexPath.row {
+            case 0:
+                cell.itemTextField.text = studentTask.name
+            case 1:
+                cell.itemTextField.text = studentTask.address
+            case 2:
+                cell.itemTextField.text = studentTask.phoneNumber
+            case 3:
+                cell.itemTextField.text = lesssonTask.startDate
+            case 4:
+                cell.itemTextField.text = "누적금액"
+            case 5:
+                cell.itemTextField.text = "누적횟수"
+            case 6:
+                cell.itemTextField.text = lesssonTask.lessonFee
+            default:
+                fatalError()
+            }
             return cell
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: DetailProgressCell.reuseIdentifier, for: indexPath) as! DetailProgressCell

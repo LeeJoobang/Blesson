@@ -1,6 +1,7 @@
 import UIKit
 import SnapKit
 import RealmSwift
+import SwiftUI
 
 class MainViewController: BaseViewController{
     
@@ -39,15 +40,11 @@ class MainViewController: BaseViewController{
         super.viewWillAppear(animated)
         studentTasks = localRealm.objects(Student.self)
         lessonTasks = localRealm.objects(Lesson.self)
-        
         mainView.tableView.reloadData()
-
         studentTasks = studentRepository.fetch()
         lessonTasks = lessonRepository.fetch()
-
     }
 
-    
     override func configure(){
     }
     
@@ -92,7 +89,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
         cell.countLabel.text = "\(0)\\\(lessonTasks[indexPath.row].lessonCount)"
         cell.messageButton.setImage(UIImage(systemName: "message"), for: .normal)
         cell.messageButton.addTarget(self, action: #selector(messageButtonClicked), for: .touchUpInside)
-        
         return cell
     }
     
@@ -102,6 +98,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = DetailViewController()
+        vc.studentTask = studentTasks[indexPath.row]
+        vc.lesssonTask = lessonTasks[indexPath.row]
         transition(vc, transitionStyle: .push)
     }
     
