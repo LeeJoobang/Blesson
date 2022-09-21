@@ -65,7 +65,8 @@ class RegisterViewController: BaseViewController{
             }
             dismiss(animated: true)
         } else {
-            showAlertMessage(title: "학생 정보를 입력해주세요.", button: "확인")
+            showAlertMessage(title: "알림", message: "5개의 메세지까지 저장됩니다.", ok: "확인", cancel: "취소")
+//            showAlertMessage(title: "학생 정보를 입력해주세요.", button: "확인")
         }
     }
 }
@@ -122,7 +123,8 @@ extension RegisterViewController: UITextFieldDelegate{
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField.text == ""{
-            showAlertMessage(title: "데이터를 입력해주세요.", button: "확인")
+            showAlertMessage(title: "알림", message: "5개의 메세지까지 저장됩니다.", ok: "확인", cancel: "취소")
+//            showAlertMessage(title: "데이터를 입력해주세요.", button: "확인")
         } else {
             guard let text = textField.text else { return }
             registData[textField.tag] = ""
