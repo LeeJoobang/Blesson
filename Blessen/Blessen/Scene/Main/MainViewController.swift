@@ -1,7 +1,9 @@
 import UIKit
+import SwiftUI
+import MessageUI
+
 import SnapKit
 import RealmSwift
-import SwiftUI
 
 class MainViewController: BaseViewController{
     
@@ -87,10 +89,36 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
         // count label의 기본값은 0으로 처리한다.
         cell.nameLabel.text = studentTasks[indexPath.row].name
         cell.countLabel.text = "\(0)\\\(lessonTasks[indexPath.row].lessonCount)"
+        cell.messageButton.tag = indexPath.row
         cell.messageButton.setImage(UIImage(systemName: "message"), for: .normal)
         cell.messageButton.addTarget(self, action: #selector(messageButtonClicked), for: .touchUpInside)
         return cell
     }
+    
+    // MARK: 버튼 클릭 후 message 기본값 화면 띄우기
+    @objc func messageButtonClicked(_ button: UIButton){
+        print("message button Clicked")
+        print("button.tag: \(button.tag)")
+        
+        guard MFMessageComposeViewController.canSendText() else {
+            print("SMS services are not available.")
+            return
+        }
+        let composViewController = MFMessageComposeViewController()
+        composViewController.messageComposeDelegate = self
+        composViewController.recipients = [studentTasks[button.tag].phoneNumber]
+        composViewController.body = """
+        테스트를 진행해보고 있습니다. 정말 잘 표시가 되는지 궁금합니다.
+        테스트를 진행해보고 있습니다. 정말 잘 표시가 되는지 궁금합니다.
+        테스트를 진행해보고 있습니다. 정말 잘 표시가 되는지 궁금합니다.
+        테스트를 진행해보고 있습니다. 정말 잘 표시가 되는지 궁금합니다.
+        테스트를 진행해보고 있습니다. 정말 잘 표시가 되는지 궁금합니다.
+        테스트를 진행해보고 있습니다. 정말 잘 표시가 되는지 궁금합니다.
+        테스트를 진행해보고 있습니다. 정말 잘 표시가 되는지 궁금합니다.
+"""
+        transition(composViewController, transitionStyle: .present)
+    }
+
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
@@ -101,10 +129,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
         vc.studentTask = studentTasks[indexPath.row]
         vc.lesssonTask = lessonTasks[indexPath.row]
         transition(vc, transitionStyle: .push)
-    }
-    
-    @objc func messageButtonClicked(){
-        print("message button Clicked")
     }
     
     // MARK: delete 하기
@@ -140,3 +164,24 @@ extension MainViewController: UISearchResultsUpdating, UISearchBarDelegate{
         self.navigationItem.hidesSearchBarWhenScrolling = false
     }
 }
+
+// MARK: 버튼 클릭 후 message 기본값 화면 띄우기
+extension MainViewController: MFMessageComposeViewControllerDelegate{
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult){
+        switch result {
+        case .cancelled:
+            print("cancelled")
+            dismiss(animated: true, completion: nil)
+        case .sent:
+            print("sent message:", controller.body ?? "안녕하세요?")
+            dismiss(animated: true, completion: nil)
+        case .failed:
+            print("failed")
+            dismiss(animated: true, completion: nil)
+        default:
+            print("Error")
+            dismiss(animated: true, completion: nil)
+        }
+    }
+}
+

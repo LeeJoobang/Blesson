@@ -34,7 +34,6 @@ class MainTableViewCell: BaseTableViewCell {
     
     let messageButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "message"), for: .normal)
         button.backgroundColor = .systemGray6
         button.tintColor = .systemGreen
         button.sizeToFit()
