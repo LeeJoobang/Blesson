@@ -75,7 +75,6 @@ class MainViewController: BaseViewController{
         let vc = RegisterViewController()
         transition(vc, transitionStyle: .present)
     }
-    
 }
 
 // MARK: TableView 정보
@@ -97,9 +96,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
     
     // MARK: 버튼 클릭 후 message 기본값 화면 띄우기
     @objc func messageButtonClicked(_ button: UIButton){
-        print("message button Clicked")
-        print("button.tag: \(button.tag)")
-        
         guard MFMessageComposeViewController.canSendText() else {
             print("SMS services are not available.")
             return
@@ -115,7 +111,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
         테스트를 진행해보고 있습니다. 정말 잘 표시가 되는지 궁금합니다.
         테스트를 진행해보고 있습니다. 정말 잘 표시가 되는지 궁금합니다.
         테스트를 진행해보고 있습니다. 정말 잘 표시가 되는지 궁금합니다.
-"""
+        """
         transition(composViewController, transitionStyle: .present)
     }
 
@@ -143,7 +139,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
         }
         self.mainView.tableView.reloadData()
     }
-    
 }
 
 // MARK: searchbar 등록

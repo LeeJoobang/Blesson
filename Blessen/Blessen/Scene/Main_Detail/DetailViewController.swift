@@ -1,4 +1,6 @@
 import UIKit
+import MessageUI
+
 import SnapKit
 import RealmSwift
 
@@ -98,10 +100,48 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
             return cell
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: DetailProgressCell.reuseIdentifier, for: indexPath) as! DetailProgressCell
+            cell.messageButton.setImage(UIImage(systemName: "message"), for: .normal)
+            cell.messageButton.addTarget(self, action: #selector(messageButtonClicked), for: .touchUpInside)
+            cell.plusButton.addTarget(self, action: #selector(plusButtonClicked), for: .touchUpInside)
             return cell
         default:
             fatalError()
         }
+    }
+    // MARK: +버튼 클릭 - progress +1 증가, realm(progress) data update
+    @objc func plusButtonClicked(){
+        calculateToday()
+        print("+")
+    }
+    
+    func calculateToday(){
+        let nowDate = Date()
+        let date = DateFormatter()
+        date.locale = Locale(identifier: "ko_kr")
+        date.dateFormat = "yyyy-MM-dd"
+        let today = date.string(from: nowDate)
+        print(today)
+    }
+    
+    // MARK: 버튼 클릭 후 message(학생 정보) 메세지 띄우기
+    @objc func messageButtonClicked(_ button: UIButton){
+        guard MFMessageComposeViewController.canSendText() else {
+            print("SMS services are not available.")
+            return
+        }
+        let composViewController = MFMessageComposeViewController()
+        composViewController.messageComposeDelegate = self
+        composViewController.recipients = [studentTask.phoneNumber]
+        composViewController.body = """
+        테스트를 진행해보고 있습니다. 정말 잘 표시가 되는지 궁금합니다.
+        테스트를 진행해보고 있습니다. 정말 잘 표시가 되는지 궁금합니다.
+        테스트를 진행해보고 있습니다. 정말 잘 표시가 되는지 궁금합니다.
+        테스트를 진행해보고 있습니다. 정말 잘 표시가 되는지 궁금합니다.
+        테스트를 진행해보고 있습니다. 정말 잘 표시가 되는지 궁금합니다.
+        테스트를 진행해보고 있습니다. 정말 잘 표시가 되는지 궁금합니다.
+        테스트를 진행해보고 있습니다. 정말 잘 표시가 되는지 궁금합니다.
+        """
+        transition(composViewController, transitionStyle: .present)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -159,4 +199,26 @@ extension DetailViewController: UITextFieldDelegate{
         }
     }
 }
+
+// MARK: 버튼 클릭 후 message 기본값 화면 띄우기
+extension DetailViewController: MFMessageComposeViewControllerDelegate{
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult){
+        switch result {
+        case .cancelled:
+            print("cancelled")
+            dismiss(animated: true, completion: nil)
+        case .sent:
+            print("sent message:", controller.body ?? "안녕하세요?")
+            dismiss(animated: true, completion: nil)
+        case .failed:
+            print("failed")
+            dismiss(animated: true, completion: nil)
+        default:
+            print("Error")
+            dismiss(animated: true, completion: nil)
+        }
+    }
+}
+
+
 

@@ -62,21 +62,21 @@ class MainTableViewCell: BaseTableViewCell {
         
         totalView.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide.snp.top)
-            make.leading.equalTo(20)
+            make.leading.equalTo(0)
             make.height.equalTo(contentView.snp.height)
-            make.trailing.equalTo(-40)
+            make.trailing.equalTo(0)
         }
         
         nameLabel.snp.makeConstraints { make in
             make.top.equalTo(self.totalView.snp.top)
             make.bottom.equalTo(self.totalView.snp.bottom)
-            make.leading.equalTo(0)
+            make.leading.equalTo(20)
         }
         
         messageButton.snp.makeConstraints { make in
             make.top.equalTo(nameLabel.snp.top)
             make.bottom.equalTo(nameLabel.snp.bottom)
-            make.trailing.equalTo(totalView.snp.trailing).offset(20)
+            make.trailing.equalTo(totalView.snp.trailing).offset(0)
             make.width.equalTo(messageButton.snp.height)
         }
         

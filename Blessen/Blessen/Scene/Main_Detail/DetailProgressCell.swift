@@ -54,7 +54,6 @@ class DetailProgressCell: BaseTableViewCell {
     
     let messageButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "message"), for: .normal)
         button.layer.cornerRadius = 50 / 2
         button.layer.masksToBounds = true
         button.backgroundColor = .systemGray6

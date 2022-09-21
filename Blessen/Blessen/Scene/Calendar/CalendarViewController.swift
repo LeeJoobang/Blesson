@@ -39,7 +39,7 @@ extension CalendarViewController: UITableViewDelegate, UITableViewDataSource{
         case 0:
             return 1
         case 1:
-            return 5
+            return 4
         default:
             fatalError()
         }
@@ -52,6 +52,8 @@ extension CalendarViewController: UITableViewDelegate, UITableViewDataSource{
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: CalendarTableViewCell.reuseIdentifier, for: indexPath) as! CalendarTableViewCell
+            let detailList = ["전체금액", "이름", "횟수", "금액"]
+            cell.nameLabel.text = detailList[indexPath.row]
             return cell
         default:
             fatalError()
@@ -66,7 +68,6 @@ extension CalendarViewController: UITableViewDelegate, UITableViewDataSource{
             return 50
         default:
             fatalError()
-            
         }
     }
     
