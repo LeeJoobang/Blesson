@@ -1,5 +1,7 @@
 import UIKit
 import SnapKit
+import RealmSwift
+import FSCalendar
 
 class CalendarViewController: BaseViewController{
     
@@ -19,6 +21,8 @@ class CalendarViewController: BaseViewController{
     }
     
     override func configure(){
+        self.calendarView.tableView.register(CalenderViewCell.self, forCellReuseIdentifier: CalenderViewCell.reuseIdentifier)
+        self.calendarView.tableView.register(CalendarTableViewCell.self, forCellReuseIdentifier: CalendarTableViewCell.reuseIdentifier)
     }
     
     override func setConstraints() {
@@ -26,17 +30,44 @@ class CalendarViewController: BaseViewController{
 }
 
 extension CalendarViewController: UITableViewDelegate, UITableViewDataSource{
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 100
+        switch section {
+        case 0:
+            return 1
+        case 1:
+            return 5
+        default:
+            fatalError()
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CalendarTableViewCell.reuseIdentifier, for: indexPath) as! CalendarTableViewCell
-        return cell
+        switch indexPath.section{
+        case 0:
+            let cell = tableView.dequeueReusableCell(withIdentifier: CalenderViewCell.reuseIdentifier, for: indexPath) as! CalenderViewCell
+            return cell
+        case 1:
+            let cell = tableView.dequeueReusableCell(withIdentifier: CalendarTableViewCell.reuseIdentifier, for: indexPath) as! CalendarTableViewCell
+            return cell
+        default:
+            fatalError()
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        switch indexPath.section{
+        case 0:
+            return 300
+        case 1:
+            return 50
+        default:
+            fatalError()
+            
+        }
     }
     
 }
