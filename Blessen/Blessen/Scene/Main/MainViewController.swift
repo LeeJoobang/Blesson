@@ -11,6 +11,7 @@ class MainViewController: BaseViewController{
     let localRealm = try! Realm()
     let studentRepository = StudentRepository()
     let lessonRepository = LessonRepository()
+    let progressRepository = ProgressRepository()
 
     var studentTasks: Results<Student>! {
         didSet {
@@ -19,6 +20,12 @@ class MainViewController: BaseViewController{
     }
     
     var lessonTasks: Results<Lesson>! {
+        didSet {
+            self.mainView.tableView.reloadData()
+        }
+    }
+    
+    var progressTasks: Results<Progress>! {
         didSet {
             self.mainView.tableView.reloadData()
         }
@@ -42,9 +49,11 @@ class MainViewController: BaseViewController{
         super.viewWillAppear(animated)
         studentTasks = localRealm.objects(Student.self)
         lessonTasks = localRealm.objects(Lesson.self)
+        progressTasks = localRealm.objects(Progress.self)
         mainView.tableView.reloadData()
         studentTasks = studentRepository.fetch()
         lessonTasks = lessonRepository.fetch()
+        progressTasks = progressRepository.fetch()
     }
 
     override func configure(){
@@ -124,6 +133,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
         let vc = DetailViewController()
         vc.studentTask = studentTasks[indexPath.row]
         vc.lesssonTask = lessonTasks[indexPath.row]
+        vc.progressTask = progressTasks[indexPath.row]
         transition(vc, transitionStyle: .push)
     }
     
@@ -136,6 +146,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
         if editingStyle == .delete{
             self.studentRepository.deleteData(data: self.studentTasks[indexPath.row])
             self.lessonRepository.deleteData(data: self.lessonTasks[indexPath.row])
+            self.progressRepository.deleteData(data: self.progressTasks[indexPath.row])
+
         }
         self.mainView.tableView.reloadData()
     }

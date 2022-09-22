@@ -2,7 +2,6 @@ import UIKit
 import SnapKit
 
 class DetailProgressCell: BaseTableViewCell {
-    
     let totalView: UIView = {
         let view = UIView()
         view.backgroundColor = Constants.BaseColor.background
@@ -22,7 +21,7 @@ class DetailProgressCell: BaseTableViewCell {
     
     let progressView: UIProgressView = {
         let view = UIProgressView(progressViewStyle: .bar)
-        view.setProgress(0.3, animated: true)
+//        view.setProgress(0.5, animated: true)
         view.trackTintColor = UIColor.systemGray6
         view.clipsToBounds = true
         view.layer.cornerRadius = 10
@@ -131,7 +130,11 @@ class DetailProgressCell: BaseTableViewCell {
             make.bottom.equalTo(self.totalView.snp.bottom).offset(-8)
             make.leading.equalTo(self.minusButton.snp.trailing).offset(8)
             make.trailing.equalTo(self.totalView.snp.trailing)
-//            make.width.equalTo(self.totalView.snp.width).multipliedBy(0.2)
         }
+    }
+    
+    func calculateProgressBar(string: String) -> Float{
+        let progress: Float = (string as NSString).floatValue
+        return progress
     }
 }

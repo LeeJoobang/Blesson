@@ -25,6 +25,14 @@ fileprivate protocol LessonRepositoryType: AnyObject {
     func deleteData(data: Lesson)
 }
 
+fileprivate protocol ProgressRepositoryType: AnyObject {
+    func fetch() -> Results<Progress>
+    func fetchSort(_ sort: String) -> Results<Progress>
+    func fetchFilter() -> Results<Progress>
+    func updateCheck(item: Progress)
+    func deleteData(data: Progress)
+}
+
 final class MessageRepository: MessageRepositoryType {
     
     let localRealm = try! Realm()
@@ -139,6 +147,47 @@ final class LessonRepository: LessonRepositoryType {
     }
         
     func deleteData(data: Lesson){
+        try! localRealm.write{
+            localRealm.delete(data)
+        }
+    }
+    
+    func removeImageFromDocument(filename: String) {
+        guard let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+        
+        let fileURL = documentDirectory.appendingPathComponent(filename)
+    
+        do {
+            try FileManager.default.removeItem(at: fileURL)
+        } catch let error {
+            print(error)
+        }
+    }
+}
+
+final class ProgressRepository: ProgressRepositoryType {
+      let localRealm = try! Realm()
+    
+    func fetch() -> Results<Progress> {
+        return localRealm.objects(Progress.self).sorted(byKeyPath: "foreignID", ascending: true)
+    }
+    
+    func fetchSort(_ sort: String) -> Results<Progress> {
+        return localRealm.objects(Progress.self).sorted(byKeyPath: sort, ascending: true)
+    }
+    
+    func fetchFilter() -> Results<Progress> {
+        return localRealm.objects(Progress.self).filter("diaryTitle CONTAINS[c] 'a'")
+    }
+    
+    func updateCheck(item: Progress) {
+        try! localRealm.write {
+//            item..toggle()
+            print("realm update succed, reload Rows 필요")
+        }
+    }
+        
+    func deleteData(data: Progress){
         try! localRealm.write{
             localRealm.delete(data)
         }

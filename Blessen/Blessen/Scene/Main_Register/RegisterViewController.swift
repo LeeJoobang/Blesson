@@ -13,6 +13,8 @@ class RegisterViewController: BaseViewController{
     let localRealm = try! Realm()
     var studentTasks: Results<Student>!
     var lessonTasks: Results<Lesson>!
+    var progressTasks: Results<Progress>!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +42,7 @@ class RegisterViewController: BaseViewController{
     @objc func saveButtonClicked(_ sender: Any){
         let filterData = registData.filter { $0 == "" }
         if filterData.count == 0 {
-            // studentTasks 정리
+            // MARK: realm data 생성(student, lesson, progress)
             let studentTasks = localRealm.objects(Student.self)
             let lessonTasks = localRealm.objects(Lesson.self)
             
@@ -63,11 +65,35 @@ class RegisterViewController: BaseViewController{
             } catch let error {
                 print(error)
             }
+            
+            
+            
+            let progressTask = Progress(foreignID: studentTask.objectID, checkDate: calculateToday(), progressCount: 0)
+            
+            do {
+                try localRealm.write{
+                    localRealm.add(progressTask)
+                    print("Realm Succeed")
+                }
+            } catch let error {
+                print(error)
+            }
+            
             dismiss(animated: true)
         } else {
-            showAlertMessage(title: "알림", message: "5개의 메세지까지 저장됩니다.", ok: "확인", cancel: "취소")
+            showAlertMessage(title: "알림", message: "학생 정보를 입력해주세요.", ok: "확인", cancel: "취소")
 //            showAlertMessage(title: "학생 정보를 입력해주세요.", button: "확인")
         }
+    }
+    
+    // 오늘 날짜 생성함수
+    func calculateToday() -> String{
+        let nowDate = Date()
+        let date = DateFormatter()
+        date.locale = Locale(identifier: "ko_kr")
+        date.dateFormat = "yyyy-MM-dd"
+        let today = date.string(from: nowDate)
+        return today
     }
 }
 

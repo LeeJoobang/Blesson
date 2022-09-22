@@ -5,14 +5,14 @@ class Progress: Object {
     @Persisted(primaryKey: true) var objectID: ObjectId
 
     @Persisted var foreignID: ObjectId
-    @Persisted var checkDate: Date
-    @Persisted var progressCount: String
+    @Persisted var checkDate: String
+    @Persisted var progressCount: Int
 
-    convenience init(foreignID: ObjectId, checkDate: Date, progressCount: String) {
+    convenience init(foreignID: ObjectId, checkDate: String, progressCount: Int) {
         self.init()
         self.foreignID = foreignID
         self.checkDate = checkDate
-        self.progressCount = progressCount
+        self.progressCount = 0
     }
 }
 

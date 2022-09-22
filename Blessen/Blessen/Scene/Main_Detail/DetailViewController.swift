@@ -11,13 +11,13 @@ class DetailViewController: BaseViewController{
     let localRealm = try! Realm()
     let studentRepository = StudentRepository()
     let lessonRepository = LessonRepository()
-    var lesssonTask: Lesson!
     var studentTask: Student!
+    var lesssonTask: Lesson!
+    var progressTask: Progress!
+
     
     lazy var originData = [studentTask.name, studentTask.address, studentTask.phoneNumber, lesssonTask.startDate,"누적금액", "누적횟수", lesssonTask.lessonFee, String(describing: studentTask.objectID)]
     lazy var modifyData = [studentTask.name, studentTask.address, studentTask.phoneNumber, lesssonTask.startDate,"누적금액", "누적횟수", lesssonTask.lessonFee, String(describing: studentTask.objectID)]
-
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,8 +40,6 @@ class DetailViewController: BaseViewController{
     
     override func setConstraints() {
     }
-    
-    
 }
 
 extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
@@ -64,9 +62,11 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
+        //학생 이미지
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: DetailImageCell.reuseIdentifier, for: indexPath) as! DetailImageCell
             return cell
+        //학생 디테일 정보
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: DetailTableViewCell.reuseIdentifier, for: indexPath) as! DetailTableViewCell
             
@@ -98,11 +98,26 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
                 fatalError()
             }
             return cell
+        //progressbar
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: DetailProgressCell.reuseIdentifier, for: indexPath) as! DetailProgressCell
+                        
+
+            let lessonCount = (lesssonTask.lessonCount as NSString).floatValue // progress gage 분모에 해당함
+            let progressCount = Float(progressTask.progressCount)
+            let calculateGage = progressCount / lessonCount
+
+            
+            print("lessonCount: \(lessonCount)")
+            print("progressCount: \(progressCount)")
+            print("calculateGage: \(calculateGage)")
+            cell.progressView.setProgress(calculateGage, animated: true)
             cell.messageButton.setImage(UIImage(systemName: "message"), for: .normal)
             cell.messageButton.addTarget(self, action: #selector(messageButtonClicked), for: .touchUpInside)
             cell.plusButton.addTarget(self, action: #selector(plusButtonClicked), for: .touchUpInside)
+            cell.minusButton.addTarget(self, action: #selector(minusButtonClicked), for: .touchUpInside)
+
+            
             return cell
         default:
             fatalError()
@@ -110,17 +125,58 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
     }
     // MARK: +버튼 클릭 - progress +1 증가, realm(progress) data update
     @objc func plusButtonClicked(){
-        calculateToday()
-        print("+")
+        let alert = UIAlertController(title: "알림", message: "레슨 횟수를 추가하시겠습니까?", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "확인", style: .default) { _ in
+            // MARK: Realm => Progress - + 수정
+            let progressTasks = self.localRealm.objects(Progress.self)
+            for task in progressTasks {
+                if self.studentTask.objectID == task.foreignID{
+                    try! self.localRealm.write {
+                        task.progressCount += 1
+                        task.checkDate = self.calculateToday()
+                        print("progressCount, check date update")
+                    }
+                    self.detailView.tableView.reloadData()
+                }
+            }
+        }
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        alert.addAction(ok)
+        alert.addAction(cancel)
+        present(alert, animated: true, completion: nil)
     }
     
-    func calculateToday(){
+    // MARK: -버튼 클릭 - progress -1 증가, realm(progress) data update
+    @objc func minusButtonClicked(){
+        let alert = UIAlertController(title: "알림", message: "레슨 횟수를 차감하시겠습니까?", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "확인", style: .default) { _ in
+            // MARK: Realm => Progress - + 수정
+            let progressTasks = self.localRealm.objects(Progress.self)
+            for task in progressTasks {
+                if self.studentTask.objectID == task.foreignID{
+                    try! self.localRealm.write {
+                        task.progressCount -= 1
+                        task.checkDate = self.calculateToday()
+                        print("progressCount, check date update")
+                    }
+                    self.detailView.tableView.reloadData()
+                }
+            }
+        }
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        alert.addAction(ok)
+        alert.addAction(cancel)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    // 오늘 날짜 생성함수
+    func calculateToday() -> String{
         let nowDate = Date()
         let date = DateFormatter()
         date.locale = Locale(identifier: "ko_kr")
         date.dateFormat = "yyyy-MM-dd"
         let today = date.string(from: nowDate)
-        print(today)
+        return today
     }
     
     // MARK: 버튼 클릭 후 message(학생 정보) 메세지 띄우기
@@ -174,7 +230,8 @@ extension DetailViewController: UITextFieldDelegate{
     // MARK: 수정버튼 클릭 후 realm 데이터 업데이트(Student, Lesson)
     @objc func modifyButtonClicked(){
         if originData != modifyData {
-            showAlertMessage(title: "알림", message: "정보가 변경되었습니다. 수정하시겠습니까?", ok: "확인", cancel: "취소")
+
+            //알럿
             // MARK: Realm => Student - 수정
             let studentTasks = localRealm.objects(Student.self)
             for task in studentTasks {
@@ -219,6 +276,3 @@ extension DetailViewController: MFMessageComposeViewControllerDelegate{
         }
     }
 }
-
-
-
