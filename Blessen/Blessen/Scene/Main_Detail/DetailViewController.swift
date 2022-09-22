@@ -143,6 +143,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
                             task.progressCount += 1
                             lesssonTask.totalCount += 1// 누적횟수 증가로직(레슨진행 progressbar의 값과 무관)
                             task.checkDate = self.calculateToday()
+                            self.detailView.tableView.reloadData()
                             print("progressCount, check date update")
                             // MARK: progressbar - 다찼을 경우, 초기화 진행
                         case 1.0...:
@@ -160,6 +161,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
                         default:
                             fatalError()
                         }
+                        self.detailView.tableView.reloadData()
                     }
                     self.detailView.tableView.reloadData()
                 }
