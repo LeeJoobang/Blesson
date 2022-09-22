@@ -12,6 +12,7 @@ class MainViewController: BaseViewController{
     let studentRepository = StudentRepository()
     let lessonRepository = LessonRepository()
     let progressRepository = ProgressRepository()
+    
 
     var studentTasks: Results<Student>! {
         didSet {
@@ -96,7 +97,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.reuseIdentifier, for: indexPath) as! MainTableViewCell
         // count label의 기본값은 0으로 처리한다.
         cell.nameLabel.text = studentTasks[indexPath.row].name
-        cell.countLabel.text = "\(0)\\\(lessonTasks[indexPath.row].lessonCount)"
+        cell.countLabel.text = "\(progressTasks[indexPath.row].progressCount)/\(lessonTasks[indexPath.row].lessonCount)"
         cell.messageButton.tag = indexPath.row
         cell.messageButton.setImage(UIImage(systemName: "message"), for: .normal)
         cell.messageButton.addTarget(self, action: #selector(messageButtonClicked), for: .touchUpInside)
@@ -112,15 +113,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
         let composViewController = MFMessageComposeViewController()
         composViewController.messageComposeDelegate = self
         composViewController.recipients = [studentTasks[button.tag].phoneNumber]
-        composViewController.body = """
-        테스트를 진행해보고 있습니다. 정말 잘 표시가 되는지 궁금합니다.
-        테스트를 진행해보고 있습니다. 정말 잘 표시가 되는지 궁금합니다.
-        테스트를 진행해보고 있습니다. 정말 잘 표시가 되는지 궁금합니다.
-        테스트를 진행해보고 있습니다. 정말 잘 표시가 되는지 궁금합니다.
-        테스트를 진행해보고 있습니다. 정말 잘 표시가 되는지 궁금합니다.
-        테스트를 진행해보고 있습니다. 정말 잘 표시가 되는지 궁금합니다.
-        테스트를 진행해보고 있습니다. 정말 잘 표시가 되는지 궁금합니다.
-        """
+        composViewController.body = ""
         transition(composViewController, transitionStyle: .present)
     }
 

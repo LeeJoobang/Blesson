@@ -56,7 +56,6 @@ class MessageViewController: BaseViewController{
             transition(vc, transitionStyle: .push)
         case 5:
             showAlertMessage(title: "알림", message: "5개의 메세지까지 저장됩니다.", ok: "확인", cancel: "취소")
-//            showAlertMessage(title: "5개의 메세지까지 저장됩니다.", button: "확인")
         default:
             fatalError()
         }

@@ -66,8 +66,6 @@ class RegisterViewController: BaseViewController{
                 print(error)
             }
             
-            
-            
             let progressTask = Progress(foreignID: studentTask.objectID, checkDate: calculateToday(), progressCount: 0)
             
             do {
@@ -82,7 +80,6 @@ class RegisterViewController: BaseViewController{
             dismiss(animated: true)
         } else {
             showAlertMessage(title: "알림", message: "학생 정보를 입력해주세요.", ok: "확인", cancel: "취소")
-//            showAlertMessage(title: "학생 정보를 입력해주세요.", button: "확인")
         }
     }
     

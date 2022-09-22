@@ -14,8 +14,15 @@ class DetailViewController: BaseViewController{
     var studentTask: Student!
     var lesssonTask: Lesson!
     var progressTask: Progress!
-
+    var messageTasks: Results<MessageList>!
     
+//    var messageTasks: Results<MessageList>! {
+//        didSet {
+//            self.detailView.tableView.reloadData()
+//        }
+//    }
+
+
     lazy var originData = [studentTask.name, studentTask.address, studentTask.phoneNumber, lesssonTask.startDate,"누적금액", "누적횟수", lesssonTask.lessonFee, String(describing: studentTask.objectID)]
     lazy var modifyData = [studentTask.name, studentTask.address, studentTask.phoneNumber, lesssonTask.startDate,"누적금액", "누적횟수", lesssonTask.lessonFee, String(describing: studentTask.objectID)]
     
@@ -86,10 +93,10 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
                 cell.itemTextField.text = lesssonTask.startDate
                 cell.itemTextField.tag = 3
             case 4:
-                cell.itemTextField.text = "누적금액"
+                cell.itemTextField.text = String((lesssonTask.totalCount / (Int(lesssonTask.lessonCount) ?? 0)) * (Int(lesssonTask.lessonFee) ?? 0))
                 cell.itemTextField.tag = 4
             case 5:
-                cell.itemTextField.text = "누적횟수"
+                cell.itemTextField.text = String(lesssonTask.totalCount)
                 cell.itemTextField.tag = 5
             case 6:
                 cell.itemTextField.text = lesssonTask.lessonFee
@@ -104,10 +111,8 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
             let lessonCount = (lesssonTask.lessonCount as NSString).floatValue // progress gage 분모에 해당함
             let progressCount = Float(progressTask.progressCount)
             let calculateGage = progressCount / lessonCount
-            
             cell.messageButton.setImage(UIImage(systemName: "message"), for: .normal)
             cell.messageButton.addTarget(self, action: #selector(messageButtonClicked), for: .touchUpInside)
-            
             print("lessonCount: \(lessonCount)")
             print("progressCount: \(progressCount)")
             print("calculateGage: \(calculateGage)")
@@ -125,14 +130,14 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
         let ok = UIAlertAction(title: "확인", style: .default) { [self] _ in
             // MARK: Realm => Progress - + 수정
             let progressTasks = self.localRealm.objects(Progress.self)
+
             for task in progressTasks {
-                if self.studentTask.objectID == task.foreignID{
+                if self.studentTask.objectID == task.foreignID {
                     try! self.localRealm.write {
                         let lessonCount = (self.lesssonTask.lessonCount as NSString).floatValue // progress gage 분모에 해당함
                         let progressCount = Float(self.progressTask.progressCount)
                         let calculateGage = progressCount / lessonCount
-
-                        print("calculateGage: \(calculateGage)")
+                        // MARK: 1.0 이상 올라가지 않도록 함.
                         switch calculateGage{
                         case 0...0.99:
                             task.progressCount += 1
@@ -143,6 +148,8 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
                         default:
                             fatalError()
                         }
+                        lesssonTask.totalCount += 1// 누적횟수 증가로직(레슨진행 progressbar의 값과 무관)
+
                     }
                     self.detailView.tableView.reloadData()
                 }
@@ -166,10 +173,9 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
                         let lessonCount = (self.lesssonTask.lessonCount as NSString).floatValue // progress gage 분모에 해당함
                         let progressCount = Float(self.progressTask.progressCount)
                         let calculateGage = progressCount / lessonCount
-
-                        print("calculateGage: \(calculateGage)")
+                        // MARK: 음수에서 작동하지 않도록 함.
                         switch calculateGage{
-                        case 0.1...1.0:
+                        case 0.001...1.0:
                             task.progressCount -= 1
                             task.checkDate = self.calculateToday()
                             print("progressCount, check date update")
@@ -178,6 +184,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
                         default:
                             fatalError()
                         }
+                        self.lesssonTask.totalCount -= 1 // 누적횟수 차감로직(레슨진행 progressbar의 값과 무관)
                     }
                     self.detailView.tableView.reloadData()
                 }
@@ -205,18 +212,22 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
             print("SMS services are not available.")
             return
         }
+        
         let composViewController = MFMessageComposeViewController()
         composViewController.messageComposeDelegate = self
         composViewController.recipients = [studentTask.phoneNumber]
-        composViewController.body = """
-        테스트를 진행해보고 있습니다. 정말 잘 표시가 되는지 궁금합니다.
-        테스트를 진행해보고 있습니다. 정말 잘 표시가 되는지 궁금합니다.
-        테스트를 진행해보고 있습니다. 정말 잘 표시가 되는지 궁금합니다.
-        테스트를 진행해보고 있습니다. 정말 잘 표시가 되는지 궁금합니다.
-        테스트를 진행해보고 있습니다. 정말 잘 표시가 되는지 궁금합니다.
-        테스트를 진행해보고 있습니다. 정말 잘 표시가 되는지 궁금합니다.
-        테스트를 진행해보고 있습니다. 정말 잘 표시가 되는지 궁금합니다.
-        """
+
+        // MARK: message - check data default 메세지 반영
+        let messageTasks = self.localRealm.objects(MessageList.self)
+        for task in messageTasks {
+            if task.check == true {
+                let filterBody = task.content
+                composViewController.body = filterBody
+                break
+            } else {
+                composViewController.body = ""
+            }
+        }
         transition(composViewController, transitionStyle: .present)
     }
     
@@ -250,29 +261,34 @@ extension DetailViewController: UITextFieldDelegate{
     // MARK: 수정버튼 클릭 후 realm 데이터 업데이트(Student, Lesson)
     @objc func modifyButtonClicked(){
         if originData != modifyData {
-
-            //알럿
-            // MARK: Realm => Student - 수정
-            let studentTasks = localRealm.objects(Student.self)
-            for task in studentTasks {
-                if String(describing: task.objectID) == modifyData[7]{
-                    try! localRealm.write {
-                        task.name = modifyData[0]
-                        task.address = modifyData[1]
-                        task.phoneNumber = modifyData[2]
+            let alert = UIAlertController(title: "알림", message: "학생정보를 변경하시겠습니까?", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "확인", style: .default) { _ in
+                // MARK: Realm => Student - 수정
+                let studentTasks = self.localRealm.objects(Student.self)
+                for task in studentTasks {
+                    if String(describing: task.objectID) == self.modifyData[7]{
+                        try! self.localRealm.write {
+                            task.name = self.modifyData[0]
+                            task.address = self.modifyData[1]
+                            task.phoneNumber = self.modifyData[2]
+                        }
+                    }
+                }
+                // MARK: Realm => Lesson - 수정
+                let lessonTasks = self.localRealm.objects(Lesson.self)
+                for task in lessonTasks {
+                    if String(describing: task.foreignID) == self.modifyData[7]{
+                        try! self.localRealm.write {
+                            task.startDate = self.modifyData[3]
+                            task.lessonFee = self.modifyData[6]
+                        }
                     }
                 }
             }
-            // MARK: Realm => Lesson - 수정
-            let lessonTasks = localRealm.objects(Lesson.self)
-            for task in lessonTasks {
-                if String(describing: task.foreignID) == modifyData[7]{
-                    try! localRealm.write {
-                        task.startDate = modifyData[3]
-                        task.lessonFee = modifyData[6]
-                    }
-                }
-            }
+            let cancel = UIAlertAction(title: "취소", style: .cancel)
+            alert.addAction(ok)
+            alert.addAction(cancel)
+            present(alert, animated: true, completion: nil)
         }
     }
 }
