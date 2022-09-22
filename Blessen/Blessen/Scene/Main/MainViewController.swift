@@ -97,7 +97,19 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.reuseIdentifier, for: indexPath) as! MainTableViewCell
         // count label의 기본값은 0으로 처리한다.
         cell.nameLabel.text = studentTasks[indexPath.row].name
-        cell.countLabel.text = "\(progressTasks[indexPath.row].progressCount)/\(lessonTasks[indexPath.row].lessonCount)"
+        var data = [String]()
+        for task in progressTasks {
+            if studentTasks[indexPath.row].objectID == task.foreignID{
+                data.append(String(describing: task.progressCount))
+            }
+        }
+        
+        for task in lessonTasks {
+            if studentTasks[indexPath.row].objectID == task.foreignID{
+                data.append(String(describing: task.lessonCount))
+            }
+        }
+        cell.countLabel.text = "\(data[0])/\(data[1])"
         cell.messageButton.tag = indexPath.row
         cell.messageButton.setImage(UIImage(systemName: "message"), for: .normal)
         cell.messageButton.addTarget(self, action: #selector(messageButtonClicked), for: .touchUpInside)
@@ -125,8 +137,18 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = DetailViewController()
         vc.studentTask = studentTasks[indexPath.row]
-        vc.lesssonTask = lessonTasks[indexPath.row]
-        vc.progressTask = progressTasks[indexPath.row]
+        
+        for task in lessonTasks {
+            if studentTasks[indexPath.row].objectID == task.foreignID{
+                vc.lesssonTask = task
+            }
+        }
+        
+        for task in progressTasks {
+            if studentTasks[indexPath.row].objectID == task.foreignID{
+                vc.progressTask = task
+            }
+        }
         transition(vc, transitionStyle: .push)
     }
     

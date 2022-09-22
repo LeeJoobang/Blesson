@@ -15,13 +15,6 @@ class DetailViewController: BaseViewController{
     var lesssonTask: Lesson!
     var progressTask: Progress!
     var messageTasks: Results<MessageList>!
-    
-//    var messageTasks: Results<MessageList>! {
-//        didSet {
-//            self.detailView.tableView.reloadData()
-//        }
-//    }
-
 
     lazy var originData = [studentTask.name, studentTask.address, studentTask.phoneNumber, lesssonTask.startDate,"누적금액", "누적횟수", lesssonTask.lessonFee, String(describing: studentTask.objectID)]
     lazy var modifyData = [studentTask.name, studentTask.address, studentTask.phoneNumber, lesssonTask.startDate,"누적금액", "누적횟수", lesssonTask.lessonFee, String(describing: studentTask.objectID)]
@@ -29,6 +22,11 @@ class DetailViewController: BaseViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view = detailView
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        detailView.tableView.reloadData()
     }
     
     override func configure(){
@@ -108,17 +106,14 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
         //progressbar
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: DetailProgressCell.reuseIdentifier, for: indexPath) as! DetailProgressCell
+            cell.messageButton.setImage(UIImage(systemName: "message"), for: .normal)
+            cell.messageButton.addTarget(self, action: #selector(messageButtonClicked), for: .touchUpInside)
+            cell.plusButton.addTarget(self, action: #selector(plusButtonClicked), for: .touchUpInside)
+            cell.minusButton.addTarget(self, action: #selector(minusButtonClicked), for: .touchUpInside)
             let lessonCount = (lesssonTask.lessonCount as NSString).floatValue // progress gage 분모에 해당함
             let progressCount = Float(progressTask.progressCount)
             let calculateGage = progressCount / lessonCount
-            cell.messageButton.setImage(UIImage(systemName: "message"), for: .normal)
-            cell.messageButton.addTarget(self, action: #selector(messageButtonClicked), for: .touchUpInside)
-            print("lessonCount: \(lessonCount)")
-            print("progressCount: \(progressCount)")
-            print("calculateGage: \(calculateGage)")
             cell.progressView.setProgress(calculateGage, animated: true)
-            cell.plusButton.addTarget(self, action: #selector(plusButtonClicked), for: .touchUpInside)
-            cell.minusButton.addTarget(self, action: #selector(minusButtonClicked), for: .touchUpInside)
             return cell
         default:
             fatalError()
@@ -135,7 +130,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
                 if self.studentTask.objectID == task.foreignID {
                     try! self.localRealm.write {
                         let lessonCount = (self.lesssonTask.lessonCount as NSString).floatValue // progress gage 분모에 해당함
-                        let progressCount = Float(self.progressTask.progressCount)
+                        let progressCount = Float(task.progressCount)
                         let calculateGage = progressCount / lessonCount
                         // MARK: 1.0 이상 올라가지 않도록 함.
                         switch calculateGage{
@@ -183,7 +178,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
                 if self.studentTask.objectID == task.foreignID{
                     try! self.localRealm.write {
                         let lessonCount = (self.lesssonTask.lessonCount as NSString).floatValue // progress gage 분모에 해당함
-                        let progressCount = Float(self.progressTask.progressCount)
+                        let progressCount = Float(task.progressCount)
                         let calculateGage = progressCount / lessonCount
                         // MARK: 음수에서 작동하지 않도록 함.
                         switch calculateGage{
