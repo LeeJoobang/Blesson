@@ -141,15 +141,25 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
                         switch calculateGage{
                         case 0...0.99:
                             task.progressCount += 1
+                            lesssonTask.totalCount += 1// 누적횟수 증가로직(레슨진행 progressbar의 값과 무관)
                             task.checkDate = self.calculateToday()
                             print("progressCount, check date update")
+                            // MARK: progressbar - 다찼을 경우, 초기화 진행
                         case 1.0...:
-                            self.showAlertMessage(title: "알림", message: "모든 레슨횟수를 채우셨습니다.")
+                            let alert = UIAlertController(title: "알림", message: "레슨 진행이 완료되었습니다. 초기화를 하시겠습니까?", preferredStyle: .alert)
+                            let ok = UIAlertAction(title: "확인", style: .default) { _ in
+                                try! self.localRealm.write {
+                                    task.progressCount = 0
+                                }
+                                self.detailView.tableView.reloadData()
+                            }
+                            let cancel = UIAlertAction(title: "취소", style: .cancel)
+                            alert.addAction(ok)
+                            alert.addAction(cancel)
+                            present(alert, animated: true, completion: nil)
                         default:
                             fatalError()
                         }
-                        lesssonTask.totalCount += 1// 누적횟수 증가로직(레슨진행 progressbar의 값과 무관)
-
                     }
                     self.detailView.tableView.reloadData()
                 }
@@ -177,6 +187,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
                         switch calculateGage{
                         case 0.001...1.0:
                             task.progressCount -= 1
+                            self.lesssonTask.totalCount -= 1 // 누적횟수 차감로직(레슨진행 progressbar의 값과 무관)
                             task.checkDate = self.calculateToday()
                             print("progressCount, check date update")
                         case ...0:
@@ -184,7 +195,6 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
                         default:
                             fatalError()
                         }
-                        self.lesssonTask.totalCount -= 1 // 누적횟수 차감로직(레슨진행 progressbar의 값과 무관)
                     }
                     self.detailView.tableView.reloadData()
                 }

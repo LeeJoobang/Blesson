@@ -21,7 +21,6 @@ class DetailProgressCell: BaseTableViewCell {
     
     let progressView: UIProgressView = {
         let view = UIProgressView(progressViewStyle: .bar)
-//        view.setProgress(0.5, animated: true)
         view.trackTintColor = UIColor.systemGray6
         view.clipsToBounds = true
         view.layer.cornerRadius = 10
