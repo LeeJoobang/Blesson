@@ -101,23 +101,19 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
         //progressbar
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: DetailProgressCell.reuseIdentifier, for: indexPath) as! DetailProgressCell
-                        
-
             let lessonCount = (lesssonTask.lessonCount as NSString).floatValue // progress gage 분모에 해당함
             let progressCount = Float(progressTask.progressCount)
             let calculateGage = progressCount / lessonCount
-
+            
+            cell.messageButton.setImage(UIImage(systemName: "message"), for: .normal)
+            cell.messageButton.addTarget(self, action: #selector(messageButtonClicked), for: .touchUpInside)
             
             print("lessonCount: \(lessonCount)")
             print("progressCount: \(progressCount)")
             print("calculateGage: \(calculateGage)")
             cell.progressView.setProgress(calculateGage, animated: true)
-            cell.messageButton.setImage(UIImage(systemName: "message"), for: .normal)
-            cell.messageButton.addTarget(self, action: #selector(messageButtonClicked), for: .touchUpInside)
             cell.plusButton.addTarget(self, action: #selector(plusButtonClicked), for: .touchUpInside)
             cell.minusButton.addTarget(self, action: #selector(minusButtonClicked), for: .touchUpInside)
-
-            
             return cell
         default:
             fatalError()
@@ -126,15 +122,27 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
     // MARK: +버튼 클릭 - progress +1 증가, realm(progress) data update
     @objc func plusButtonClicked(){
         let alert = UIAlertController(title: "알림", message: "레슨 횟수를 추가하시겠습니까?", preferredStyle: .alert)
-        let ok = UIAlertAction(title: "확인", style: .default) { _ in
+        let ok = UIAlertAction(title: "확인", style: .default) { [self] _ in
             // MARK: Realm => Progress - + 수정
             let progressTasks = self.localRealm.objects(Progress.self)
             for task in progressTasks {
                 if self.studentTask.objectID == task.foreignID{
                     try! self.localRealm.write {
-                        task.progressCount += 1
-                        task.checkDate = self.calculateToday()
-                        print("progressCount, check date update")
+                        let lessonCount = (self.lesssonTask.lessonCount as NSString).floatValue // progress gage 분모에 해당함
+                        let progressCount = Float(self.progressTask.progressCount)
+                        let calculateGage = progressCount / lessonCount
+
+                        print("calculateGage: \(calculateGage)")
+                        switch calculateGage{
+                        case 0...0.99:
+                            task.progressCount += 1
+                            task.checkDate = self.calculateToday()
+                            print("progressCount, check date update")
+                        case 1.0...:
+                            self.showAlertMessage(title: "알림", message: "모든 레슨횟수를 채우셨습니다.")
+                        default:
+                            fatalError()
+                        }
                     }
                     self.detailView.tableView.reloadData()
                 }
@@ -155,9 +163,21 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
             for task in progressTasks {
                 if self.studentTask.objectID == task.foreignID{
                     try! self.localRealm.write {
-                        task.progressCount -= 1
-                        task.checkDate = self.calculateToday()
-                        print("progressCount, check date update")
+                        let lessonCount = (self.lesssonTask.lessonCount as NSString).floatValue // progress gage 분모에 해당함
+                        let progressCount = Float(self.progressTask.progressCount)
+                        let calculateGage = progressCount / lessonCount
+
+                        print("calculateGage: \(calculateGage)")
+                        switch calculateGage{
+                        case 0.1...1.0:
+                            task.progressCount -= 1
+                            task.checkDate = self.calculateToday()
+                            print("progressCount, check date update")
+                        case ...0:
+                            self.showAlertMessage(title: "알림", message: "더이상 차감할 수 없습니다.")
+                        default:
+                            fatalError()
+                        }
                     }
                     self.detailView.tableView.reloadData()
                 }
