@@ -16,8 +16,6 @@ class MainViewController: BaseViewController{
     var filterStudent = [Student]()
     var filterLesson = [Lesson]()
     var filterProgress = [Progress]()
-    
-
 
     var studentTasks: Results<Student>! {
         didSet {
@@ -102,7 +100,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.reuseIdentifier, for: indexPath) as! MainTableViewCell
 
-
         // MARK: filter data 있을 경우 표시되는 데이터 바뀜
         var data = [String]() // 진행되는 정보표시를 담는 공간
         filterProgress = isFiltering == true ? progressTasks.filter { $0.foreignID == filterStudent[indexPath.row].objectID } : progressTasks.filter { $0.foreignID == studentTasks[indexPath.row].objectID}
@@ -138,16 +135,46 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = DetailViewController()
-        vc.studentTask = studentTasks[indexPath.row]
+        vc.studentTask = isFiltering == true ? filterStudent[indexPath.row] : studentTasks[indexPath.row]
         
-        for task in lessonTasks {
-            if studentTasks[indexPath.row].objectID == task.foreignID{
-                vc.lesssonTask = task
+        
+        // progressTasks의 foreignID와 studentTasks[indexPath.row].objectID와 중복된 것을 찾는다.
+//        let notfilteringProgress = progressTasks.filter { $0.foreignID == self.studentTasks[indexPath.row].objectID}
+//        print("======notfilteringProgress: \(notfilteringProgress)")
+//        print("======================================================")
+//        print("select indexPath.row: \(indexPath.row)")
+//        print("self.studentTasks[indexPath.row].objectID:   \(self.studentTasks[indexPath.row].objectID)")
+//        let sameObjectIDProgress = progressTasks.filter { $0.foreignID == self.studentTasks[indexPath.row].objectID }
+//        print("sameObjectIDProgress: \(sameObjectIDProgress)")
+//
+//        let anotherProgress = realm.objects(progressTasks.filter {$0.foreignID == self.studentTasks[indexPath.row].objectID})
+//        print("anotherProgress: \(anotherProgress)")
+
+        
+    
+        // MARK: filter data 전달
+        if isFiltering == true {
+            // 만약 필터링된 데이터가 true라면
+            for task in filterLesson {
+                if filterStudent[indexPath.row].objectID == task.foreignID{
+                    vc.lesssonTask = task
+                }
             }
-        }
-        for task in progressTasks {
-            if studentTasks[indexPath.row].objectID == task.foreignID{
-                vc.progressTask = task
+            for task in filterProgress {
+                if filterStudent[indexPath.row].objectID == task.foreignID{
+                    vc.progressTask = task
+                }
+            }
+        } else {
+            for task in lessonTasks {
+                if studentTasks[indexPath.row].objectID == task.foreignID{
+                    vc.lesssonTask = task
+                }
+            }
+            for task in progressTasks {
+                if studentTasks[indexPath.row].objectID == task.foreignID{
+                    vc.progressTask = task
+                }
             }
         }
         transition(vc, transitionStyle: .push)
@@ -163,7 +190,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
             self.studentRepository.deleteData(data: self.studentTasks[indexPath.row])
             self.lessonRepository.deleteData(data: self.lessonTasks[indexPath.row])
             self.progressRepository.deleteData(data: self.progressTasks[indexPath.row])
-
         }
         self.mainView.tableView.reloadData()
     }
