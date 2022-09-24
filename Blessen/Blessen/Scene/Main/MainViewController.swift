@@ -13,6 +13,11 @@ class MainViewController: BaseViewController{
     let lessonRepository = LessonRepository()
     let progressRepository = ProgressRepository()
     
+    var filterStudent = [Student]()
+    var filterLesson = [Lesson]()
+    var filterProgress = [Progress]()
+    
+
 
     var studentTasks: Results<Student>! {
         didSet {
@@ -87,28 +92,25 @@ class MainViewController: BaseViewController{
     }
 }
 
-// MARK: TableView 정보
+// MARK: TableView 정보(별도 섹션 구분하지 않고 사용하고 있음)
 extension MainViewController: UITableViewDelegate, UITableViewDataSource{
+    // MARK: filter data 있을 경우에 대한 로직 반영
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return studentTasks.count
+        return isFiltering == true ? filterStudent.count : studentTasks.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.reuseIdentifier, for: indexPath) as! MainTableViewCell
-        // count label의 기본값은 0으로 처리한다.
-        cell.nameLabel.text = studentTasks[indexPath.row].name
-        var data = [String]()
-        for task in progressTasks {
-            if studentTasks[indexPath.row].objectID == task.foreignID{
-                data.append(String(describing: task.progressCount))
-            }
-        }
-        
-        for task in lessonTasks {
-            if studentTasks[indexPath.row].objectID == task.foreignID{
-                data.append(String(describing: task.lessonCount))
-            }
-        }
+
+
+        // MARK: filter data 있을 경우 표시되는 데이터 바뀜
+        var data = [String]() // 진행되는 정보표시를 담는 공간
+        filterProgress = isFiltering == true ? progressTasks.filter { $0.foreignID == filterStudent[indexPath.row].objectID } : progressTasks.filter { $0.foreignID == studentTasks[indexPath.row].objectID}
+        filterLesson = isFiltering == true ? lessonTasks.filter { $0.foreignID == filterStudent[indexPath.row].objectID } : lessonTasks.filter { $0.foreignID == studentTasks[indexPath.row].objectID}
+        data.append(String(describing: filterProgress[0].progressCount))
+        data.append(filterLesson[0].lessonCount)
+
+        cell.nameLabel.text = isFiltering == true ? filterStudent[indexPath.row].name : studentTasks[indexPath.row].name
         cell.countLabel.text = "\(data[0])/\(data[1])"
         cell.messageButton.tag = indexPath.row
         cell.messageButton.setImage(UIImage(systemName: "message"), for: .normal)
@@ -143,7 +145,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
                 vc.lesssonTask = task
             }
         }
-        
         for task in progressTasks {
             if studentTasks[indexPath.row].objectID == task.foreignID{
                 vc.progressTask = task
@@ -170,20 +171,28 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
 
 // MARK: searchbar 등록
 extension MainViewController: UISearchResultsUpdating, UISearchBarDelegate{
-    func updateSearchResults(for searchController: UISearchController) {
-        guard let text = searchController.searchBar.text else { return }
-        print(text)
-    }
-    
+    // MARK: searchController 설정
     func setupSearchController() {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.placeholder = "Search"
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
         searchController.searchBar.backgroundColor = .systemGray6
-        
         self.navigationItem.searchController = searchController
         self.navigationItem.hidesSearchBarWhenScrolling = false
+    }
+    
+    // MARK: search filter 내용 담음
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let text = searchController.searchBar.text else { return }
+        filterStudent = self.studentTasks.filter { $0.name.lowercased().contains(text)}
+        self.mainView.tableView.reloadData()
+    }
+    var isFiltering: Bool {
+        let searchController = self.navigationItem.searchController
+        let isActive = searchController?.isActive ?? false
+        let isSearchBarHasText = searchController?.searchBar.text?.isEmpty == false
+        return isActive && isSearchBarHasText
     }
 }
 

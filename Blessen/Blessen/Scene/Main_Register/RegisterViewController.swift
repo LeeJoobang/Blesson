@@ -43,8 +43,8 @@ class RegisterViewController: BaseViewController{
         let filterData = registData.filter { $0 == "" }
         if filterData.count == 0 {
             // MARK: realm data 생성(student, lesson, progress)
-            let studentTasks = localRealm.objects(Student.self)
-            let lessonTasks = localRealm.objects(Lesson.self)
+//            let studentTasks = localRealm.objects(Student.self)
+//            let lessonTasks = localRealm.objects(Lesson.self)
             
             let studentTask = Student(name: registData[0], address: registData[1], phoneNumber: registData[2])
             do {
@@ -121,6 +121,7 @@ extension RegisterViewController: UITableViewDelegate, UITableViewDataSource{
             cell.itemTextField.delegate = self
             cell.itemLabel.text = registetList[indexPath.row]
             cell.itemTextField.attributedPlaceholder = NSAttributedString(string: placeholderList[indexPath.row], attributes: [NSAttributedString.Key.foregroundColor : UIColor.gray])
+            
             cell.itemTextField.tag = indexPath.row
             
             return cell
