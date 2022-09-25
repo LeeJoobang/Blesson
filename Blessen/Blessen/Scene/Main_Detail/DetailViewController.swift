@@ -139,7 +139,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
                         case 0...0.99:
                             task.progressCount += 1
                             lesssonTask.totalCount += 1// 누적횟수 증가로직(레슨진행 progressbar의 값과 무관)
-                            task.checkDate = self.calculateToday()
+                            task.checkDate.append(self.calculateToday())
                             self.detailView.tableView.reloadData()
                             print("progressCount, check date update")
                             // MARK: progressbar - 다찼을 경우, 초기화 진행
@@ -187,7 +187,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
                         case 0.001...1.0:
                             task.progressCount -= 1
                             self.lesssonTask.totalCount -= 1 // 누적횟수 차감로직(레슨진행 progressbar의 값과 무관)
-                            task.checkDate = self.calculateToday()
+                            task.checkDate.removeLast()
                             print("progressCount, check date update")
                         case ...0:
                             self.showAlertMessage(title: "알림", message: "더이상 차감할 수 없습니다.")
@@ -210,7 +210,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
         let nowDate = Date()
         let date = DateFormatter()
         date.locale = Locale(identifier: "ko_kr")
-        date.dateFormat = "yyyy-MM-dd"
+        date.dateFormat = "yyyy-MM-dd hh:mm:ss.SSS"
         let today = date.string(from: nowDate)
         return today
     }

@@ -74,7 +74,7 @@ class RegisterViewController: BaseViewController{
                 print(error)
             }
             
-            let progressTask = Progress(foreignID: studentTask.objectID, checkDate: calculateToday(), progressCount: 0)
+            let progressTask = Progress(foreignID: studentTask.objectID, progressCount: 0)
             do {
                 try localRealm.write{
                     localRealm.add(progressTask)

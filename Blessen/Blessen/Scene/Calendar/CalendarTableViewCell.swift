@@ -19,7 +19,7 @@ class CalendarTableViewCell: BaseTableViewCell {
         return label
     }()
     
-    let countLabel: UILabel = {
+    let contentLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .systemGray6
         label.tintColor = .white
@@ -40,7 +40,7 @@ class CalendarTableViewCell: BaseTableViewCell {
     }
     
     override func configure() {
-        [nameLabel, countLabel].forEach {
+        [nameLabel, contentLabel].forEach {
             self.totalView.addSubview($0)
         }
         
@@ -62,7 +62,7 @@ class CalendarTableViewCell: BaseTableViewCell {
             make.width.equalTo(70)
         }
         
-        countLabel.snp.makeConstraints { make in
+        contentLabel.snp.makeConstraints { make in
             make.top.equalTo(nameLabel.snp.top)
             make.bottom.equalTo(nameLabel.snp.bottom)
             make.leading.equalTo(self.nameLabel.snp.trailing).offset(20)
