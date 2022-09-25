@@ -5,11 +5,12 @@ class DetailImageCell: BaseTableViewCell {
     
     let idImageView: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "Test.png")!
-        image.backgroundColor = .red
+        image.backgroundColor = .systemGray6
+        image.tintColor = .darkGray
         image.layer.cornerRadius = 50 / 2
         image.layer.masksToBounds = true
-        image.sizeToFit()
+        image.contentMode = .center
+        image.image = UIImage(systemName: "person")?.resizableImage(withCapInsets: UIEdgeInsets(top: 50, left: 50, bottom: 50, right: 50))
         return image
     }()
     
@@ -34,12 +35,11 @@ class DetailImageCell: BaseTableViewCell {
     }
     
     override func setConstraints() {
-        
         idImageView.snp.makeConstraints { make in
-            make.top.equalTo(self.contentView).multipliedBy(10)
+            make.centerX.equalTo(self.contentView)
+            make.centerY.equalTo(self.contentView)
             make.width.equalTo(self.contentView).multipliedBy(0.2)
             make.height.equalTo(idImageView.snp.width)
-            make.centerX.equalTo(self.contentView.snp.centerX)
         }
         
     }
