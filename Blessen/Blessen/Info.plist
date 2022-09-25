@@ -21,5 +21,9 @@
 			</array>
 		</dict>
 	</dict>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>저희 앱은 앨범을 사용합니다.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>저희 앱은 카메라를 사용합니다.</string>
 </dict>
 </plist>

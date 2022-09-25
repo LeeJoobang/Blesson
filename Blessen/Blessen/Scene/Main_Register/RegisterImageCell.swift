@@ -34,12 +34,12 @@ class RegisterImageCell: BaseTableViewCell {
     }
     
     override func setConstraints() {
-        
         idImageView.snp.makeConstraints { make in
-            make.top.equalTo(self.contentView).multipliedBy(10)
+            make.centerX.equalTo(self.contentView)
+            make.centerY.equalTo(self.contentView)
+
             make.width.equalTo(self.contentView).multipliedBy(0.2)
             make.height.equalTo(idImageView.snp.width)
-            make.centerX.equalTo(self.contentView.snp.centerX)
         }
         
     }

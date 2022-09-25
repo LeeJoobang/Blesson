@@ -150,7 +150,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
 //        let anotherProgress = realm.objects(progressTasks.filter {$0.foreignID == self.studentTasks[indexPath.row].objectID})
 //        print("anotherProgress: \(anotherProgress)")
 
-        
     
         // MARK: filter data 전달
         if isFiltering == true {
