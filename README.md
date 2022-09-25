@@ -26,3 +26,4 @@
 | 2022/09/21 | [9월 21일 개발일지](https://inframince.notion.site/2022-09-21-b97fed9efad44b2194f47d1790c94c6c) |      |
 | 2022/09/22 | [9월 22일 개발일지](https://inframince.notion.site/2022-09-22-b97fed9efad44b2194f47d1790c94c6c) |      |
 | 2022/09/24 | [9월 24일 개발일지](https://inframince.notion.site/2022-09-24-a6c961ac88c749349cfe8b22996827eb) |      |
+| 2022/09/25 | [9월 25일 개발일지](https://inframince.notion.site/2022-09-25-a6c961ac88c749349cfe8b22996827eb) |      |
