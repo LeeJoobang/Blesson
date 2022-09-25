@@ -20,7 +20,7 @@ class RegisterViewController: BaseViewController{
     
     // MARK: image picker 추가
     let picker = UIImagePickerController()
-    private var imageData = UIImage()
+    private var imageData: UIImage?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +50,7 @@ class RegisterViewController: BaseViewController{
         let filterData = registData.filter { $0 == "" }
         if filterData.count == 0 {
             // MARK: realm data 생성(student, lesson, progress)            
-            let studentTask = Student(name: registData[0], address: registData[1], phoneNumber: registData[2])
+            let studentTask = Student(name: registData[0], address: registData[1], phoneNumber: registData[2], image: nil)
             do {
                 try localRealm.write{
                     localRealm.add(studentTask)
@@ -58,6 +58,10 @@ class RegisterViewController: BaseViewController{
                 }
             } catch let error {
                 print(error)
+            }
+            
+            if let image = imageData {
+                savaImageToDocument(filename: "\(studentTask.objectID).jpg", image: image)
             }
             
             let lessonTask = Lesson(foreignID: studentTask.objectID, lessonFee: registData[5], startDate: registData[3], lessonCount: registData[4])
@@ -227,8 +231,7 @@ extension RegisterViewController: PHPickerViewControllerDelegate{
     
 }
 
-// MARK: 앨범 - 이미지 선택 후 디스플레이, 이미지 사이즈가 크기 변동이 필요함.
-
+// MARK: 앨범 - 이미지 선택 후 디스플레이
 extension RegisterViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate{
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[.originalImage] as? UIImage {

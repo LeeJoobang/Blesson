@@ -9,8 +9,6 @@ class DetailImageCell: BaseTableViewCell {
         image.tintColor = .darkGray
         image.layer.cornerRadius = 50 / 2
         image.layer.masksToBounds = true
-        image.contentMode = .center
-        image.image = UIImage(systemName: "person")?.resizableImage(withCapInsets: UIEdgeInsets(top: 50, left: 50, bottom: 50, right: 50))
         return image
     }()
     
