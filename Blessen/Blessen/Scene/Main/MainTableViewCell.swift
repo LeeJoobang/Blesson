@@ -25,7 +25,7 @@ class MainTableViewCell: BaseTableViewCell {
         let label = UILabel()
         label.backgroundColor = .systemGray6
         label.tintColor = .white
-        label.textAlignment = .center
+        label.textAlignment = .right
         label.font = UIFont(name: "Halvetica", size: 15)
         label.numberOfLines = 1
         label.sizeToFit()
@@ -83,8 +83,8 @@ class MainTableViewCell: BaseTableViewCell {
         countLabel.snp.makeConstraints { make in
             make.top.equalTo(nameLabel.snp.top)
             make.bottom.equalTo(nameLabel.snp.bottom)
-            make.trailing.equalTo(messageButton.snp.leading).offset(-20)
-            make.width.equalTo(countLabel.snp.height)
+            make.trailing.equalTo(messageButton.snp.leading).offset(-40)
+            make.width.equalTo(countLabel.snp.height).multipliedBy(1.2)
         }
 
 

@@ -80,25 +80,30 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
             cell.itemLabel.text = detailList[indexPath.row]
             cell.itemTextField.delegate = self
             switch indexPath.row {
-            case 0:
+            case 0: // 이름
                 cell.itemTextField.text = studentTask.name
                 cell.itemTextField.tag = 0
-            case 1:
+            case 1: // 주소
                 cell.itemTextField.text = studentTask.address
                 cell.itemTextField.tag = 1
-            case 2:
+            case 2: // 연락처
                 cell.itemTextField.text = studentTask.phoneNumber
                 cell.itemTextField.tag = 2
-            case 3:
+            case 3: // 레슨시작일
                 cell.itemTextField.text = lesssonTask.startDate
                 cell.itemTextField.tag = 3
-            case 4:
-                cell.itemTextField.text = String((lesssonTask.totalCount / (Int(lesssonTask.lessonCount) ?? 0)) * (Int(lesssonTask.lessonFee) ?? 0))
+            case 4: // 누적금액, 콤마 표시
+                let numberFormaater = NumberFormatter()
+                numberFormaater.numberStyle = .decimal
+                let calculateFee = (lesssonTask.totalCount / (Int(lesssonTask.lessonCount) ?? 0)) * (Int(lesssonTask.lessonFee.components(separatedBy: ",").joined()) ?? 0)
+                let result = numberFormaater.string(from: NSNumber(value: calculateFee))
+
+                cell.itemTextField.text = result
                 cell.itemTextField.tag = 4
-            case 5:
+            case 5: // 누적횟수
                 cell.itemTextField.text = String(lesssonTask.totalCount)
                 cell.itemTextField.tag = 5
-            case 6:
+            case 6: // 레슨비
                 cell.itemTextField.text = lesssonTask.lessonFee
                 cell.itemTextField.tag = 6
             default:

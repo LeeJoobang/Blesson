@@ -132,9 +132,11 @@ extension RegisterViewController: UITableViewDelegate, UITableViewDataSource{
             cell.itemTextField.attributedPlaceholder = NSAttributedString(string: placeholderList[indexPath.row], attributes: [NSAttributedString.Key.foregroundColor : UIColor.gray])
             cell.itemTextField.tag = indexPath.row
             switch indexPath.row{
-            case 0, 1, 3:
+            case 0, 1: // 이름, 주소 - 일반
                 cell.itemTextField.keyboardType = .default
-            case 2, 4, 5:
+            case 3: // 레슨시작일 - 데이트피커
+                cell.itemTextField.keyboardType = .default
+            case 2, 4, 5: // 레슨횟수, 레슨비 - ',' 적용, 숫자패드
                 cell.itemTextField.keyboardType = .numberPad
             default:
                 fatalError()
@@ -206,6 +208,19 @@ extension RegisterViewController: UITextFieldDelegate{
             guard let text = textField.text else { return }
             registData[textField.tag] = ""
             registData[textField.tag].append(text)
+            // 값을 저장한다. 여기서 레슨비와 레슨횟수 값은 콤마를 더한다.
+            let count = Int(registData[4]) // 레슨횟수
+            let fee = Int(registData[5]) // 레슨금액
+            
+            let numberFormaater = NumberFormatter()
+            numberFormaater.numberStyle = .decimal
+            
+            if let decimalCount = count, let decimalFee = fee {
+                guard let numberCount = numberFormaater.string(from: NSNumber(value: decimalCount)) else { return }
+                guard let numberFee = numberFormaater.string(from: NSNumber(value: decimalFee)) else { return }
+                registData[4] = numberCount
+                registData[5] = numberFee
+            }
             textField.resignFirstResponder()
         }
     }
