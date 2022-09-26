@@ -8,6 +8,7 @@ import RealmSwift
 class MainViewController: BaseViewController{
     
     var mainView = MainView()
+
     let localRealm = try! Realm()
     let studentRepository = StudentRepository()
     let lessonRepository = LessonRepository()
@@ -136,24 +137,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = DetailViewController()
         vc.studentTask = isFiltering == true ? filterStudent[indexPath.row] : studentTasks[indexPath.row]
-        
-        
-        // progressTasks의 foreignID와 studentTasks[indexPath.row].objectID와 중복된 것을 찾는다.
-//        let notfilteringProgress = progressTasks.filter { $0.foreignID == self.studentTasks[indexPath.row].objectID}
-//        print("======notfilteringProgress: \(notfilteringProgress)")
-//        print("======================================================")
-//        print("select indexPath.row: \(indexPath.row)")
-//        print("self.studentTasks[indexPath.row].objectID:   \(self.studentTasks[indexPath.row].objectID)")
-//        let sameObjectIDProgress = progressTasks.filter { $0.foreignID == self.studentTasks[indexPath.row].objectID }
-//        print("sameObjectIDProgress: \(sameObjectIDProgress)")
-//
-//        let anotherProgress = realm.objects(progressTasks.filter {$0.foreignID == self.studentTasks[indexPath.row].objectID})
-//        print("anotherProgress: \(anotherProgress)")
-
-    
         // MARK: filter data 전달
         if isFiltering == true {
-            // 만약 필터링된 데이터가 true라면
             for task in filterLesson {
                 if filterStudent[indexPath.row].objectID == task.foreignID{
                     vc.lesssonTask = task

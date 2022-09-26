@@ -210,7 +210,9 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
         let nowDate = Date()
         let date = DateFormatter()
         date.locale = Locale(identifier: "ko_kr")
-        date.dateFormat = "yyyy-MM-dd hh:mm:ss.SSS"
+//        date.dateFormat = "yyyy-MM-dd hh:mm:ss.SSS"
+        date.dateFormat = "yyyy-MM-dd"
+
         let today = date.string(from: nowDate)
         return today
     }

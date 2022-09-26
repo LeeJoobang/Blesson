@@ -7,28 +7,13 @@ class CalendarViewController: BaseViewController{
     
     var calendarView = CalendarView()
     var pickDate = String()
-    
+    var filterStudent = [String]()
     let localRealm = try! Realm()
-    let studentRepository = StudentRepository()
-    let lessonRepository = LessonRepository()
-    let progressRepository = ProgressRepository()
-    
-    var filterStudent = [Student]()
-    var filterLesson = [Lesson]()
-    var filterProgress = [Progress]()
-
     var studentTasks: Results<Student>! {
         didSet {
             self.calendarView.tableView.reloadData()
         }
     }
-    
-    var lessonTasks: Results<Lesson>! {
-        didSet {
-            self.calendarView.tableView.reloadData()
-        }
-    }
-    
     var progressTasks: Results<Progress>! {
         didSet {
             self.calendarView.tableView.reloadData()
@@ -45,6 +30,11 @@ class CalendarViewController: BaseViewController{
         
         navigationItem.title = "캘린더"
         self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.calendarView.tableView.reloadData()
     }
     
     override func configure(){
@@ -66,7 +56,7 @@ extension CalendarViewController: UITableViewDelegate, UITableViewDataSource{
         case 0:
             return 1
         case 1:
-            return 4
+            return 1
         default:
             fatalError()
         }
@@ -80,15 +70,12 @@ extension CalendarViewController: UITableViewDelegate, UITableViewDataSource{
             cell.calendar.dataSource = self
             cell.calendar.appearance.headerMinimumDissolvedAlpha = 0.0
             return cell
+        // MARK: 선택한 날짜 - 이름표시
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: CalendarTableViewCell.reuseIdentifier, for: indexPath) as! CalendarTableViewCell
-            let detailList = ["전체금액", "이름", "레슨횟수", "수입"]
+            let detailList = ["이름"]
             cell.nameLabel.text = detailList[indexPath.row]
-
-            // pickdate == checkDate 있으면, checkDate의 foreignID을 가지고, 이름, 레슨횟수, 수입을 뽑아야 한다.
-            //
-            
-            
+            cell.contentLabel.text = filterStudent.joined(separator: ", ")
             return cell
         default:
             fatalError()
@@ -114,14 +101,28 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource, FSCa
         dateFormatter.locale = Locale(identifier: "ko_KR")
         dateFormatter.dateFormat = "yyyy-MM-dd"
         pickDate = dateFormatter.string(from: date)
-        print(pickDate)
         
-        
-        
-        
+        // MARK: 선택한 날짜 정보 filterStudent - 이름정보 담음
+        let progressTasks = self.localRealm.objects(Progress.self)
+        let studentTasks = self.localRealm.objects(Student.self)
+        for progresstask in progressTasks{
+            // task.check - list item 하나씩 추출
+            for item in progresstask.checkDate {
+                if item == pickDate {
+                    print("check date: \(item) 일치함")
+                    for studentTask in studentTasks{
+                        if studentTask.objectID == progresstask.foreignID{
+                            filterStudent.append(studentTask.name)
+                            let set = Set(filterStudent)
+                            filterStudent = Array(set).sorted()
+                        }
+                    }
+                } else {
+                    print("check date: \(item) 일치하지 않음.")
+                    filterStudent.removeAll()
+                }
+            }
+        }
+        self.calendarView.tableView.reloadData()
     }
-    
-    // 선택된 날짜를 기준으로 테이블 정보 표시
-    
-    
 }
