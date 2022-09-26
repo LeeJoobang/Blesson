@@ -17,11 +17,13 @@ class RegisterViewController: BaseViewController{
     var studentTasks: Results<Student>!
     var lessonTasks: Results<Lesson>!
     var progressTasks: Results<Progress>!
+    // MARK: date picker
+    let datePicker = UIDatePicker()
     
     // MARK: image picker 추가
     let picker = UIImagePickerController()
     private var imageData: UIImage?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view = registerView
@@ -46,10 +48,18 @@ class RegisterViewController: BaseViewController{
         self.registerView.tableView.register(RegisterTableViewCell.self, forCellReuseIdentifier: RegisterTableViewCell.reuseIdentifier)
     }
     
+    override func setConstraints() {
+        datePicker.preferredDatePickerStyle = .automatic
+        datePicker.datePickerMode = .date
+        datePicker.locale = Locale(identifier: "ko_KR")
+        datePicker.timeZone = .autoupdatingCurrent
+        
+    }
+    
     @objc func saveButtonClicked(_ sender: Any){
         let filterData = registData.filter { $0 == "" }
         if filterData.count == 0 {
-            // MARK: realm data 생성(student, lesson, progress)            
+            // MARK: realm data 생성(student, lesson, progress)
             let studentTask = Student(name: registData[0], address: registData[1], phoneNumber: registData[2], image: nil)
             do {
                 try localRealm.write{
@@ -135,7 +145,14 @@ extension RegisterViewController: UITableViewDelegate, UITableViewDataSource{
             case 0, 1: // 이름, 주소 - 일반
                 cell.itemTextField.keyboardType = .default
             case 3: // 레슨시작일 - 데이트피커
-                cell.itemTextField.keyboardType = .default
+                if #available(iOS 14, *) {
+                    datePicker.preferredDatePickerStyle = .wheels
+                    datePicker.sizeToFit()
+                }
+                cell.itemTextField.inputView = datePicker
+                datePicker.addTarget(self, action: #selector(handleDatePicker), for: .valueChanged)
+                cell.itemTextField.text = registData[indexPath.row]
+
             case 2, 4, 5: // 레슨횟수, 레슨비 - ',' 적용, 숫자패드
                 cell.itemTextField.keyboardType = .numberPad
             default:
@@ -148,12 +165,14 @@ extension RegisterViewController: UITableViewDelegate, UITableViewDataSource{
         }
     }
     
+    
+    
     // MARK: image button clicked - album, camera 기능 적용 + alert: action Sheet
     @objc func imageButtonClicked(){
         print("image button clicked")
         
         let alert = UIAlertController(title: "알림", message: "사진을 추가해주시겠습니까?", preferredStyle: .actionSheet)
-
+        
         let library = UIAlertAction(title: "사진앨범", style: .default) { (action) in self.openLibrary()
         }
         
@@ -202,27 +221,42 @@ extension RegisterViewController: UITextFieldDelegate{
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField.text == ""{
-            showAlertMessage(title: "알림", message: "데이터를 입력해주세요.", ok: "확인", cancel: "취소")
-        } else {
-            guard let text = textField.text else { return }
-            registData[textField.tag] = ""
-            registData[textField.tag].append(text)
-            // 값을 저장한다. 여기서 레슨비와 레슨횟수 값은 콤마를 더한다.
-            let count = Int(registData[4]) // 레슨횟수
-            let fee = Int(registData[5]) // 레슨금액
-            
-            let numberFormaater = NumberFormatter()
-            numberFormaater.numberStyle = .decimal
-            
-            if let decimalCount = count, let decimalFee = fee {
-                guard let numberCount = numberFormaater.string(from: NSNumber(value: decimalCount)) else { return }
-                guard let numberFee = numberFormaater.string(from: NSNumber(value: decimalFee)) else { return }
-                registData[4] = numberCount
-                registData[5] = numberFee
+        switch textField.tag {
+        case 0, 1, 2, 4, 5:
+            if textField.text == ""{
+                showAlertMessage(title: "알림", message: "데이터를 입력해주세요.", ok: "확인", cancel: "취소")
+            } else {
+                guard let text = textField.text else { return }
+                registData[textField.tag] = ""
+                registData[textField.tag].append(text)
+                // MARK: comma 처리
+                let count = Int(registData[4]) // 레슨횟수
+                let fee = Int(registData[5]) // 레슨금액
+                let numberFormaater = NumberFormatter()
+                numberFormaater.numberStyle = .decimal
+                if let decimalCount = count, let decimalFee = fee {
+                    guard let numberCount = numberFormaater.string(from: NSNumber(value: decimalCount)) else { return }
+                    guard let numberFee = numberFormaater.string(from: NSNumber(value: decimalFee)) else { return }
+                    registData[4] = numberCount
+                    registData[5] = numberFee
+                }
+                textField.resignFirstResponder()
             }
-            textField.resignFirstResponder()
-        }
+        case 3:
+            datePicker.addTarget(self, action: #selector(handleDatePicker), for: .valueChanged)
+        default:
+            fatalError()
+        }        
+    }
+
+    // MARK: datepicker 데이트 표시 - reloadRows 활용
+    @objc func handleDatePicker(_ sender: UIDatePicker){
+        let date = DateFormatter()
+        date.locale = Locale(identifier: "ko_kr")
+        date.dateFormat = "yyyy-MM-dd"
+        let selectDay = date.string(from: sender.date)
+        registData[3].append(contentsOf: selectDay)
+        registerView.tableView.reloadRows(at: [IndexPath(row: 3, section: 1)], with: .fade)
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -246,23 +280,18 @@ extension RegisterViewController: PHPickerViewControllerDelegate{
             }
         }
         group.notify(queue: .main) {
-            print(self.imageData)
             self.registerView.tableView.reloadData()
-
         }
     }
-    
 }
 
 // MARK: 앨범 - 이미지 선택 후 디스플레이
 extension RegisterViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate{
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[.originalImage] as? UIImage {
-            print(image)
             imageData = image
         }
         self.registerView.tableView.reloadData()
         dismiss(animated: true, completion: nil)
-
     }
 }

@@ -97,7 +97,6 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
                 numberFormaater.numberStyle = .decimal
                 let calculateFee = (lesssonTask.totalCount / (Int(lesssonTask.lessonCount) ?? 0)) * (Int(lesssonTask.lessonFee.components(separatedBy: ",").joined()) ?? 0)
                 let result = numberFormaater.string(from: NSNumber(value: calculateFee))
-
                 cell.itemTextField.text = result
                 cell.itemTextField.tag = 4
             case 5: // 누적횟수

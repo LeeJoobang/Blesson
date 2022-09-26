@@ -8,7 +8,6 @@ class DetailView: BaseView{
         return view
     }()
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -31,9 +30,5 @@ class DetailView: BaseView{
             make.trailing.equalTo(0)
             make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom)
         }
-
     }
-    
-    
-    
 }
