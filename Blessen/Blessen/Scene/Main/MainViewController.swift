@@ -8,7 +8,7 @@ import RealmSwift
 class MainViewController: BaseViewController{
     
     var mainView = MainView()
-
+    
     let localRealm = try! Realm()
     let studentRepository = StudentRepository()
     let lessonRepository = LessonRepository()
@@ -16,8 +16,8 @@ class MainViewController: BaseViewController{
     
     var filterStudent = [Student]()
     var filterLesson = [Lesson]()
-    var filterProgress = [Progress]()
-
+    lazy var filterProgress = [Progress]()
+    
     var studentTasks: Results<Student>! {
         didSet {
             self.mainView.tableView.reloadData()
@@ -60,7 +60,7 @@ class MainViewController: BaseViewController{
         lessonTasks = lessonRepository.fetch()
         progressTasks = progressRepository.fetch()
     }
-
+    
     override func configure(){
     }
     
@@ -100,14 +100,33 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.reuseIdentifier, for: indexPath) as! MainTableViewCell
-
+        
         // MARK: filter data 있을 경우 표시되는 데이터 바뀜
         var data = [String]() // 진행되는 정보표시를 담는 공간
-        filterProgress = isFiltering == true ? progressTasks.filter { $0.foreignID == filterStudent[indexPath.row].objectID } : progressTasks.filter { $0.foreignID == studentTasks[indexPath.row].objectID}
-        filterLesson = isFiltering == true ? lessonTasks.filter { $0.foreignID == filterStudent[indexPath.row].objectID } : lessonTasks.filter { $0.foreignID == studentTasks[indexPath.row].objectID}
-        data.append(String(describing: filterProgress[0].progressCount))
-        data.append(filterLesson[0].lessonCount)
-
+        //        filterProgress = isFiltering == true ? progressTasks.filter { $0.foreignID == filterStudent[indexPath.row].objectID } : progressTasks.filter { $0.foreignID == self.studentTasks[indexPath.row].objectID}
+        if isFiltering == true {
+            for progressTask in progressTasks{
+                if progressTask.foreignID == filterStudent[indexPath.row].objectID{
+                    data.append(String(describing: progressTask.progressCount))
+                }
+            }
+            for lessonTask in lessonTasks{
+                if lessonTask.foreignID == filterLesson[indexPath.row].objectID{
+                    data.append(String(describing: lessonTask.lessonCount))
+                }
+            }
+        } else {
+            for progressTask in progressTasks{
+                if progressTask.foreignID == studentTasks[indexPath.row].objectID{
+                    data.append(String(describing: progressTask.progressCount))
+                }
+            }
+            for lessonTask in lessonTasks{
+                if lessonTask.foreignID == studentTasks[indexPath.row].objectID{
+                    data.append(String(describing: lessonTask.lessonCount))
+                }
+            }
+        }
         cell.nameLabel.text = isFiltering == true ? filterStudent[indexPath.row].name : studentTasks[indexPath.row].name
         cell.countLabel.text = "\(data[0])/\(data[1])"
         cell.messageButton.tag = indexPath.row
@@ -128,7 +147,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
         composViewController.body = ""
         transition(composViewController, transitionStyle: .present)
     }
-
+    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50

@@ -158,7 +158,6 @@ extension RegisterViewController: UITableViewDelegate, UITableViewDataSource{
             default:
                 fatalError()
             }
-            
             return cell
         default:
             fatalError()
@@ -170,7 +169,7 @@ extension RegisterViewController: UITableViewDelegate, UITableViewDataSource{
     // MARK: image button clicked - album, camera 기능 적용 + alert: action Sheet
     @objc func imageButtonClicked(){
         print("image button clicked")
-        
+
         let alert = UIAlertController(title: "알림", message: "사진을 추가해주시겠습니까?", preferredStyle: .actionSheet)
         
         let library = UIAlertAction(title: "사진앨범", style: .default) { (action) in self.openLibrary()

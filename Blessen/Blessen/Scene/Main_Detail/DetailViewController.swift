@@ -88,6 +88,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
                 cell.itemTextField.tag = 1
             case 2: // 연락처
                 cell.itemTextField.text = studentTask.phoneNumber
+                cell.itemTextField.keyboardType = .numberPad
                 cell.itemTextField.tag = 2
             case 3: // 레슨시작일
                 cell.itemTextField.text = lesssonTask.startDate
@@ -98,12 +99,15 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
                 let calculateFee = (lesssonTask.totalCount / (Int(lesssonTask.lessonCount) ?? 0)) * (Int(lesssonTask.lessonFee.components(separatedBy: ",").joined()) ?? 0)
                 let result = numberFormaater.string(from: NSNumber(value: calculateFee))
                 cell.itemTextField.text = result
+                cell.itemTextField.keyboardType = .numberPad
                 cell.itemTextField.tag = 4
             case 5: // 누적횟수
                 cell.itemTextField.text = String(lesssonTask.totalCount)
+                cell.itemTextField.keyboardType = .numberPad
                 cell.itemTextField.tag = 5
             case 6: // 레슨비
                 cell.itemTextField.text = lesssonTask.lessonFee
+                cell.itemTextField.keyboardType = .numberPad
                 cell.itemTextField.tag = 6
             default:
                 fatalError()
@@ -214,7 +218,6 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
         let nowDate = Date()
         let date = DateFormatter()
         date.locale = Locale(identifier: "ko_kr")
-//        date.dateFormat = "yyyy-MM-dd hh:mm:ss.SSS"
         date.dateFormat = "yyyy-MM-dd"
 
         let today = date.string(from: nowDate)
