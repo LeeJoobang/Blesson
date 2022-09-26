@@ -131,6 +131,14 @@ extension RegisterViewController: UITableViewDelegate, UITableViewDataSource{
             cell.itemLabel.text = registetList[indexPath.row]
             cell.itemTextField.attributedPlaceholder = NSAttributedString(string: placeholderList[indexPath.row], attributes: [NSAttributedString.Key.foregroundColor : UIColor.gray])
             cell.itemTextField.tag = indexPath.row
+            switch indexPath.row{
+            case 0, 1, 3:
+                cell.itemTextField.keyboardType = .default
+            case 2, 4, 5:
+                cell.itemTextField.keyboardType = .numberPad
+            default:
+                fatalError()
+            }
             
             return cell
         default:
