@@ -14,16 +14,17 @@
 
 #### 프로젝트 진행사항
 
-|    날짜    |                             내용                             | 비고 |
-| :--------: | :----------------------------------------------------------: | :--: |
-| 2022/09/13 | [9월 13일 개발일지](https://inframince.notion.site/2022-09-13-bd317099c67b46d1aaf985557ebff9e8) |      |
-| 2022/09/14 | [9월 14일 개발일지](https://inframince.notion.site/2022-09-14-b97fed9efad44b2194f47d1790c94c6c) |      |
-| 2022/09/15 | [9월 15일 개발일지](https://inframince.notion.site/2022-09-15-b97fed9efad44b2194f47d1790c94c6c) |      |
-| 2022/09/17 | [9월 17일 개발일지](https://inframince.notion.site/2022-09-17-b97fed9efad44b2194f47d1790c94c6c) |      |
-| 2022/09/18 | [9월 18일 개발일지](https://inframince.notion.site/2022-09-18-b97fed9efad44b2194f47d1790c94c6c) |      |
-| 2022/09/19 | [9월 19일 개발일지](https://inframince.notion.site/2022-09-19-b97fed9efad44b2194f47d1790c94c6c) |      |
-| 2022/09/20 | [9월 20일 개발일지](https://inframince.notion.site/2022-09-20-b97fed9efad44b2194f47d1790c94c6c) |      |
-| 2022/09/21 | [9월 21일 개발일지](https://inframince.notion.site/2022-09-21-b97fed9efad44b2194f47d1790c94c6c) |      |
-| 2022/09/22 | [9월 22일 개발일지](https://inframince.notion.site/2022-09-22-b97fed9efad44b2194f47d1790c94c6c) |      |
-| 2022/09/24 | [9월 24일 개발일지](https://inframince.notion.site/2022-09-24-a6c961ac88c749349cfe8b22996827eb) |      |
-| 2022/09/25 | [9월 25일 개발일지](https://inframince.notion.site/2022-09-25-a6c961ac88c749349cfe8b22996827eb) |      |
+|      날짜       |                             내용                             | 비고 |
+| :-------------: | :----------------------------------------------------------: | :--: |
+|   2022/09/13    | [9월 13일 개발일지](https://inframince.notion.site/2022-09-13-bd317099c67b46d1aaf985557ebff9e8) |      |
+|   2022/09/14    | [9월 14일 개발일지](https://inframince.notion.site/2022-09-14-b97fed9efad44b2194f47d1790c94c6c) |      |
+|   2022/09/15    | [9월 15일 개발일지](https://inframince.notion.site/2022-09-15-b97fed9efad44b2194f47d1790c94c6c) |      |
+|   2022/09/17    | [9월 17일 개발일지](https://inframince.notion.site/2022-09-17-b97fed9efad44b2194f47d1790c94c6c) |      |
+|   2022/09/18    | [9월 18일 개발일지](https://inframince.notion.site/2022-09-18-b97fed9efad44b2194f47d1790c94c6c) |      |
+|   2022/09/19    | [9월 19일 개발일지](https://inframince.notion.site/2022-09-19-b97fed9efad44b2194f47d1790c94c6c) |      |
+|   2022/09/20    | [9월 20일 개발일지](https://inframince.notion.site/2022-09-20-b97fed9efad44b2194f47d1790c94c6c) |      |
+|   2022/09/21    | [9월 21일 개발일지](https://inframince.notion.site/2022-09-21-b97fed9efad44b2194f47d1790c94c6c) |      |
+|   2022/09/22    | [9월 22일 개발일지](https://inframince.notion.site/2022-09-22-b97fed9efad44b2194f47d1790c94c6c) |      |
+|   2022/09/24    | [9월 24일 개발일지](https://inframince.notion.site/2022-09-24-a6c961ac88c749349cfe8b22996827eb) |      |
+|   2022/09/25    | [9월 25일 개발일지](https://inframince.notion.site/2022-09-25-a6c961ac88c749349cfe8b22996827eb) |      |
+| 2022/09/26 - 27 | [9월 26 - 27일 개발일지](https://inframince.notion.site/2022-09-26-27-a4d1cb8ab76442d088b35173538f429e) |      |
