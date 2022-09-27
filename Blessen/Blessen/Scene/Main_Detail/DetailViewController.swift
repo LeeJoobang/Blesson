@@ -90,7 +90,11 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
                 cell.itemTextField.text = studentTask.phoneNumber
                 cell.itemTextField.keyboardType = .numberPad
                 cell.itemTextField.tag = 2
-            case 3: // 레슨시작일
+            case 3: // 레슨시작일 + 버그 발생
+//                print(lesssonTask)
+//                print(studentTask)
+//
+//                lesssonTask.startDate
                 cell.itemTextField.text = lesssonTask.startDate
                 cell.itemTextField.tag = 3
             case 4: // 누적금액, 콤마 표시

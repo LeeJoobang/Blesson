@@ -56,6 +56,13 @@ final class MessageRepository: MessageRepositoryType {
         }
     }
     
+    func falseCheck(item: MessageList){
+        try! localRealm.write {
+            item.check = false
+            print("item을 false로 변환함")
+        }
+    }
+    
     func deleteData(data: MessageList){
         try! localRealm.write{
             localRealm.delete(data)

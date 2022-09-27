@@ -5,7 +5,7 @@ import MessageUI
 import SnapKit
 import RealmSwift
 
-class MainViewController: BaseViewController{
+class MainViewController: BaseViewController {
     
     var mainView = MainView()
     
@@ -13,10 +13,7 @@ class MainViewController: BaseViewController{
     let studentRepository = StudentRepository()
     let lessonRepository = LessonRepository()
     let progressRepository = ProgressRepository()
-    
     var filterStudent = [Student]()
-    var filterLesson = [Lesson]()
-    lazy var filterProgress = [Progress]()
     
     var studentTasks: Results<Student>! {
         didSet {
@@ -100,35 +97,37 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.reuseIdentifier, for: indexPath) as! MainTableViewCell
-        
-        // MARK: filter data 있을 경우 표시되는 데이터 바뀜
-        var data = [String]() // 진행되는 정보표시를 담는 공간
-        //        filterProgress = isFiltering == true ? progressTasks.filter { $0.foreignID == filterStudent[indexPath.row].objectID } : progressTasks.filter { $0.foreignID == self.studentTasks[indexPath.row].objectID}
+        var data = [String]() // 진행되는 정보를 담는 공간
+        // MARK: filter data 있을 경우 표시되는 데이터 바뀜 - filterdata가 있을 경우, filterStudent에서 찾는다.
         if isFiltering == true {
-            for progressTask in progressTasks{
-                if progressTask.foreignID == filterStudent[indexPath.row].objectID{
-                    data.append(String(describing: progressTask.progressCount))
+            for progressItem in progressTasks{
+                if progressItem.foreignID == filterStudent[indexPath.row].objectID{
+                    data.append(String(describing: progressItem.progressCount))
                 }
             }
-            for lessonTask in lessonTasks{
-                if lessonTask.foreignID == filterLesson[indexPath.row].objectID{
-                    data.append(String(describing: lessonTask.lessonCount))
+            for lessonItem in lessonTasks{
+                if lessonItem.foreignID == filterStudent[indexPath.row].objectID{
+                    print("lessonItem.lessonCount: \(lessonItem.lessonCount)")
+                    data.append(lessonItem.lessonCount)
                 }
             }
-        } else {
-            for progressTask in progressTasks{
-                if progressTask.foreignID == studentTasks[indexPath.row].objectID{
-                    data.append(String(describing: progressTask.progressCount))
+        } else { // false 일 경우
+            for progressItem in progressTasks{
+                if progressItem.foreignID == studentTasks[indexPath.row].objectID{
+                    print("False - progressItem.progressCount: \(progressItem.progressCount)")
+                    data.append(String(describing: progressItem.progressCount))
                 }
             }
-            for lessonTask in lessonTasks{
-                if lessonTask.foreignID == studentTasks[indexPath.row].objectID{
-                    data.append(String(describing: lessonTask.lessonCount))
+            for lessonItem in lessonTasks{
+                if lessonItem.foreignID == studentTasks[indexPath.row].objectID{
+                    print("false -- lessonItem.lessonCount: \(lessonItem.lessonCount)")
+                    data.append(lessonItem.lessonCount)
+                    print(data)
                 }
             }
         }
         cell.nameLabel.text = isFiltering == true ? filterStudent[indexPath.row].name : studentTasks[indexPath.row].name
-        cell.countLabel.text = "\(data[0])/\(data[1])"
+        cell.countLabel.text = data.joined(separator: "/")
         cell.messageButton.tag = indexPath.row
         cell.messageButton.setImage(UIImage(systemName: "message"), for: .normal)
         cell.messageButton.addTarget(self, action: #selector(messageButtonClicked), for: .touchUpInside)
@@ -158,12 +157,12 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
         vc.studentTask = isFiltering == true ? filterStudent[indexPath.row] : studentTasks[indexPath.row]
         // MARK: filter data 전달
         if isFiltering == true {
-            for task in filterLesson {
+            for task in lessonTasks {
                 if filterStudent[indexPath.row].objectID == task.foreignID{
                     vc.lesssonTask = task
                 }
             }
-            for task in filterProgress {
+            for task in progressTasks {
                 if filterStudent[indexPath.row].objectID == task.foreignID{
                     vc.progressTask = task
                 }
@@ -184,17 +183,56 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     // MARK: delete 하기
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        return .delete
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete{
-            self.studentRepository.deleteData(data: self.studentTasks[indexPath.row])
-            self.lessonRepository.deleteData(data: self.lessonTasks[indexPath.row])
-            self.progressRepository.deleteData(data: self.progressTasks[indexPath.row])
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = UIContextualAction(style: .destructive, title: title) { [self] action, view, completionHandler in
+            completionHandler(true)
+            if isFiltering == true {
+                let filterObjectID = self.filterStudent[indexPath.row].objectID
+                let studentTasks = self.localRealm.objects(Student.self) // results
+                
+                for task in studentTasks {
+                    if task.objectID == filterObjectID{
+                        try! self.localRealm.write {
+                            let deleteStudent = task
+                            localRealm.delete(deleteStudent)
+                        }
+                    }
+                }
+//                let studentCopy = localRealm.create(Student.self, update: .all)
+//                localRealm.add(studentCopy, update: .all)
+//                
+//                print("Update studentTasks: \(studentTasks)")
+
+                let lessonTasks = self.localRealm.objects(Lesson.self)
+                for task in lessonTasks {
+                    if task.foreignID == filterObjectID{
+                        try! self.localRealm.write {
+                            let deleteLesson = task
+                            localRealm.delete(deleteLesson)
+                        }
+                    }
+                }
+                
+                let progressTasks = self.localRealm.objects(Progress.self)
+                for task in progressTasks {
+                    if task.foreignID == filterObjectID{
+                        try! self.localRealm.write {
+                            let deleteProgress = task
+                            localRealm.delete(deleteProgress)
+                        }
+                    }
+                }
+                
+                
+            } else {
+                self.studentRepository.deleteData(data: self.studentTasks[indexPath.row])
+                self.lessonRepository.deleteData(data: self.lessonTasks[indexPath.row])
+                self.progressRepository.deleteData(data: self.progressTasks[indexPath.row])
+            }
+            self.mainView.tableView.reloadData()
         }
-        self.mainView.tableView.reloadData()
+        delete.image = UIImage(systemName: "trash.fill")
+        return UISwipeActionsConfiguration(actions: [delete])
     }
 }
 
@@ -211,7 +249,7 @@ extension MainViewController: UISearchResultsUpdating, UISearchBarDelegate{
         self.navigationItem.hidesSearchBarWhenScrolling = false
     }
     
-    // MARK: search filter 내용 담음
+    // MARK: search filter 내용 담음 - filter를 할 경우에 filterStudent에 담는다.
     func updateSearchResults(for searchController: UISearchController) {
         guard let text = searchController.searchBar.text else { return }
         filterStudent = self.studentTasks.filter { $0.name.lowercased().contains(text)}
@@ -244,4 +282,3 @@ extension MainViewController: MFMessageComposeViewControllerDelegate{
         }
     }
 }
-
