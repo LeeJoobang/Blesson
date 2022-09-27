@@ -51,14 +51,23 @@ class WriteViewController: BaseViewController{
         view.endEditing(true)
         guard let writeText = writeView.writeTextView.text else { return }
         let tasks = localRealm.objects(MessageList.self)
-        let task = MessageList(content: writeText)
-        do {
-            try localRealm.write{
-                localRealm.add(task)
-                print("Realm Succeed")
+        
+        
+        switch tasks.count {
+        case 0...4:
+            let task = MessageList(content: writeText)
+            do {
+                try localRealm.write{
+                    localRealm.add(task)
+                    print("Realm Succeed")
+                }
+            } catch let error {
+                print(error)
             }
-        } catch let error {
-            print(error)
+        case 5:
+            showAlertMessage(title: "알림", message: "5개의 메세지까지 저장됩니다.", ok: "확인", cancel: "취소")
+        default:
+            fatalError()
         }
     }
 }

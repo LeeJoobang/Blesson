@@ -198,11 +198,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
                         }
                     }
                 }
-//                let studentCopy = localRealm.create(Student.self, update: .all)
-//                localRealm.add(studentCopy, update: .all)
-//                
-//                print("Update studentTasks: \(studentTasks)")
-
                 let lessonTasks = self.localRealm.objects(Lesson.self)
                 for task in lessonTasks {
                     if task.foreignID == filterObjectID{
@@ -222,8 +217,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
                         }
                     }
                 }
-                
-                
             } else {
                 self.studentRepository.deleteData(data: self.studentTasks[indexPath.row])
                 self.lessonRepository.deleteData(data: self.lessonTasks[indexPath.row])
