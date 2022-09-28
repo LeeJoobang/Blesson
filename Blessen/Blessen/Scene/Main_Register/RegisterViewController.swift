@@ -5,6 +5,7 @@ import PhotosUI
 import SnapKit
 import RealmSwift
 import SwiftUI
+import IQKeyboardManagerSwift
 
 class RegisterViewController: BaseViewController{
     
@@ -46,14 +47,6 @@ class RegisterViewController: BaseViewController{
         registerView.tableView.dataSource = self
         self.registerView.tableView.register(RegisterImageCell.self, forCellReuseIdentifier: RegisterImageCell.reuseIdentifier)
         self.registerView.tableView.register(RegisterTableViewCell.self, forCellReuseIdentifier: RegisterTableViewCell.reuseIdentifier)
-    }
-    
-    override func setConstraints() {
-        datePicker.preferredDatePickerStyle = .automatic
-        datePicker.datePickerMode = .date
-        datePicker.locale = Locale(identifier: "ko_KR")
-        datePicker.timeZone = .autoupdatingCurrent
-        
     }
     
     @objc func saveButtonClicked(_ sender: Any){
@@ -145,14 +138,14 @@ extension RegisterViewController: UITableViewDelegate, UITableViewDataSource{
             case 0, 1: // 이름, 주소 - 일반
                 cell.itemTextField.keyboardType = .default
             case 3: // 레슨시작일 - 데이트피커
-                if #available(iOS 14, *) {
-                    datePicker.preferredDatePickerStyle = .wheels
-                    datePicker.sizeToFit()
-                }
                 cell.itemTextField.inputView = datePicker
+                datePicker.datePickerMode = .date
+                datePicker.locale = Locale(identifier: "ko_KR")
+                datePicker.timeZone = .autoupdatingCurrent
+                datePicker.preferredDatePickerStyle = .inline
+                print("cell에 표시하는 내용: \(registData[indexPath.row])")
                 datePicker.addTarget(self, action: #selector(handleDatePicker), for: .valueChanged)
                 cell.itemTextField.text = registData[indexPath.row]
-
             case 2, 4, 5: // 레슨횟수, 레슨비 - ',' 적용, 숫자패드
                 cell.itemTextField.keyboardType = .numberPad
             default:
@@ -164,20 +157,11 @@ extension RegisterViewController: UITableViewDelegate, UITableViewDataSource{
         }
     }
     
-    
-    
     // MARK: image button clicked - album, camera 기능 적용 + alert: action Sheet
     @objc func imageButtonClicked(){
-        print("image button clicked")
-
         let alert = UIAlertController(title: "알림", message: "사진을 추가해주시겠습니까?", preferredStyle: .actionSheet)
-        
-        let library = UIAlertAction(title: "사진앨범", style: .default) { (action) in self.openLibrary()
-        }
-        
-        let camera = UIAlertAction(title: "카메라", style: .default) { (action) in self.openCamera()
-        }
-        
+        let library = UIAlertAction(title: "사진앨범", style: .default) { (action) in self.openLibrary() }
+        let camera = UIAlertAction(title: "카메라", style: .default) { (action) in self.openCamera() }
         let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         alert.addAction(library)
         alert.addAction(camera)
@@ -216,6 +200,7 @@ extension RegisterViewController: UITableViewDelegate, UITableViewDataSource{
 extension RegisterViewController: UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        self.registerView.endEditing(true)
         return true
     }
     
@@ -242,19 +227,23 @@ extension RegisterViewController: UITextFieldDelegate{
                 textField.resignFirstResponder()
             }
         case 3:
+            textField.text = ""
             datePicker.addTarget(self, action: #selector(handleDatePicker), for: .valueChanged)
+
         default:
             fatalError()
         }        
     }
 
     // MARK: datepicker 데이트 표시 - reloadRows 활용
-    @objc func handleDatePicker(_ sender: UIDatePicker){
+    @objc func handleDatePicker(_ sender: UIDatePicker, forEvent event: UIEvent){
         let date = DateFormatter()
         date.locale = Locale(identifier: "ko_kr")
         date.dateFormat = "yyyy-MM-dd"
+        print("sender: \(sender.date)")
         let selectDay = date.string(from: sender.date)
-        registData[3].append(contentsOf: selectDay)
+        self.registData[3].removeAll()
+        self.registData[3].append(contentsOf: selectDay)
         registerView.tableView.reloadRows(at: [IndexPath(row: 3, section: 1)], with: .fade)
     }
     

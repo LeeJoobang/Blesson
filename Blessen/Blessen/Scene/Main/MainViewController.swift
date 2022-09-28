@@ -198,6 +198,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
                         }
                     }
                 }
+                
+                
                 let lessonTasks = self.localRealm.objects(Lesson.self)
                 for task in lessonTasks {
                     if task.foreignID == filterObjectID{

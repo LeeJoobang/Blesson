@@ -48,7 +48,7 @@ class MessageViewController: BaseViewController{
         navigationItem.rightBarButtonItems = [saveButton]
     }
 
-    
+    // MARK: 메세지 저장 갯수 제한 5개
     @objc func writeButtonClicked(){
         switch tasks.count {
         case 0...4:
@@ -79,6 +79,13 @@ extension MessageViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
+    }
+    
+    // MARK: 작성된 메세지 수정
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = WriteViewController()
+        transition(vc, transitionStyle: .push)
+        vc.writeView.writeTextView.text = tasks[indexPath.row].content
     }
     
     // MARK: row 삭제

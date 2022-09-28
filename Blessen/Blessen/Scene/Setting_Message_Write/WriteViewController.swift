@@ -51,8 +51,7 @@ class WriteViewController: BaseViewController{
         view.endEditing(true)
         guard let writeText = writeView.writeTextView.text else { return }
         let tasks = localRealm.objects(MessageList.self)
-        
-        
+        // MARK: 메세지 저장 갯수 제한(5개)
         switch tasks.count {
         case 0...4:
             let task = MessageList(content: writeText)
