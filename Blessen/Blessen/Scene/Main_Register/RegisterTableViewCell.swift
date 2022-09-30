@@ -5,13 +5,16 @@ class RegisterTableViewCell: BaseTableViewCell {
     
     let totalView: UIView = {
         let view = UIView()
-        view.backgroundColor = Constants.BaseColor.background
+        view.backgroundColor = .secondarySystemGroupedBackground
+//        view.backgroundColor = Constants.BaseColor.background
         return view
     }()
     
     let itemLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = Constants.BaseColor.background
+        label.backgroundColor = .secondarySystemGroupedBackground
+
+//        label.backgroundColor = Constants.BaseColor.background
         label.textAlignment = .left
         label.font = UIFont(name: "Halvetica", size: 15)
         label.numberOfLines = 1
@@ -19,9 +22,10 @@ class RegisterTableViewCell: BaseTableViewCell {
         return label
     }()
     
-    let itemTextField: UnderLineTextField = {
-        let text = UnderLineTextField()
-        text.backgroundColor = Constants.BaseColor.background
+    let itemTextField: UITextField = {
+        let text = UITextField()
+        text.backgroundColor = .secondarySystemGroupedBackground
+//        text.backgroundColor = Constants.BaseColor.background
         text.textAlignment = .left
         text.textColor = .black
         return text
@@ -40,7 +44,7 @@ class RegisterTableViewCell: BaseTableViewCell {
     // 셀간 간격
     override func layoutSubviews() {
         super.layoutSubviews()
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0))
+//        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0))
     }
     
     override func configure() {

@@ -13,7 +13,11 @@ class MainViewController: BaseViewController {
     let studentRepository = StudentRepository()
     let lessonRepository = LessonRepository()
     let progressRepository = ProgressRepository()
-    var filterStudent = [Student]()
+    var filterStudent : Results<Student>! {
+        didSet {
+            self.mainView.tableView.reloadData()
+        }
+    }
     
     var studentTasks: Results<Student>! {
         didSet {
@@ -53,9 +57,13 @@ class MainViewController: BaseViewController {
         lessonTasks = localRealm.objects(Lesson.self)
         progressTasks = localRealm.objects(Progress.self)
         mainView.tableView.reloadData()
+        fetchTasks()
+    }
+    func fetchTasks(){
         studentTasks = studentRepository.fetch()
         lessonTasks = lessonRepository.fetch()
         progressTasks = progressRepository.fetch()
+
     }
     
     override func configure(){
@@ -102,6 +110,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
         if isFiltering == true {
             for progressItem in progressTasks{
                 if progressItem.foreignID == filterStudent[indexPath.row].objectID{
+                    print(progressItem.progressCount)
                     data.append(String(describing: progressItem.progressCount))
                 }
             }
@@ -111,6 +120,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
                     data.append(lessonItem.lessonCount)
                 }
             }
+
         } else { // false 일 경우
             for progressItem in progressTasks{
                 if progressItem.foreignID == studentTasks[indexPath.row].objectID{
@@ -188,43 +198,40 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
             completionHandler(true)
             if isFiltering == true {
                 let filterObjectID = self.filterStudent[indexPath.row].objectID
-                let studentTasks = self.localRealm.objects(Student.self) // results
-                
-                for task in studentTasks {
-                    if task.objectID == filterObjectID{
-                        try! self.localRealm.write {
-                            let deleteStudent = task
-                            localRealm.delete(deleteStudent)
-                        }
-                    }
+                let studentTask = studentTasks.filter("objectID == %@", filterObjectID)
+                try! self.localRealm.write {
+                    localRealm.delete(studentTask)
+                }
+
+                let lessonTask = lessonTasks.filter("foreignID == %@", filterObjectID)
+                try! self.localRealm.write {
+                    localRealm.delete(lessonTask)
                 }
                 
-                
-                let lessonTasks = self.localRealm.objects(Lesson.self)
-                for task in lessonTasks {
-                    if task.foreignID == filterObjectID{
-                        try! self.localRealm.write {
-                            let deleteLesson = task
-                            localRealm.delete(deleteLesson)
-                        }
-                    }
+                let progressTask = progressTasks.filter("foreignID == %@", filterObjectID)
+                try! self.localRealm.write {
+                    localRealm.delete(progressTask)
                 }
-                
-                let progressTasks = self.localRealm.objects(Progress.self)
-                for task in progressTasks {
-                    if task.foreignID == filterObjectID{
-                        try! self.localRealm.write {
-                            let deleteProgress = task
-                            localRealm.delete(deleteProgress)
-                        }
-                    }
-                }
+                self.fetchTasks()
+
             } else {
-                self.studentRepository.deleteData(data: self.studentTasks[indexPath.row])
-                self.lessonRepository.deleteData(data: self.lessonTasks[indexPath.row])
-                self.progressRepository.deleteData(data: self.progressTasks[indexPath.row])
+                print("indexPath.row: \(indexPath.row)")
+                let studentObjectID = studentTasks[indexPath.row].objectID
+                try! self.localRealm.write {
+                    localRealm.delete(studentTasks[indexPath.row])
+                }
+                
+                let lessonTask = lessonTasks.filter("foreignID == %@", studentObjectID)
+                try! self.localRealm.write {
+                    localRealm.delete(lessonTask)
+                }
+                
+                let progressTask = progressTasks.filter("foreignID == %@", studentObjectID)
+                try! self.localRealm.write {
+                    localRealm.delete(progressTask)
+                }
             }
-            self.mainView.tableView.reloadData()
+            self.fetchTasks()
         }
         delete.image = UIImage(systemName: "trash.fill")
         return UISwipeActionsConfiguration(actions: [delete])
@@ -247,7 +254,7 @@ extension MainViewController: UISearchResultsUpdating, UISearchBarDelegate{
     // MARK: search filter 내용 담음 - filter를 할 경우에 filterStudent에 담는다.
     func updateSearchResults(for searchController: UISearchController) {
         guard let text = searchController.searchBar.text else { return }
-        filterStudent = self.studentTasks.filter { $0.name.lowercased().contains(text)}
+        filterStudent = studentTasks.filter("name == %@", text)
         self.mainView.tableView.reloadData()
     }
     var isFiltering: Bool {

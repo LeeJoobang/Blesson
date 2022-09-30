@@ -3,8 +3,9 @@ import UIKit
 class RegisterView: BaseView{
     
     let tableView: UITableView = {
-        let view = UITableView()
-        view.backgroundColor = Constants.BaseColor.background
+        let view = UITableView(frame: .zero, style: .insetGrouped)
+        view.backgroundColor = .systemGroupedBackground
+//        view.backgroundColor = Constants.BaseColor.background
         return view
     }()
     

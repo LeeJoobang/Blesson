@@ -102,7 +102,7 @@ final class StudentRepository: StudentRepositoryType {
     }
     
     func fetchFilter() -> Results<Student> {
-        return localRealm.objects(Student.self).filter("diaryTitle CONTAINS[c] 'a'")
+        return localRealm.objects(Student.self).filter("objectID")
     }
     
     func updateCheck(item: Student) {

@@ -21,7 +21,6 @@ class MessageViewController: BaseViewController{
         messageView.backgroundColor = Constants.BaseColor.background
         messageView.tableView.delegate = self
         messageView.tableView.dataSource = self
-        
         self.messageView.tableView.register(MessageViewTableCell.self, forCellReuseIdentifier: MessageViewTableCell.reuseIdentifier)
         print("Realm is located at:", localRealm.configuration.fileURL!)
     }
