@@ -3,7 +3,7 @@ import UIKit
 class MessageView: BaseView{
     
     let tableView: UITableView = {
-        let view = UITableView()
+        let view = UITableView(frame: .zero, style: .insetGrouped)
         view.backgroundColor = .white
         return view
     }()

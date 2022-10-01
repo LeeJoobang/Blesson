@@ -1,11 +1,12 @@
 import UIKit
+import SwiftUI
 
 class MainView: BaseView{
     
     // MARK: TableView
     let tableView: UITableView = {
-        let view = UITableView()
-        view.backgroundColor = .white
+        let view = UITableView(frame: .zero, style: .insetGrouped)
+        view.backgroundColor = Constants.BaseColor.background
         return view
     }()
     

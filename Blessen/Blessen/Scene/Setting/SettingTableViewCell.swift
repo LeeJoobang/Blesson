@@ -4,7 +4,7 @@ import SnapKit
 class SettingViewTableCell: BaseTableViewCell {
     let totalView: UIView = {
         let view = UIView()
-        view.backgroundColor = Constants.BaseColor.background
+        view.backgroundColor = .secondarySystemBackground
         return view
     }()
     
@@ -61,9 +61,9 @@ class SettingViewTableCell: BaseTableViewCell {
     override func setConstraints() {
         totalView.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide.snp.top)
-            make.leading.equalTo(20)
+            make.leading.equalTo(0)
             make.height.equalTo(contentView.snp.height)
-            make.trailing.equalTo(-40)
+            make.trailing.equalTo(0)
         }
         
         leftImage.snp.makeConstraints { make in
@@ -82,8 +82,10 @@ class SettingViewTableCell: BaseTableViewCell {
         rightImage.snp.makeConstraints { make in
             make.top.equalTo(nameLabel.snp.top)
             make.bottom.equalTo(nameLabel.snp.bottom)
-            make.trailing.equalTo(totalView.snp.trailing).offset(20)
+            make.trailing.equalTo(totalView.snp.trailing)
+//            make.trailing.equalTo(totalView.snp.trailing).offset(20)
             make.width.equalTo(rightImage.snp.height)
+
         }
     }
 }

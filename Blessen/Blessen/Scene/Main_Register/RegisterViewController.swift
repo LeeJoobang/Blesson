@@ -203,50 +203,9 @@ extension RegisterViewController: UITableViewDelegate, UITableViewDataSource{
 
 extension RegisterViewController: UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        textField.resignFirstResponder()
         self.registerView.endEditing(true)
         return true
     }
-    
-//    func textFieldDidEndEditing(_ textField: UITextField) {
-//        switch textField.tag {
-//        case 0, 1, 2, 4, 5:
-//            if textField.text == ""{
-//                showAlertMessage(title: "알림", message: "데이터를 입력해주세요.", ok: "확인", cancel: "취소")
-//            } else {
-//                guard let text = textField.text else { return }
-//                registData[textField.tag] = ""
-//                registData[textField.tag].append(text)
-//                // MARK: comma 처리
-//                let count = Int(registData[4]) // 레슨횟수
-//                let fee = Int(registData[5]) // 레슨금액
-//                let numberFormaater = NumberFormatter()
-//                numberFormaater.numberStyle = .decimal
-//                if let decimalCount = count, let decimalFee = fee {
-//                    guard let numberCount = numberFormaater.string(from: NSNumber(value: decimalCount)) else { return }
-//                    guard let numberFee = numberFormaater.string(from: NSNumber(value: decimalFee)) else { return }
-//                    registData[4] = numberCount
-//                    registData[5] = numberFee
-//                }
-//                textField.resignFirstResponder()
-//            }
-//        case 3:
-//            textField.text = ""
-//            if textField.text == nil || ((textField.text?.isEmpty) != nil) {
-//                let date = DateFormatter()
-//                date.locale = Locale(identifier: "ko_kr")
-//                date.dateFormat = "yyyy-MM-dd"
-//                let selectDay = date.string(from: Date())
-//                self.registData[3].removeAll()
-//                self.registData[3].append(contentsOf: selectDay)
-//                textField.text = registData[3]
-//            }
-//            datePicker.addTarget(self, action: #selector(handleDatePicker), for: .valueChanged)
-//
-//        default:
-//            fatalError()
-//        }
-//    }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         textField.addTarget(self, action: #selector(saveTextFieldValue), for: .editingChanged)
@@ -292,7 +251,6 @@ extension RegisterViewController: UITextFieldDelegate{
                 }
             print("registData[textField.tag]: \(registData[textField.tag])")
         case 3:
-//            textField.text = ""
             guard let text = textField.text else { return }
             if text.isEmpty {
                 let date = DateFormatter()
@@ -309,8 +267,6 @@ extension RegisterViewController: UITextFieldDelegate{
         default:
             fatalError()
         }
-        
-
     }
 
     // MARK: datepicker 데이트 표시 - reloadRows 활용
@@ -324,19 +280,6 @@ extension RegisterViewController: UITextFieldDelegate{
         self.registData[3].append(contentsOf: selectDay)
         registerView.tableView.reloadRows(at: [IndexPath(row: 3, section: 1)], with: .fade)
     }
-    
-    
-//    func textFieldDidBeginEditing(_ textField: UITextField) {
-//        switch textField.tag {
-//        case 0, 1, 2, 4, 5:
-//            textField.text = ""
-//        case 3:
-//            print("날짜 표시")
-//        default:
-//            fatalError()
-//
-//        }
-//    },n
 }
 
 // MARK: image phpicker를 사용해 image 선택하고, imageData에 담은 후 cell 생성시 데이터를  담는다.

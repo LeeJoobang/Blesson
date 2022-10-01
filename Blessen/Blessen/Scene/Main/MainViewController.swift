@@ -41,7 +41,7 @@ class MainViewController: BaseViewController {
         super.viewDidLoad()
         self.view = mainView
         navigationItem.title = "학생정보"
-        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: Constants.BaseColor.text]
         mainView.backgroundColor = Constants.BaseColor.background
         mainView.tableView.delegate = self
         mainView.tableView.dataSource = self
@@ -84,8 +84,8 @@ class MainViewController: BaseViewController {
         
         let toolbarItem = UIBarButtonItem(image: UIImage(systemName: "plus.circle"), style: .plain, target: self, action: #selector(registerButtonClicked))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-        toolbarItem.tintColor = .black
-        toolbar.barTintColor = UIColor.white
+        toolbarItem.tintColor = Constants.BaseColor.text
+        toolbar.barTintColor = Constants.BaseColor.background
         toolbar.setItems([flexibleSpace, toolbarItem], animated: true)
     }
     
@@ -110,13 +110,11 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
         if isFiltering == true {
             for progressItem in progressTasks{
                 if progressItem.foreignID == filterStudent[indexPath.row].objectID{
-                    print(progressItem.progressCount)
                     data.append(String(describing: progressItem.progressCount))
                 }
             }
             for lessonItem in lessonTasks{
                 if lessonItem.foreignID == filterStudent[indexPath.row].objectID{
-                    print("lessonItem.lessonCount: \(lessonItem.lessonCount)")
                     data.append(lessonItem.lessonCount)
                 }
             }
@@ -124,15 +122,12 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
         } else { // false 일 경우
             for progressItem in progressTasks{
                 if progressItem.foreignID == studentTasks[indexPath.row].objectID{
-                    print("False - progressItem.progressCount: \(progressItem.progressCount)")
                     data.append(String(describing: progressItem.progressCount))
                 }
             }
             for lessonItem in lessonTasks{
                 if lessonItem.foreignID == studentTasks[indexPath.row].objectID{
-                    print("false -- lessonItem.lessonCount: \(lessonItem.lessonCount)")
                     data.append(lessonItem.lessonCount)
-                    print(data)
                 }
             }
         }
@@ -215,7 +210,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
                 self.fetchTasks()
 
             } else {
-                print("indexPath.row: \(indexPath.row)")
                 let studentObjectID = studentTasks[indexPath.row].objectID
                 try! self.localRealm.write {
                     localRealm.delete(studentTasks[indexPath.row])
@@ -244,9 +238,10 @@ extension MainViewController: UISearchResultsUpdating, UISearchBarDelegate{
     func setupSearchController() {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.placeholder = "Search"
+        searchController.searchBar.setValue("취소", forKey: "cancelButtonText")
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
-        searchController.searchBar.backgroundColor = .systemGray6
+        searchController.searchBar.backgroundColor = Constants.BaseColor.background
         self.navigationItem.searchController = searchController
         self.navigationItem.hidesSearchBarWhenScrolling = false
     }

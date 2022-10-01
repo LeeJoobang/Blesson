@@ -3,8 +3,8 @@ import UIKit
 class SettingView: BaseView{
     
     let tableView: UITableView = {
-        let view = UITableView()
-        view.backgroundColor = .white
+        let view = UITableView(frame: .zero, style: .insetGrouped)
+        view.backgroundColor = .systemBackground
         return view
     }()
     

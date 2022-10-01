@@ -4,7 +4,7 @@ import SnapKit
 class MessageViewTableCell: BaseTableViewCell {
     let totalView: UIView = {
         let view = UIView()
-        view.backgroundColor = Constants.BaseColor.background
+        view.backgroundColor = .secondarySystemBackground
         return view
     }()
     
@@ -17,7 +17,7 @@ class MessageViewTableCell: BaseTableViewCell {
 
     let messageLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = Constants.BaseColor.background
+        label.backgroundColor = .clear
         label.textAlignment = .left
         label.font = UIFont(name: "Halvetica", size: 15)
         label.numberOfLines = 1
@@ -52,9 +52,9 @@ class MessageViewTableCell: BaseTableViewCell {
     override func setConstraints() {
         totalView.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide.snp.top)
-            make.leading.equalTo(20)
+            make.leading.equalTo(0)
             make.height.equalTo(contentView.snp.height)
-            make.trailing.equalTo(-20)
+            make.trailing.equalTo(0)
         }
         
         checkBoxButton.snp.makeConstraints { make in

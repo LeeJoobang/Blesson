@@ -8,9 +8,9 @@ class BaseTabBarController: UITabBarController, UITabBarControllerDelegate {
         
         self.delegate = self
         self.tabBar.tintColor = Constants.BaseColor.background
-        self.tabBar.unselectedItemTintColor = .black
-        self.tabBar.selectedImageTintColor = .black
-        self.tabBar.backgroundColor = .white
+        self.tabBar.unselectedItemTintColor = Constants.BaseColor.text
+        self.tabBar.selectedImageTintColor = Constants.BaseColor.text
+        self.tabBar.backgroundColor = Constants.BaseColor.background
         self.tabBar.isTranslucent = false
         
         let mainVC = UINavigationController(rootViewController: MainViewController())

@@ -3,7 +3,7 @@ import UIKit
 class CalendarView: BaseView{
     
     let tableView: UITableView = {
-        let view = UITableView()
+        let view = UITableView(frame: .zero, style: .insetGrouped)
         view.backgroundColor = Constants.BaseColor.background
         return view
     }()
