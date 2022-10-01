@@ -121,17 +121,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
             let lessonCount = (self.lesssonTask.lessonCount as NSString).floatValue // progress gage 분모에 해당함
             let progressCount = Float(self.progressTask.progressCount)
             let calculateGage = progressCount / lessonCount
-            print("lessonCount: \(lessonCount), progressCount: \(progressCount), calculateGage: \(calculateGage)")
-            
-            var progress: Float = 0
-
-            if calculateGage != progressCount / lessonCount{
-                print("error")
-            } else {
-                progress += calculateGage
-                cell.progressView.setProgress(progress, animated: true)
-            }
-            
+            cell.progressView.setProgress(calculateGage, animated: true)
             return cell
         default:
             fatalError()
