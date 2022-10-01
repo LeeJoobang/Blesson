@@ -4,13 +4,13 @@ import SnapKit
 class DetailTableViewCell: BaseTableViewCell {
     let totalView: UIView = {
         let view = UIView()
-        view.backgroundColor = Constants.BaseColor.background
+        view.backgroundColor = Constants.BaseColor.secondBackground
         return view
     }()
     
     let itemLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = Constants.BaseColor.background
+        label.backgroundColor = Constants.BaseColor.secondBackground
         label.textAlignment = .left
         label.font = UIFont(name: "Halvetica", size: 15)
         label.numberOfLines = 1
@@ -18,11 +18,11 @@ class DetailTableViewCell: BaseTableViewCell {
         return label
     }()
     
-    var itemTextField: UnderLineTextField = {
-        let text = UnderLineTextField()
-        text.backgroundColor = Constants.BaseColor.background
+    var itemTextField: UITextField = {
+        let text = UITextField()
+        text.backgroundColor = Constants.BaseColor.secondBackground
+        text.textColor = Constants.BaseColor.text
         text.textAlignment = .left
-        text.textColor = .black
         return text
     }()
     

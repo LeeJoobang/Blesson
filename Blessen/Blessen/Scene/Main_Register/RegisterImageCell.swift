@@ -5,7 +5,7 @@ class RegisterImageCell: BaseTableViewCell {
     
     let idImageView: UIImageView = {
         let image = UIImageView()
-        image.backgroundColor = .systemGray6
+        image.backgroundColor = Constants.BaseColor.background
         image.layer.cornerRadius = 50 / 2
         image.layer.masksToBounds = true
         image.contentMode = .center
@@ -16,8 +16,8 @@ class RegisterImageCell: BaseTableViewCell {
         let button = UIButton()
         button.setImage(UIImage(systemName: "plus"), for: .normal)
         button.layer.masksToBounds = true
-        button.tintColor = .black
-        button.backgroundColor = .systemMint
+        button.tintColor = Constants.BaseColor.text
+        button.backgroundColor = Constants.BaseColor.secondBackground
         button.layer.cornerRadius = 50/2
         button.contentMode = .center
         return button

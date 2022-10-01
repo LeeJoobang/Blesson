@@ -4,15 +4,14 @@ class RegisterView: BaseView{
     
     let tableView: UITableView = {
         let view = UITableView(frame: .zero, style: .insetGrouped)
-        view.backgroundColor = .systemGroupedBackground
-//        view.backgroundColor = Constants.BaseColor.background
+        view.backgroundColor = Constants.BaseColor.background
         return view
     }()
     
     let saveButton: UIButton = {
         let button = UIButton()
         button.setTitle("저장", for: .normal)
-        button.setTitleColor(UIColor.black, for: .normal)
+        button.setTitleColor(Constants.BaseColor.text, for: .normal)
         return button
     }()
     

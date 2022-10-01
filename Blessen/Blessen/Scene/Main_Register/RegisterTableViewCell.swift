@@ -5,16 +5,13 @@ class RegisterTableViewCell: BaseTableViewCell {
     
     let totalView: UIView = {
         let view = UIView()
-        view.backgroundColor = .secondarySystemGroupedBackground
-//        view.backgroundColor = Constants.BaseColor.background
+        view.backgroundColor = Constants.BaseColor.secondBackground
         return view
     }()
     
     let itemLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .secondarySystemGroupedBackground
-
-//        label.backgroundColor = Constants.BaseColor.background
+        label.backgroundColor = Constants.BaseColor.secondBackground
         label.textAlignment = .left
         label.font = UIFont(name: "Halvetica", size: 15)
         label.numberOfLines = 1
@@ -24,8 +21,7 @@ class RegisterTableViewCell: BaseTableViewCell {
     
     let itemTextField: UITextField = {
         let text = UITextField()
-        text.backgroundColor = .secondarySystemGroupedBackground
-//        text.backgroundColor = Constants.BaseColor.background
+        text.backgroundColor = Constants.BaseColor.secondBackground
         text.textAlignment = .left
         text.textColor = .black
         return text
