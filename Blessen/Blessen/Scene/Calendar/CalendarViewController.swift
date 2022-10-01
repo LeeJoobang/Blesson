@@ -41,9 +41,6 @@ class CalendarViewController: BaseViewController{
         self.calendarView.tableView.register(CalenderViewCell.self, forCellReuseIdentifier: CalenderViewCell.reuseIdentifier)
         self.calendarView.tableView.register(CalendarTableViewCell.self, forCellReuseIdentifier: CalendarTableViewCell.reuseIdentifier)
     }
-    
-    override func setConstraints() {
-    }
 }
 
 extension CalendarViewController: UITableViewDelegate, UITableViewDataSource{
@@ -53,9 +50,7 @@ extension CalendarViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 0:
-            return 1
-        case 1:
+        case 0, 1:
             return 1
         default:
             fatalError()

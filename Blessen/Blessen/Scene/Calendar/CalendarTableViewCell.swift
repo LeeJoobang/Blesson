@@ -4,28 +4,28 @@ import SnapKit
 class CalendarTableViewCell: BaseTableViewCell {
     let totalView: UIView = {
         let view = UIView()
-        view.backgroundColor = .systemGray6
+        view.backgroundColor = Constants.BaseColor.secondBackground
         return view
     }()
     
     let nameLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .systemGray6
-        label.tintColor = .white
+        label.backgroundColor = Constants.BaseColor.secondBackground
+        label.tintColor = Constants.BaseColor.text
         label.textAlignment = .left
         label.font = UIFont(name: "Halvetica", size: 15)
-        label.numberOfLines = 1
+        label.numberOfLines = 0
         label.sizeToFit()
         return label
     }()
     
     let contentLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .systemGray6
-        label.tintColor = .white
+        label.backgroundColor = Constants.BaseColor.secondBackground
+        label.tintColor = Constants.BaseColor.text
         label.textAlignment = .left
         label.font = UIFont(name: "Halvetica", size: 15)
-        label.numberOfLines = 1
+        label.numberOfLines = 0
         label.sizeToFit()
         return label
     }()
@@ -65,7 +65,7 @@ class CalendarTableViewCell: BaseTableViewCell {
         contentLabel.snp.makeConstraints { make in
             make.top.equalTo(nameLabel.snp.top)
             make.bottom.equalTo(nameLabel.snp.bottom)
-            make.leading.equalTo(self.nameLabel.snp.trailing).offset(20)
+            make.leading.equalTo(self.nameLabel.snp.trailing)
             make.trailing.equalTo(self.totalView.snp.trailing).offset(20)
         }
     }
