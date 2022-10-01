@@ -180,7 +180,7 @@ extension RegisterViewController: UITableViewDelegate, UITableViewDataSource{
         vc.delegate = self
         present(vc, animated: true)
     }
-    
+    // MARK: 카메라 기능
     func openCamera(){
         if (UIImagePickerController .isSourceTypeAvailable(.camera)) {
             picker.sourceType = .camera
@@ -189,7 +189,7 @@ extension RegisterViewController: UITableViewDelegate, UITableViewDataSource{
             print("Camera not available")
         }
     }
-    
+    // MARK: 로우 높이
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
             return 100

@@ -17,7 +17,6 @@ class DetailView: BaseView{
     }
     
     override func configure() {
-        
         [tableView].forEach {
             self.addSubview($0)
         }

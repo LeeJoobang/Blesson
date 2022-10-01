@@ -4,13 +4,13 @@ import SnapKit
 class DetailProgressCell: BaseTableViewCell {
     let totalView: UIView = {
         let view = UIView()
-        view.backgroundColor = Constants.BaseColor.background
+        view.backgroundColor = Constants.BaseColor.secondBackground
         return view
     }()
     
     let itemLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = Constants.BaseColor.background
+        label.backgroundColor = Constants.BaseColor.secondBackground
         label.textAlignment = .left
         label.font = UIFont(name: "Halvetica", size: 15)
         label.text = "레슨 진행"

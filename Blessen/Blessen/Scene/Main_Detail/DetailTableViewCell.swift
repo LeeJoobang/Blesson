@@ -35,17 +35,15 @@ class DetailTableViewCell: BaseTableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // 셀간 간격
     override func layoutSubviews() {
         super.layoutSubviews()
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0))
+//        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0))
     }
     
     override func configure() {
         [itemLabel, itemTextField].forEach {
             self.totalView.addSubview($0)
         }
-        
         self.contentView.addSubview(totalView)
     }
     
@@ -58,8 +56,8 @@ class DetailTableViewCell: BaseTableViewCell {
         }
         
         itemLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.totalView.snp.top)
-            make.height.equalTo(self.totalView.snp.height).multipliedBy(0.4)
+            make.top.equalTo(self.totalView.snp.top).offset(12)
+            make.height.equalTo(self.totalView.snp.height).multipliedBy(0.3)
             make.leading.equalTo(self.totalView.snp.leading)
             make.width.equalTo(self.totalView.snp.width)
         }
@@ -71,10 +69,4 @@ class DetailTableViewCell: BaseTableViewCell {
             make.width.equalTo(self.totalView.snp.width)
         }
     }
-    
-    func setDetailInformation(studentData: Student, lessonData: Lesson, index: Int){
-        print(studentData)
-        print(lessonData)
-    }
-
 }

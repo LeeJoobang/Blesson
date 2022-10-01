@@ -5,7 +5,7 @@ class DetailImageCell: BaseTableViewCell {
     
     let idImageView: UIImageView = {
         let image = UIImageView()
-        image.backgroundColor = .systemGray6
+        image.backgroundColor = Constants.BaseColor.background
         image.tintColor = .darkGray
         image.layer.cornerRadius = 50 / 2
         image.layer.masksToBounds = true

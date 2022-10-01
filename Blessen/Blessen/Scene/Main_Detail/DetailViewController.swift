@@ -39,11 +39,8 @@ class DetailViewController: BaseViewController{
         self.detailView.tableView.register(DetailProgressCell.self, forCellReuseIdentifier: DetailProgressCell.reuseIdentifier)
         
         let modifyButton = UIBarButtonItem(title: "수정", style: .plain, target: self, action: #selector(modifyButtonClicked))
-        modifyButton.tintColor = .black
+        modifyButton.tintColor = Constants.BaseColor.text
         navigationItem.rightBarButtonItems = [modifyButton]
-    }
-    
-    override func setConstraints() {
     }
 }
 
@@ -90,11 +87,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
                 cell.itemTextField.text = studentTask.phoneNumber
                 cell.itemTextField.keyboardType = .numberPad
                 cell.itemTextField.tag = 2
-            case 3: // 레슨시작일 + 버그 발생
-//                print(lesssonTask)
-//                print(studentTask)
-//
-//                lesssonTask.startDate
+            case 3: // 레슨시작일
                 cell.itemTextField.text = lesssonTask.startDate
                 cell.itemTextField.tag = 3
             case 4: // 누적금액, 콤마 표시
@@ -258,7 +251,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
         case 0:
             return 100
         case 1:
-            return 60
+            return 65
         case 2:
             return 80
         default:
