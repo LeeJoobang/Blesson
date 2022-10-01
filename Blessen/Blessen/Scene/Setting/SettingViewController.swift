@@ -4,6 +4,9 @@ import SnapKit
 class SettingViewController: BaseViewController{
     
     var settingView = SettingView()
+    let settingList = ["Message"]
+    let settingImageList = ["message"]
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -15,26 +18,17 @@ class SettingViewController: BaseViewController{
         self.settingView.tableView.register(SettingViewTableCell.self, forCellReuseIdentifier: SettingViewTableCell.reuseIdentifier)
         
         navigationItem.title = "설정"
-        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
-        
-    }
-    
-    override func configure(){
-    }
-    
-    override func setConstraints() {
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: Constants.BaseColor.text]
     }
 }
 
 extension SettingViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return settingList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SettingViewTableCell.reuseIdentifier, for: indexPath) as! SettingViewTableCell
-        let settingList = ["BackUp", "Restore", "Message"]
-        let settingImageList = ["bell", "arrowshape.turn.up.backward", "message"]
         cell.setData(data: settingList[indexPath.row], image: settingImageList[indexPath.row])
         return cell
     }
@@ -45,9 +39,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row{
-        case 0...1:
-            print("backup & restore")
-        case 2:
+        case 0:
             let vc = MessageViewController()
             transition(vc, transitionStyle: .push)
         default:

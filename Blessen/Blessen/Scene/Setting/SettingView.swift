@@ -4,7 +4,7 @@ class SettingView: BaseView{
     
     let tableView: UITableView = {
         let view = UITableView(frame: .zero, style: .insetGrouped)
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = Constants.BaseColor.background
         return view
     }()
     

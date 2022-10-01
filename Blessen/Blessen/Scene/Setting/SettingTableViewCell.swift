@@ -4,13 +4,13 @@ import SnapKit
 class SettingViewTableCell: BaseTableViewCell {
     let totalView: UIView = {
         let view = UIView()
-        view.backgroundColor = .secondarySystemBackground
+        view.backgroundColor = Constants.BaseColor.secondBackground
         return view
     }()
     
     let leftImage: UIImageView = {
         let image = UIImageView()
-        image.backgroundColor = .clear
+        image.backgroundColor = Constants.BaseColor.secondBackground
         image.tintColor = Constants.BaseColor.text
         image.contentMode = .center
         return image
@@ -18,11 +18,9 @@ class SettingViewTableCell: BaseTableViewCell {
     
     let nameLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .clear
-        
+        label.backgroundColor = Constants.BaseColor.secondBackground
         label.textAlignment = .center
         label.font = UIFont(name: "Halvetica", size: 15)
-        
         label.numberOfLines = 1
         label.sizeToFit()
         return label
@@ -30,7 +28,7 @@ class SettingViewTableCell: BaseTableViewCell {
     
     let rightImage: UIImageView = {
         let image = UIImageView()
-        image.backgroundColor = .clear
+        image.backgroundColor = Constants.BaseColor.secondBackground
         image.tintColor = Constants.BaseColor.text
         image.image = UIImage(systemName: "chevron.right")
         image.contentMode = .center

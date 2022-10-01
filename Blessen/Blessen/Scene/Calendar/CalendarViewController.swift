@@ -29,7 +29,7 @@ class CalendarViewController: BaseViewController{
         self.calendarView.tableView.register(CalendarTableViewCell.self, forCellReuseIdentifier: CalendarTableViewCell.reuseIdentifier)
         
         navigationItem.title = "캘린더"
-        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: Constants.BaseColor.text]
     }
     
     override func viewWillAppear(_ animated: Bool) {
