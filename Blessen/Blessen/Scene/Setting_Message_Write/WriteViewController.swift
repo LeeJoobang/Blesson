@@ -27,7 +27,7 @@ class WriteViewController: BaseViewController{
     override func configure(){
         writeView.backgroundColor = Constants.BaseColor.background
         navigationItem.title = "Message"
-        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: Constants.BaseColor.text]
         writeView.writeTextView.becomeFirstResponder()
         self.tabBarController?.tabBar.isHidden = true
     }
