@@ -13,8 +13,6 @@ class MainTableViewCell: BaseTableViewCell {
         label.backgroundColor = Constants.BaseColor.labelBackground
         label.tintColor = Constants.BaseColor.text
         label.textAlignment = .center
-        label.text = "이주영"
-
         label.font = UIFont(name: "Halvetica", size: 15)
         label.numberOfLines = 1
         label.sizeToFit()
@@ -43,7 +41,6 @@ class MainTableViewCell: BaseTableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
-
     }
     
     required init?(coder: NSCoder) {
@@ -54,12 +51,10 @@ class MainTableViewCell: BaseTableViewCell {
         [nameLabel, countLabel, messageButton].forEach {
             self.totalView.addSubview($0)
         }
-        
         self.contentView.addSubview(totalView)
     }
     
     override func setConstraints() {
-        
         totalView.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide.snp.top)
             make.leading.equalTo(0)
@@ -86,7 +81,5 @@ class MainTableViewCell: BaseTableViewCell {
             make.trailing.equalTo(messageButton.snp.leading).offset(-40)
             make.width.equalTo(countLabel.snp.height).multipliedBy(1.2)
         }
-
-
     }
 }

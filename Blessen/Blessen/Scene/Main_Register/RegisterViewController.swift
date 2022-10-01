@@ -10,7 +10,6 @@ import IQKeyboardManagerSwift
 class RegisterViewController: BaseViewController{
     
     var registerView = RegisterView()
-    
     let registetList = ["이름", "주소", "연락처", "레슨시작일", "레슨횟수", "레슨비"]
     let placeholderList = ["이름을 입력하세요.", "주소를 입력하세요.", "'-'를 제외하고 입력하세요.", "레슨시작일을 입력하세요.", "ex) 10 or 20", "ex)500000"]
     var registData = Array(repeating: "", count: 6)
@@ -50,50 +49,50 @@ class RegisterViewController: BaseViewController{
     }
     
     @objc func saveButtonClicked(_ sender: Any){
-        let filterData = registData.filter { $0 == "" }
-        print(filterData.count)
-        
-        // MARK: realm data 생성(student, lesson, progress)
-        let studentTask = Student(name: registData[0], address: registData[1], phoneNumber: registData[2], image: nil)
-        do {
-            try localRealm.write{
-                localRealm.add(studentTask)
-                print("Realm Succeed")
+        let filterData = registData.filter { $0.isEmpty }
+        for item in filterData{
+            print("registData: \(item)")
+        }
+        if filterData.isEmpty {
+            // MARK: realm data 생성(student, lesson, progress)
+            let studentTask = Student(name: registData[0], address: registData[1], phoneNumber: registData[2], image: nil)
+            do {
+                try localRealm.write{
+                    localRealm.add(studentTask)
+                    print("Realm Succeed")
+                }
+            } catch let error {
+                print(error)
             }
-        } catch let error {
-            print(error)
-        }
-
-        if let image = imageData {
-            savaImageToDocument(filename: "\(studentTask.objectID).jpg", image: image)
-        }
-        
-        let lessonTask = Lesson(foreignID: studentTask.objectID, lessonFee: registData[5], startDate: registData[3], lessonCount: registData[4])
-        do {
-            try localRealm.write{
-                localRealm.add(lessonTask)
-                print("Realm Succeed")
+            
+            if let image = imageData {
+                savaImageToDocument(filename: "\(studentTask.objectID).jpg", image: image)
             }
-        } catch let error {
-            print(error)
-        }
-        
-        let progressTask = Progress(foreignID: studentTask.objectID, progressCount: 0)
-        do {
-            try localRealm.write{
-                localRealm.add(progressTask)
-                print("Realm Succeed")
+            
+            let lessonTask = Lesson(foreignID: studentTask.objectID, lessonFee: registData[5], startDate: registData[3], lessonCount: registData[4])
+            do {
+                try localRealm.write{
+                    localRealm.add(lessonTask)
+                    print("Realm Succeed")
+                }
+            } catch let error {
+                print(error)
             }
-        } catch let error {
-            print(error)
+            
+            let progressTask = Progress(foreignID: studentTask.objectID, progressCount: 0)
+            do {
+                try localRealm.write{
+                    localRealm.add(progressTask)
+                    print("Realm Succeed")
+                }
+            } catch let error {
+                print(error)
+            }
+            dismiss(animated: true)
+        } else {
+            showAlertMessage(title: "알림", message: "학생 정보를 입력해주세요.", ok: "확인", cancel: "취소")
         }
-        dismiss(animated: true)
-        
-//        if filterData.count == 0 {
-//
-//        }else {
-//            showAlertMessage(title: "알림", message: "학생 정보를 입력해주세요.", ok: "확인", cancel: "취소")
-//        }
+      
     }
     
     // 오늘 날짜 생성함수
@@ -147,7 +146,6 @@ extension RegisterViewController: UITableViewDelegate, UITableViewDataSource{
                 datePicker.locale = Locale(identifier: "ko_KR")
                 datePicker.timeZone = .autoupdatingCurrent
                 datePicker.preferredDatePickerStyle = .inline
-                print("cell에 표시하는 내용: \(registData[indexPath.row])")
                 datePicker.addTarget(self, action: #selector(handleDatePicker), for: .valueChanged)
                 cell.itemTextField.text = registData[indexPath.row]
             case 2, 4, 5: // 레슨횟수, 레슨비 - ',' 적용, 숫자패드
@@ -216,40 +214,31 @@ extension RegisterViewController: UITextFieldDelegate{
             let selectDay = date.string(from: Date())
             self.registData[3].removeAll()
             self.registData[3].append(contentsOf: selectDay)
-            print("selectDay: \(selectDay)")
             guard let cell = registerView.tableView.cellForRow(at: [1, 3]) as? RegisterTableViewCell else {return false}
             if cell.itemTextField.text == nil || cell.itemTextField.text!.isEmpty {
                 cell.itemTextField.text = selectDay
             }
-
         }
         return true
     }
     
-    // 실시간 저장
+    // MARK: 실시간 저장
     @objc func saveTextFieldValue(textField: UITextField){
-        print("textField.tag: \(textField.tag)")
         switch textField.tag {
         case 0, 1, 2, 4, 5:
- //           if textField.text == ""{
-//                showAlertMessage(title: "알림", message: "데이터를 입력해주세요.", ok: "확인", cancel: "취소")
-//            } else {
-                guard let text = textField.text else { return }
-                registData[textField.tag] = text
-            
-            print("text: \(text)")
-                // MARK: comma 처리
-                let count = Int(registData[4]) // 레슨횟수
-                let fee = Int(registData[5]) // 레슨금액
-                let numberFormaater = NumberFormatter()
-                numberFormaater.numberStyle = .decimal
-                if let decimalCount = count, let decimalFee = fee {
-                    guard let numberCount = numberFormaater.string(from: NSNumber(value: decimalCount)) else { return }
-                    guard let numberFee = numberFormaater.string(from: NSNumber(value: decimalFee)) else { return }
-                    registData[4] = numberCount
-                    registData[5] = numberFee
-                }
-            print("registData[textField.tag]: \(registData[textField.tag])")
+            guard let text = textField.text else { return }
+            registData[textField.tag] = text
+            // MARK: comma 처리
+            let count = Int(registData[4]) // 레슨횟수
+            let fee = Int(registData[5]) // 레슨금액
+            let numberFormaater = NumberFormatter()
+            numberFormaater.numberStyle = .decimal
+            if let decimalCount = count, let decimalFee = fee {
+                guard let numberCount = numberFormaater.string(from: NSNumber(value: decimalCount)) else { return }
+                guard let numberFee = numberFormaater.string(from: NSNumber(value: decimalFee)) else { return }
+                registData[4] = numberCount
+                registData[5] = numberFee
+            }
         case 3:
             guard let text = textField.text else { return }
             if text.isEmpty {
@@ -259,7 +248,6 @@ extension RegisterViewController: UITextFieldDelegate{
                 let selectDay = date.string(from: Date())
                 self.registData[3].removeAll()
                 self.registData[3].append(contentsOf: selectDay)
-                print("selectDay: \(selectDay)")
                 textField.text = selectDay
             } else {
                 datePicker.addTarget(self, action: #selector(handleDatePicker), for: .valueChanged)
@@ -268,13 +256,12 @@ extension RegisterViewController: UITextFieldDelegate{
             fatalError()
         }
     }
-
+    
     // MARK: datepicker 데이트 표시 - reloadRows 활용
     @objc func handleDatePicker(_ sender: UIDatePicker, forEvent event: UIEvent){
         let date = DateFormatter()
         date.locale = Locale(identifier: "ko_kr")
         date.dateFormat = "yyyy-MM-dd"
-        print("sender: \(sender.date)")
         let selectDay = date.string(from: sender.date)
         self.registData[3].removeAll()
         self.registData[3].append(contentsOf: selectDay)

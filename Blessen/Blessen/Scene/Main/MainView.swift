@@ -32,9 +32,5 @@ class MainView: BaseView{
             make.trailing.equalTo(0)
             make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom)
         }
-
     }
-    
-    
-    
 }
