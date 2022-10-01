@@ -21,8 +21,10 @@
 			</array>
 		</dict>
 	</dict>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>ko</string>
+	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>사용자의 회원 관리를 위해 포토 앨범을 사용합니다.</string>
 	<key>NSCameraUsageDescription</key>
