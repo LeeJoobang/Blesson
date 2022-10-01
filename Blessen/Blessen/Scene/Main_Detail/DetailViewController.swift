@@ -117,10 +117,21 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
             cell.messageButton.addTarget(self, action: #selector(messageButtonClicked), for: .touchUpInside)
             cell.plusButton.addTarget(self, action: #selector(plusButtonClicked), for: .touchUpInside)
             cell.minusButton.addTarget(self, action: #selector(minusButtonClicked), for: .touchUpInside)
-            let lessonCount = (lesssonTask.lessonCount as NSString).floatValue // progress gage 분모에 해당함
-            let progressCount = Float(progressTask.progressCount)
+    
+            let lessonCount = (self.lesssonTask.lessonCount as NSString).floatValue // progress gage 분모에 해당함
+            let progressCount = Float(self.progressTask.progressCount)
             let calculateGage = progressCount / lessonCount
-            cell.progressView.setProgress(calculateGage, animated: true)
+            print("lessonCount: \(lessonCount), progressCount: \(progressCount), calculateGage: \(calculateGage)")
+            
+            var progress: Float = 0
+
+            if calculateGage != progressCount / lessonCount{
+                print("error")
+            } else {
+                progress += calculateGage
+                cell.progressView.setProgress(progress, animated: true)
+            }
+            
             return cell
         default:
             fatalError()
@@ -128,86 +139,73 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
     }
     // MARK: +버튼 클릭 - progress +1 증가, realm(progress) data update
     @objc func plusButtonClicked(){
-        let alert = UIAlertController(title: "알림", message: "레슨 횟수를 추가하시겠습니까?", preferredStyle: .alert)
-        let ok = UIAlertAction(title: "확인", style: .default) { [self] _ in
-            // MARK: Realm => Progress - + 수정
-            let progressTasks = self.localRealm.objects(Progress.self)
+         let progressTasks = self.localRealm.objects(Progress.self)
+         for task in progressTasks {
+             if self.studentTask.objectID == task.foreignID {
+                 try! self.localRealm.write {
+                     let lessonCount = (self.lesssonTask.lessonCount as NSString).floatValue // progress gage 분모에 해당함
+                     let progressCount = Float(task.progressCount)
+                     let calculateGage = progressCount / lessonCount
+                     print("calculateGage: \(calculateGage)")
+                     // MARK: 1.0 이상 올라가지 않도록 함.
+                     switch calculateGage{
+                     case 0...0.99:
+                         task.progressCount += 1
+                         self.lesssonTask.totalCount += 1// 누적횟수 증가로직(레슨진행 progressbar의 값과 무관)
+                         task.checkDate.append(self.calculateToday())
+                         self.detailView.tableView.reloadData()
+                         print("progressCount, check date update")
+                         // MARK: progressbar - 다찼을 경우, 초기화 진행
+                     case 1.0...:
+                         let alert = UIAlertController(title: "알림", message: "레슨 진행이 완료되었습니다. 초기화를 하시겠습니까?", preferredStyle: .alert)
+                         let ok = UIAlertAction(title: "확인", style: .default) { _ in
+                             try! self.localRealm.write {
+                                 task.progressCount = 0
+                             }
+                             self.detailView.tableView.reloadData()
+                         }
+                         let cancel = UIAlertAction(title: "취소", style: .cancel)
+                         alert.addAction(ok)
+                         alert.addAction(cancel)
+                         present(alert, animated: true, completion: nil)
+                     default:
+                         fatalError()
+                     }
+                     self.detailView.tableView.reloadData()
+                 }
+                 self.detailView.tableView.reloadData()
+             }
+         }
 
-            for task in progressTasks {
-                if self.studentTask.objectID == task.foreignID {
-                    try! self.localRealm.write {
-                        let lessonCount = (self.lesssonTask.lessonCount as NSString).floatValue // progress gage 분모에 해당함
-                        let progressCount = Float(task.progressCount)
-                        let calculateGage = progressCount / lessonCount
-                        // MARK: 1.0 이상 올라가지 않도록 함.
-                        switch calculateGage{
-                        case 0...0.99:
-                            task.progressCount += 1
-                            lesssonTask.totalCount += 1// 누적횟수 증가로직(레슨진행 progressbar의 값과 무관)
-                            task.checkDate.append(self.calculateToday())
-                            self.detailView.tableView.reloadData()
-                            print("progressCount, check date update")
-                            // MARK: progressbar - 다찼을 경우, 초기화 진행
-                        case 1.0...:
-                            let alert = UIAlertController(title: "알림", message: "레슨 진행이 완료되었습니다. 초기화를 하시겠습니까?", preferredStyle: .alert)
-                            let ok = UIAlertAction(title: "확인", style: .default) { _ in
-                                try! self.localRealm.write {
-                                    task.progressCount = 0
-                                }
-                                self.detailView.tableView.reloadData()
-                            }
-                            let cancel = UIAlertAction(title: "취소", style: .cancel)
-                            alert.addAction(ok)
-                            alert.addAction(cancel)
-                            present(alert, animated: true, completion: nil)
-                        default:
-                            fatalError()
-                        }
-                        self.detailView.tableView.reloadData()
-                    }
-                    self.detailView.tableView.reloadData()
-                }
-            }
-        }
-        let cancel = UIAlertAction(title: "취소", style: .cancel)
-        alert.addAction(ok)
-        alert.addAction(cancel)
-        present(alert, animated: true, completion: nil)
     }
     
     // MARK: -버튼 클릭 - progress -1 증가, realm(progress) data update
     @objc func minusButtonClicked(){
-        let alert = UIAlertController(title: "알림", message: "레슨 횟수를 차감하시겠습니까?", preferredStyle: .alert)
-        let ok = UIAlertAction(title: "확인", style: .default) { _ in
-            // MARK: Realm => Progress - + 수정
-            let progressTasks = self.localRealm.objects(Progress.self)
-            for task in progressTasks {
-                if self.studentTask.objectID == task.foreignID{
-                    try! self.localRealm.write {
-                        let lessonCount = (self.lesssonTask.lessonCount as NSString).floatValue // progress gage 분모에 해당함
-                        let progressCount = Float(task.progressCount)
-                        let calculateGage = progressCount / lessonCount
-                        // MARK: 음수에서 작동하지 않도록 함.
-                        switch calculateGage{
-                        case 0.001...1.0:
-                            task.progressCount -= 1
-                            self.lesssonTask.totalCount -= 1 // 누적횟수 차감로직(레슨진행 progressbar의 값과 무관)
-                            task.checkDate.removeLast()
-                            print("progressCount, check date update")
-                        case ...0:
-                            self.showAlertMessage(title: "알림", message: "더이상 차감할 수 없습니다.")
-                        default:
-                            fatalError()
-                        }
+
+        // MARK: Realm => Progress - + 수정
+        let progressTasks = self.localRealm.objects(Progress.self)
+        for task in progressTasks {
+            if self.studentTask.objectID == task.foreignID{
+                try! self.localRealm.write {
+                    let lessonCount = (self.lesssonTask.lessonCount as NSString).floatValue // progress gage 분모에 해당함
+                    let progressCount = Float(task.progressCount)
+                    let calculateGage = progressCount / lessonCount
+                    // MARK: 음수에서 작동하지 않도록 함.
+                    switch calculateGage{
+                    case 0.001...1.0:
+                        task.progressCount -= 1
+                        self.lesssonTask.totalCount -= 1 // 누적횟수 차감로직(레슨진행 progressbar의 값과 무관)
+                        task.checkDate.removeLast()
+                        print("progressCount, check date update")
+                    case ...0:
+                        self.showAlertMessage(title: "알림", message: "더이상 차감할 수 없습니다.")
+                    default:
+                        fatalError()
                     }
-                    self.detailView.tableView.reloadData()
                 }
+                self.detailView.tableView.reloadData()
             }
         }
-        let cancel = UIAlertAction(title: "취소", style: .cancel)
-        alert.addAction(ok)
-        alert.addAction(cancel)
-        present(alert, animated: true, completion: nil)
     }
     
     // 오늘 날짜 생성함수

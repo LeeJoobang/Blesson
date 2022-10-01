@@ -25,7 +25,7 @@ class DetailProgressCell: BaseTableViewCell {
         view.clipsToBounds = true
         view.layer.cornerRadius = 10
         view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.systemGray6.cgColor
+        view.layer.borderColor = UIColor.systemGray.cgColor
         view.tintColor = UIColor.blue
         return view
     }()
