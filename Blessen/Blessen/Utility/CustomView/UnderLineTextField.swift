@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-// MARK: underline을 갖는 텍스트 뷰
+// MARK: underline을 갖는 텍스트 뷰, 사용하지 않음.
 class UnderLineTextField: UITextField {
 
     private lazy var underLineView: UIView = {

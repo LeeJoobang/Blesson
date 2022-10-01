@@ -202,13 +202,13 @@
 		3783427528CF243200237B99 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
-				37B0D1FA28D316A1001B1BEE /* Setting_Message_Write */,
-				37B0D1F128D30697001B1BEE /* Setting_Message */,
-				3783427228CF231100237B99 /* Setting */,
 				3783427028CF219B00237B99 /* Main */,
 				37C24A7D28D0D93300B2A415 /* Main_Register */,
 				37C24A8228D0D9AC00B2A415 /* Main_Detail */,
 				3783427128CF22EB00237B99 /* Calendar */,
+				3783427228CF231100237B99 /* Setting */,
+				37B0D1F128D30697001B1BEE /* Setting_Message */,
+				37B0D1FA28D316A1001B1BEE /* Setting_Message_Write */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
