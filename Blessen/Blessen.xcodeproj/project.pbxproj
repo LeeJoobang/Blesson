@@ -260,8 +260,8 @@
 			isa = PBXGroup;
 			children = (
 				37B0D1F228D306CC001B1BEE /* MessageViewController.swift */,
-				37B0D1F628D306F0001B1BEE /* MessageTableViewCell.swift */,
 				37B0D1F428D306DB001B1BEE /* MessageView.swift */,
+				37B0D1F628D306F0001B1BEE /* MessageTableViewCell.swift */,
 			);
 			path = Setting_Message;
 			sourceTree = "<group>";

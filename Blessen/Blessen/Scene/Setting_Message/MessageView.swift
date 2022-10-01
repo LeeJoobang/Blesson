@@ -4,7 +4,7 @@ class MessageView: BaseView{
     
     let tableView: UITableView = {
         let view = UITableView(frame: .zero, style: .insetGrouped)
-        view.backgroundColor = .white
+        view.backgroundColor = Constants.BaseColor.background
         return view
     }()
     
@@ -30,5 +30,4 @@ class MessageView: BaseView{
             make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom)
         }
     }
-    
 }

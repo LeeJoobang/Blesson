@@ -35,7 +35,7 @@ class MessageViewController: BaseViewController{
     
     override func configure(){
         navigationItem.title = "메세지 설정"
-        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: Constants.BaseColor.text]
         
         let backButton = UIBarButtonItem()
         backButton.title = "Message"
@@ -43,7 +43,7 @@ class MessageViewController: BaseViewController{
         self.navigationController?.navigationBar.topItem?.backBarButtonItem?.tintColor = .black
         
         let saveButton = UIBarButtonItem(title: "작성", style: .plain, target: self, action: #selector(writeButtonClicked))
-        saveButton.tintColor = .black
+        saveButton.tintColor = Constants.BaseColor.text
         navigationItem.rightBarButtonItems = [saveButton]
     }
 
@@ -98,7 +98,8 @@ extension MessageViewController: UITableViewDelegate, UITableViewDataSource{
         }
         self.messageView.tableView.reloadData()
     }
-
+    
+    // MARK: checkbox toggle 기능
     @objc func checkboxButtonClicked(_ sender: UIButton){
         let buttonClicked = tasks[sender.tag]
         var buttonChecked = [Bool]()

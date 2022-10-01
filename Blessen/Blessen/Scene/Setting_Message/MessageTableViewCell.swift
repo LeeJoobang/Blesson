@@ -4,20 +4,21 @@ import SnapKit
 class MessageViewTableCell: BaseTableViewCell {
     let totalView: UIView = {
         let view = UIView()
-        view.backgroundColor = .secondarySystemBackground
+        view.backgroundColor = Constants.BaseColor.secondBackground
         return view
     }()
     
     let checkBoxButton: UIButton = {
         let check = UIButton()
-        check.backgroundColor = Constants.BaseColor.background
+        check.backgroundColor = Constants.BaseColor.secondBackground
         check.tintColor = Constants.BaseColor.text
         return check
     }()
 
     let messageLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .clear
+        label.backgroundColor = Constants.BaseColor.secondBackground
+        label.tintColor = Constants.BaseColor.text
         label.textAlignment = .left
         label.font = UIFont(name: "Halvetica", size: 15)
         label.numberOfLines = 1
