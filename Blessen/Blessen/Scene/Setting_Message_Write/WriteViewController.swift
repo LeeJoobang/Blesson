@@ -30,6 +30,7 @@ class WriteViewController: BaseViewController{
         self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: Constants.BaseColor.text]
         writeView.writeTextView.becomeFirstResponder()
         self.tabBarController?.tabBar.isHidden = true
+        self.tabBarController?.tabBar.isTranslucent = true
     }
     
     // MARK: 완료버튼 - endediting, save text
