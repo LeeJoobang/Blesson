@@ -36,6 +36,6 @@
 
 #### 프로젝트 구현
 
-| https://user-images.githubusercontent.com/84652513/193572589-aaf84b6e-55a6-4c71-bf89-dd36dd12a8b6.gif | https://user-images.githubusercontent.com/84652513/193572863-01bfc8b7-9f5a-4ea8-b239-1644b685d303.gif |
+| <p align = "center"><img src = "https://user-images.githubusercontent.com/84652513/193572589-aaf84b6e-55a6-4c71-bf89-dd36dd12a8b6.gif"></p> | <p align="center"><img src="https://user-images.githubusercontent.com/84652513/193572863-01bfc8b7-9f5a-4ea8-b239-1644b685d303.gif"></p> |
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
 
