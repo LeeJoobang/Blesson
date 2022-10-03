@@ -31,3 +31,11 @@
 | 2022/09/26 - 27 | [9월 26 - 27일 개발일지](https://inframince.notion.site/2022-09-26-27-a4d1cb8ab76442d088b35173538f429e) |      |
 |   2022/10/02    | [Blesson 소개 자료](https://inframince.notion.site/Blesson-974a53bf6d47477dbc2db0501b0507ad) |      |
 |   2022/10/03    | [Blesson 회고](https://inframince.notion.site/2022-10-02-927b9b411dfa4e03a70fb3f394dd5fa2) |      |
+
+------
+
+#### 프로젝트 구현
+
+| https://user-images.githubusercontent.com/84652513/193572589-aaf84b6e-55a6-4c71-bf89-dd36dd12a8b6.gif | https://user-images.githubusercontent.com/84652513/193572863-01bfc8b7-9f5a-4ea8-b239-1644b685d303.gif |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+
