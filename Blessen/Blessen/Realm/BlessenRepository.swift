@@ -101,6 +101,7 @@ final class StudentRepository: StudentRepositoryType {
         return localRealm.objects(Student.self).sorted(byKeyPath: sort, ascending: true)
     }
     
+    
     func fetchFilter() -> Results<Student> {
         return localRealm.objects(Student.self).filter("objectID")
     }
@@ -117,6 +118,16 @@ final class StudentRepository: StudentRepositoryType {
             localRealm.delete(data)
         }
     }
+//    func deleteData(data: Lesson){
+//        try! localRealm.write{
+//            localRealm.delete(data)
+//        }
+//    }
+//    func deleteData(data: Progress){
+//        try! localRealm.write{
+//            localRealm.delete(data)
+//        }
+//    }
     
     func removeImageFromDocument(filename: String) {
         guard let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }

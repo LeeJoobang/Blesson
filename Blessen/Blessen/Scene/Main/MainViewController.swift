@@ -13,6 +13,7 @@ class MainViewController: BaseViewController {
     let studentRepository = StudentRepository()
     let lessonRepository = LessonRepository()
     let progressRepository = ProgressRepository()
+    
     var filterStudent : Results<Student>! {
         didSet {
             self.mainView.tableView.reloadData()

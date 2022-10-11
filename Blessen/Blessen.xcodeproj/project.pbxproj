@@ -50,6 +50,9 @@
 		37C24A8A28D0E1DA00B2A415 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C24A8928D0E1DA00B2A415 /* DetailView.swift */; };
 		37C24A8C28D0E1F800B2A415 /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C24A8B28D0E1F800B2A415 /* DetailTableViewCell.swift */; };
 		37CAF62928E08CF6006D0B0B /* FileManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CAF62828E08CF6006D0B0B /* FileManagerExtension.swift */; };
+		37D6403828F53FD8001F0B69 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 37D6403728F53FD8001F0B69 /* FirebaseAnalyticsWithoutAdIdSupport */; };
+		37D6403A28F53FD8001F0B69 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 37D6403928F53FD8001F0B69 /* FirebaseCrashlytics */; };
+		37D6403C28F53FD8001F0B69 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 37D6403B28F53FD8001F0B69 /* FirebaseMessaging */; };
 		37F632E328D1CED80016CF5A /* RegisterImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F632E228D1CED80016CF5A /* RegisterImageCell.swift */; };
 		37F632E528D205380016CF5A /* UnderLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F632E428D205380016CF5A /* UnderLineTextField.swift */; };
 		37FDEA9F28D05523002CE136 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 37FDEA9E28D05523002CE136 /* SnapKit */; };
@@ -114,8 +117,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37D6403C28F53FD8001F0B69 /* FirebaseMessaging in Frameworks */,
 				37031F3328D59BBA0080D8D9 /* RealmSwift in Frameworks */,
+				37D6403828F53FD8001F0B69 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				37031F3128D59BBA0080D8D9 /* Realm in Frameworks */,
+				37D6403A28F53FD8001F0B69 /* FirebaseCrashlytics in Frameworks */,
 				37FDEA9F28D05523002CE136 /* SnapKit in Frameworks */,
 				3754052A28DB0E82004BC475 /* FSCalendar in Frameworks */,
 				37B0D20328D3421F001B1BEE /* IQKeyboardManagerSwift in Frameworks */,
@@ -320,6 +326,9 @@
 				37031F3028D59BBA0080D8D9 /* Realm */,
 				37031F3228D59BBA0080D8D9 /* RealmSwift */,
 				3754052928DB0E82004BC475 /* FSCalendar */,
+				37D6403728F53FD8001F0B69 /* FirebaseAnalyticsWithoutAdIdSupport */,
+				37D6403928F53FD8001F0B69 /* FirebaseCrashlytics */,
+				37D6403B28F53FD8001F0B69 /* FirebaseMessaging */,
 			);
 			productName = Blessen;
 			productReference = 3783425928CF20A700237B99 /* Blessen.app */;
@@ -354,6 +363,7 @@
 				37B0D20128D3421F001B1BEE /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				37031F2F28D59BBA0080D8D9 /* XCRemoteSwiftPackageReference "realm-swift" */,
 				3754052828DB0E82004BC475 /* XCRemoteSwiftPackageReference "FSCalendar" */,
+				37D6403628F53FD8001F0B69 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 3783425A28CF20A700237B99 /* Products */;
 			projectDirPath = "";
@@ -568,6 +578,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Blessen/Blessen.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = H2FTMY38H7;
@@ -601,6 +612,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Blessen/Blessen.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = H2FTMY38H7;
@@ -677,6 +689,14 @@
 				minimumVersion = 6.5.0;
 			};
 		};
+		37D6403628F53FD8001F0B69 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 		37FDEA9D28D05523002CE136 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -707,6 +727,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 37B0D20128D3421F001B1BEE /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
 			productName = IQKeyboardManagerSwift;
+		};
+		37D6403728F53FD8001F0B69 /* FirebaseAnalyticsWithoutAdIdSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 37D6403628F53FD8001F0B69 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsWithoutAdIdSupport;
+		};
+		37D6403928F53FD8001F0B69 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 37D6403628F53FD8001F0B69 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		37D6403B28F53FD8001F0B69 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 37D6403628F53FD8001F0B69 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
 		};
 		37FDEA9E28D05523002CE136 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
