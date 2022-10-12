@@ -31,6 +31,7 @@
 | 2022/09/26 - 27 | [9월 26 - 27일 개발일지](https://inframince.notion.site/2022-09-26-27-a4d1cb8ab76442d088b35173538f429e) |      |
 |   2022/10/02    | [Blesson 소개 자료](https://inframince.notion.site/Blesson-974a53bf6d47477dbc2db0501b0507ad) |      |
 |   2022/10/03    | [Blesson 회고1](https://inframince.notion.site/2022-10-02-927b9b411dfa4e03a70fb3f394dd5fa2) [Blesson 회고2](https://velog.io/@hii5074/Blesson-%EA%B0%9C%EB%B0%9C-%ED%9A%8C%EA%B3%A0) |      |
+|   2022/10/12    | [업데이트 방향](https://inframince.notion.site/Blesson-243f233a12ba4f099d926872479b76eb) |      |
 
 
 
