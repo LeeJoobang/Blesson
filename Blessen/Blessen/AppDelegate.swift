@@ -109,6 +109,4 @@ extension AppDelegate: MessagingDelegate {
         userInfo: dataDict
       )
     }
-    
-    
 }

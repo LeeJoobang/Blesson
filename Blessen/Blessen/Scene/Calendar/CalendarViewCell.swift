@@ -7,6 +7,7 @@ class CalenderViewCell: BaseTableViewCell {
     let calendar: FSCalendar = {
         let view = FSCalendar()
         view.backgroundColor = Constants.BaseColor.secondBackground
+        view.appearance.titleDefaultColor = Constants.BaseColor.text
         view.scrollEnabled = true
         view.scrollDirection = .vertical
         view.locale = Locale(identifier: "ko_KR")
