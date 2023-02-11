@@ -1,16 +1,19 @@
-### Blesson
+## Blesson
+
+### 앱 소개
+
+| <p align = "center"><img src = "https://user-images.githubusercontent.com/84652513/193572589-aaf84b6e-55a6-4c71-bf89-dd36dd12a8b6.gif"></p> | <p align="center"><img src="https://user-images.githubusercontent.com/84652513/193572863-01bfc8b7-9f5a-4ea8-b239-1644b685d303.gif"></p> |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+
+- 프리랜서 강의 활동시 일정이 일정치 않아 인원 및 수입 관리 내용을 확인하는데 번거로움이 있습니다. 이에 사용자에게 현재 등록된 학생에 대한 관리를 돕기 위해 서비스를 제공하는 앱을 만들었습니다. 개인 학생 별 - 등록 횟수 및 레슨비, 일별 수업 참가인원 명단, 개인 학생별 메세지 발송, 메세지 템플릿 작성 등의 서비스를 제공합니다.
 
 ------
 
-#### 앱 소개 및 특징
+### 개발 기간 및 사용 기술
 
-- 이름: Blesson
-- 소개: 프리랜서 강의 활동하는 분들의 레슨 활동 관리 앱
-- 특징:
-  - 프리랜서 강의 활동시 일정이 일정치 않아 인원 및 수입 관리 내용을 확인하는데 번거로움이 있습니다.
-  - 이에 사용자에게 학생에 대한 정보 정리, 일별 수업 참가인원 명단, 메세지 발송 서비스를 제공합니다.
+#### 개발기간
 
-------
+- '22. 08. 29. - 10. 12.
 
 #### 프로젝트 진행사항
 
@@ -33,12 +36,22 @@
 |   2022/10/03    | [Blesson 회고1](https://inframince.notion.site/2022-10-02-de9dd0be55a842ef878c914cf4f7c370) [Blesson 회고2](https://velog.io/@hii5074/Blesson-%EA%B0%9C%EB%B0%9C-%ED%9A%8C%EA%B3%A0) |      |
 |   2022/10/12    | [업데이트 방향](https://inframince.notion.site/Blesson-bb28fcd031724a488df50302481f4e29) |      |
 
+#### 사용기술
 
+- UIKit, Autolayout, Realm, SnapKit, Firebase, FSCalendar, SPM, Figma, MessageUI
 
 ------
 
-#### 프로젝트 구현
+### 고민과 해결
 
-| <p align = "center"><img src = "https://user-images.githubusercontent.com/84652513/193572589-aaf84b6e-55a6-4c71-bf89-dd36dd12a8b6.gif"></p> | <p align="center"><img src="https://user-images.githubusercontent.com/84652513/193572863-01bfc8b7-9f5a-4ea8-b239-1644b685d303.gif"></p> |
-| :----------------------------------------------------------: | :----------------------------------------------------------: |
+- 신규회원 정보 입력에 구성된 데이터 테이블이 각기 다른 뷰에서 사용될 때 중복 데이터 저장 방지를 위하여 정규화를 진행하였음. 이를 통해 데이터의 독립성을 높이고자 하였음.
 
+- 뷰 객체에 대한 UI나 레이아웃, Import 등 뷰 컨트롤러에서 공통적으로 작성되는 코드를 구조화함으로써 가독성을 높이고, 코드 중복을 줄이기 위해 BaseViewController를 사용
+
+- Firebase Cloud Messaging(FCM)을 이용해 푸시 알림 설정
+
+
+
+### 회고
+
+- 링크: [Blesson 개발 회고](https://velog.io/@hii5074/Blesson-개발-회고)

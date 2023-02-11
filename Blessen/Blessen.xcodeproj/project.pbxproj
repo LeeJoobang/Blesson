@@ -106,7 +106,6 @@
 		37C24A8B28D0E1F800B2A415 /* DetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
 		37CAF62828E08CF6006D0B0B /* FileManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerExtension.swift; sourceTree = "<group>"; };
 		37D6403D28F54961001F0B69 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		37D6403F28F54970001F0B69 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../900_인증서 관리+중요정보/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		37D6404A28F5A241001F0B69 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		37D6404C28F5A501001F0B69 /* Blessen.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Blessen.entitlements; sourceTree = "<group>"; };
 		37F632E228D1CED80016CF5A /* RegisterImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterImageCell.swift; sourceTree = "<group>"; };
@@ -197,8 +196,8 @@
 			isa = PBXGroup;
 			children = (
 				37C24A7728D08A6000B2A415 /* SettingViewController.swift */,
-				37C24A7B28D08A7800B2A415 /* SettingTableViewCell.swift */,
 				37C24A7928D08A6A00B2A415 /* SettingView.swift */,
+				37C24A7B28D08A7800B2A415 /* SettingTableViewCell.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -207,7 +206,6 @@
 			isa = PBXGroup;
 			children = (
 				37D6403D28F54961001F0B69 /* GoogleService-Info.plist */,
-				37D6403F28F54970001F0B69 /* GoogleService-Info.plist */,
 				37BC2E1128D05DB4007B49EE /* Transition+Extension.swift */,
 				37CAF62828E08CF6006D0B0B /* FileManagerExtension.swift */,
 			);
@@ -608,7 +606,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jooyoung.Blesson;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -642,7 +640,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jooyoung.Blesson;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
