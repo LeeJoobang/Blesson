@@ -86,6 +86,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
             case 2: // 연락처
                 cell.itemTextField.text = studentTask.phoneNumber
                 cell.itemTextField.keyboardType = .numberPad
+                cell.itemTextField.inputView = nil
                 cell.itemTextField.tag = 2
             case 3: // 레슨시작일
                 cell.itemTextField.text = lesssonTask.startDate
