@@ -33,10 +33,10 @@ class DetailImageCell: BaseTableViewCell {
     }
     
     override func setConstraints() {
+        // 이미지 크기 키우기
         idImageView.snp.makeConstraints { make in
-            make.centerX.equalTo(self.contentView)
-            make.centerY.equalTo(self.contentView)
-            make.width.equalTo(self.contentView).multipliedBy(0.2)
+            make.center.equalTo(self.contentView)
+            make.width.equalTo(self.contentView).multipliedBy(0.25)
             make.height.equalTo(idImageView.snp.width)
         }
         
