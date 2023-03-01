@@ -50,7 +50,7 @@ class RegisterImageCell: BaseTableViewCell {
         idImageView.snp.makeConstraints { make in
             make.centerX.equalTo(self.contentView)
             make.centerY.equalTo(self.contentView)
-            make.width.equalTo(self.contentView).multipliedBy(0.2)
+            make.width.equalTo(self.contentView).multipliedBy(0.5)
             make.height.equalTo(idImageView.snp.width)
         }
         

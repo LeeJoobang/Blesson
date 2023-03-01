@@ -191,7 +191,7 @@ extension RegisterViewController: UITableViewDelegate, UITableViewDataSource{
     }
     // MARK: 로우 높이
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        // 이미지 섹션 높이
+        // 이미지 섹션 높이 -> UIScreen 1/4 크기 확장
         if indexPath.section == 0 {
             let screenHeight = UIScreen.main.bounds.height
             let screenWidth = UIScreen.main.bounds.width
