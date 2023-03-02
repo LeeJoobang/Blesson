@@ -47,6 +47,7 @@ class RegisterImageCell: BaseTableViewCell {
     }
     
     override func setConstraints() {
+        // 등록시 이미지 원의 사이즈 증가
         idImageView.snp.makeConstraints { make in
             make.centerX.equalTo(self.contentView)
             make.centerY.equalTo(self.contentView)

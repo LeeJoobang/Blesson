@@ -6,8 +6,12 @@ import SnapKit
 import RealmSwift
 import SwiftUI
 import IQKeyboardManagerSwift
+import CropViewController
+import AVFoundation
 
-class RegisterViewController: BaseViewController{
+
+
+class RegisterViewController: BaseViewController, CropViewControllerDelegate{
     
     var registerView = RegisterView()
     let registetList = ["이름", "주소", "연락처", "레슨시작일", "레슨횟수", "레슨비"]
@@ -20,9 +24,12 @@ class RegisterViewController: BaseViewController{
     // MARK: date picker
     let datePicker = UIDatePicker()
     
+    
     // MARK: image picker 추가
     let picker = UIImagePickerController()
     private var imageData: UIImage?
+    var cropView = UIView()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,8 +99,9 @@ class RegisterViewController: BaseViewController{
         } else {
             showAlertMessage(title: "알림", message: "학생 정보를 입력해주세요.", ok: "확인", cancel: "취소")
         }
-      
+        
     }
+    
     
     // 오늘 날짜 생성함수
     func calculateToday() -> String{
@@ -127,7 +135,7 @@ extension RegisterViewController: UITableViewDelegate, UITableViewDataSource{
         switch indexPath.section {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: RegisterImageCell.reuseIdentifier, for: indexPath) as! RegisterImageCell
-            cell.imageButton.addTarget(self, action: #selector(imageButtonClicked), for: .touchUpInside)
+            cell.imageButton.addTarget(self, action: #selector(imageButtonClicked(_:)), for: .touchUpInside)
             cell.idImageView.image = imageData
             cell.idImageView.contentMode = .scaleToFill
             return cell
@@ -159,36 +167,49 @@ extension RegisterViewController: UITableViewDelegate, UITableViewDataSource{
         }
     }
     
-    // MARK: image button clicked - album, camera 기능 적용 + alert: action Sheet
-    @objc func imageButtonClicked(){
-        let alert = UIAlertController(title: "알림", message: "사진을 추가해주시겠습니까?", preferredStyle: .actionSheet)
-        let library = UIAlertAction(title: "사진앨범", style: .default) { (action) in self.openLibrary() }
-        let camera = UIAlertAction(title: "카메라", style: .default) { (action) in self.openCamera() }
-        let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-        alert.addAction(library)
-        alert.addAction(camera)
-        alert.addAction(cancel)
+    @objc func imageButtonClicked(_ sender: UIButton) {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let albumAction = UIAlertAction(title: "사진앨범", style: .default) { _ in
+            self.showImagePicker(sourceType: .photoLibrary)
+        }
+        
+        let cameraAction = UIAlertAction(title: "카메라", style: .default) { _ in
+            self.showImagePicker(sourceType: .camera)
+        }
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        
+        alert.addAction(albumAction)
+        alert.addAction(cameraAction)
+        alert.addAction(cancelAction)
+        
+        if let popoverController = alert.popoverPresentationController {
+            popoverController.sourceView = sender
+            popoverController.sourceRect = sender.bounds
+        }
+        
         present(alert, animated: true, completion: nil)
     }
     
     // MARK: phpickercontroller를 통해서 image 1개 선택
-    func openLibrary(){
-        var config = PHPickerConfiguration(photoLibrary: .shared())
-        config.selectionLimit = 1
-        config.filter = .images
-        let vc = PHPickerViewController(configuration: config)
-        vc.delegate = self
-        present(vc, animated: true)
-    }
-    // MARK: 카메라 기능
-    func openCamera(){
-        if (UIImagePickerController .isSourceTypeAvailable(.camera)) {
-            picker.sourceType = .camera
-            present(picker, animated: false, completion: nil)
-        }else {
-            print("Camera not available")
-        }
-    }
+    //    func openLibrary(){
+    //        var config = PHPickerConfiguration(photoLibrary: .shared())
+    //        config.selectionLimit = 1
+    //        config.filter = .images
+    //        let vc = PHPickerViewController(configuration: config)
+    //        vc.delegate = self
+    //        present(vc, animated: true)
+    //    }
+    //    // MARK: 카메라 기능
+    //    func openCamera(){
+    //        if (UIImagePickerController .isSourceTypeAvailable(.camera)) {
+    //            picker.sourceType = .camera
+    //            present(picker, animated: false, completion: nil)
+    //        }else {
+    //            print("Camera not available")
+    //        }
+    //    }
     // MARK: 로우 높이
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         // 이미지 섹션 높이 -> UIScreen 1/4 크기 확장
@@ -274,33 +295,106 @@ extension RegisterViewController: UITextFieldDelegate{
 }
 
 // MARK: image phpicker를 사용해 image 선택하고, imageData에 담은 후 cell 생성시 데이터를  담는다.
-extension RegisterViewController: PHPickerViewControllerDelegate{
-    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        picker.dismiss(animated: true, completion: nil)
-        let group = DispatchGroup()
-        results.forEach { result in
-            group.enter()
-            result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] reading, error in
-                defer{
-                    group.leave()
-                }
-                guard let image = reading as? UIImage, error == nil else { return }
-                self?.imageData = image
-            }
-        }
-        group.notify(queue: .main) {
-            self.registerView.tableView.reloadData()
-        }
-    }
-}
+//extension RegisterViewController: PHPickerViewControllerDelegate{
+//    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+//        picker.dismiss(animated: true, completion: nil)
+//
+//        // 선택한 이미지를 가져와서 크롭합니다.
+//        let group = DispatchGroup()
+//        results.forEach { result in
+//            group.enter()
+//            result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] reading, error in
+//                defer {
+//                    group.leave()
+//                }
+//                guard let image = reading as? UIImage, error == nil else { return }
+//                let croppedImage = self?.cropToCircle(image: image)
+//                self?.imageData = croppedImage
+//            }
+//        }
+//        group.notify(queue: .main) {
+//            self.registerView.tableView.reloadData()
+//        }
+//    }
+//}
 
 // MARK: 앨범 - 이미지 선택 후 디스플레이
 extension RegisterViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate{
+    func showImagePicker(){
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        present(imagePickerController, animated: true, completion: nil)
+    }
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[.originalImage] as? UIImage {
-            imageData = image
+        picker.dismiss(animated: true, completion: nil)
+        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
+            return
         }
-        self.registerView.tableView.reloadData()
-        dismiss(animated: true, completion: nil)
+        let cropViewController = CropViewController(croppingStyle: .circular, image: image)
+        cropViewController.delegate = self
+        present(cropViewController, animated: true, completion: nil)
+    }
+    
+    
+    private func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func fetchImage(for asset: PHAsset, completion: @escaping (UIImage?) -> Void) {
+        let options = PHImageRequestOptions()
+        options.deliveryMode = .highQualityFormat
+        options.isNetworkAccessAllowed = true
+        options.isSynchronous = false
+        
+        let imageSize = CGSize(width: 200, height: 200)
+        let imageManager = PHImageManager.default()
+        imageManager.requestImage(for: asset, targetSize: imageSize, contentMode: .aspectFit, options: options) { (image, info) in
+            guard let image = image else {
+                completion(nil)
+                return
+            }
+            completion(image)
+        }
+    }
+    
+}
+
+
+extension UIImage {
+    var circularImage: UIImage? {
+        let squareImage = fixOrientation().cropToSquare()
+        let imageSize = CGSize(width: min(size.width, size.height), height: min(size.width, size.height))
+        let renderer = UIGraphicsImageRenderer(size: imageSize)
+        return renderer.image { _ in
+            UIBezierPath(roundedRect: CGRect(origin: .zero, size: imageSize), cornerRadius: imageSize.width / 2).addClip()
+            squareImage.draw(in: CGRect(origin: CGPoint(x: (imageSize.width - squareImage.size.width) / 2, y: (imageSize.height - squareImage.size.height) / 2), size: squareImage.size))
+        }
+    }
+    
+    func fixOrientation() -> UIImage {
+        if self.imageOrientation == UIImage.Orientation.up {
+            return self
+        }
+        UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
+        self.draw(in: CGRect(origin: .zero, size: self.size))
+        let normalizedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return normalizedImage ?? self
+    }
+    
+    func cropToSquare() -> UIImage {
+        let originalWidth  = self.size.width
+        let originalHeight = self.size.height
+        let cropSquare = min(self.size.width, self.size.height)
+        let offsetX = (originalWidth - cropSquare) / 2.0
+        let offsetY = (originalHeight - cropSquare) / 2.0
+        
+        let rect = CGRect(x: offsetX, y: offsetY, width: cropSquare, height: cropSquare)
+        let imageRef = self.cgImage!.cropping(to: rect)
+        let cropped = UIImage(cgImage: imageRef!, scale: self.scale, orientation: self.imageOrientation)
+        return cropped
     }
 }

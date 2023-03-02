@@ -15,6 +15,8 @@
 		370F145A28D8CC9500AF6F5F /* DetailProgressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370F145928D8CC9500AF6F5F /* DetailProgressCell.swift */; };
 		373E58DC28D1BDFD00F9EEF5 /* Lesson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E58DB28D1BDFD00F9EEF5 /* Lesson.swift */; };
 		373E58DE28D1BE1E00F9EEF5 /* Progress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E58DD28D1BE1E00F9EEF5 /* Progress.swift */; };
+		3750C52129B0DF620091DBC8 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3750C52029B0DF620091DBC8 /* TestViewController.swift */; };
+		3750C52429B0E0020091DBC8 /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 3750C52329B0E0020091DBC8 /* CropViewController */; };
 		3754052A28DB0E82004BC475 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 3754052928DB0E82004BC475 /* FSCalendar */; };
 		3754052C28DB11AD004BC475 /* CalendarViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3754052B28DB11AD004BC475 /* CalendarViewCell.swift */; };
 		3783425D28CF20A700237B99 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3783425C28CF20A700237B99 /* AppDelegate.swift */; };
@@ -70,6 +72,7 @@
 		370F145928D8CC9500AF6F5F /* DetailProgressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailProgressCell.swift; sourceTree = "<group>"; };
 		373E58DB28D1BDFD00F9EEF5 /* Lesson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson.swift; sourceTree = "<group>"; };
 		373E58DD28D1BE1E00F9EEF5 /* Progress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Progress.swift; sourceTree = "<group>"; };
+		3750C52029B0DF620091DBC8 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		3754052B28DB11AD004BC475 /* CalendarViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewCell.swift; sourceTree = "<group>"; };
 		3783425928CF20A700237B99 /* Blessen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blessen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3783425C28CF20A700237B99 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -123,6 +126,7 @@
 			files = (
 				37D6404728F59549001F0B69 /* FirebaseMessaging in Frameworks */,
 				37031F3328D59BBA0080D8D9 /* RealmSwift in Frameworks */,
+				3750C52429B0E0020091DBC8 /* CropViewController in Frameworks */,
 				37D6404328F59549001F0B69 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				37031F3128D59BBA0080D8D9 /* Realm in Frameworks */,
 				37D6404528F59549001F0B69 /* FirebaseCrashlytics in Frameworks */,
@@ -295,6 +299,7 @@
 				37C24A8528D0DFBE00B2A415 /* RegisterView.swift */,
 				37C24A8728D0E0D300B2A415 /* RegisterTableViewCell.swift */,
 				37F632E228D1CED80016CF5A /* RegisterImageCell.swift */,
+				3750C52029B0DF620091DBC8 /* TestViewController.swift */,
 			);
 			path = Main_Register;
 			sourceTree = "<group>";
@@ -336,6 +341,7 @@
 				37D6404228F59549001F0B69 /* FirebaseAnalyticsWithoutAdIdSupport */,
 				37D6404428F59549001F0B69 /* FirebaseCrashlytics */,
 				37D6404628F59549001F0B69 /* FirebaseMessaging */,
+				3750C52329B0E0020091DBC8 /* CropViewController */,
 			);
 			productName = Blessen;
 			productReference = 3783425928CF20A700237B99 /* Blessen.app */;
@@ -371,6 +377,7 @@
 				37031F2F28D59BBA0080D8D9 /* XCRemoteSwiftPackageReference "realm-swift" */,
 				3754052828DB0E82004BC475 /* XCRemoteSwiftPackageReference "FSCalendar" */,
 				37D6404128F59549001F0B69 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				3750C52229B0E0020091DBC8 /* XCRemoteSwiftPackageReference "TOCropViewController" */,
 			);
 			productRefGroup = 3783425A28CF20A700237B99 /* Products */;
 			projectDirPath = "";
@@ -407,6 +414,7 @@
 				37B0D1F728D306F0001B1BEE /* MessageTableViewCell.swift in Sources */,
 				37C24A8428D0D9D300B2A415 /* DetailViewController.swift in Sources */,
 				37C24A7A28D08A6A00B2A415 /* SettingView.swift in Sources */,
+				3750C52129B0DF620091DBC8 /* TestViewController.swift in Sources */,
 				37BC2E1028D05B13007B49EE /* MainTableViewCell.swift in Sources */,
 				37B0D1F528D306DB001B1BEE /* MessageView.swift in Sources */,
 				37FDEAA128D056AF002CE136 /* BaseViewController.swift in Sources */,
@@ -681,6 +689,14 @@
 				minimumVersion = 10.0.0;
 			};
 		};
+		3750C52229B0E0020091DBC8 /* XCRemoteSwiftPackageReference "TOCropViewController" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/TimOliver/TOCropViewController.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		3754052828DB0E82004BC475 /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/WenchaoD/FSCalendar.git";
@@ -725,6 +741,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 37031F2F28D59BBA0080D8D9 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
+		};
+		3750C52329B0E0020091DBC8 /* CropViewController */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3750C52229B0E0020091DBC8 /* XCRemoteSwiftPackageReference "TOCropViewController" */;
+			productName = CropViewController;
 		};
 		3754052928DB0E82004BC475 /* FSCalendar */ = {
 			isa = XCSwiftPackageProductDependency;
