@@ -11,7 +11,7 @@ import AVFoundation
 
 
 
-class RegisterViewController: BaseViewController, CropViewControllerDelegate{
+class RegisterViewController: BaseViewController{
     
     var registerView = RegisterView()
     let registetList = ["이름", "주소", "연락처", "레슨시작일", "레슨횟수", "레슨비"]
@@ -24,12 +24,10 @@ class RegisterViewController: BaseViewController, CropViewControllerDelegate{
     // MARK: date picker
     let datePicker = UIDatePicker()
     
-    
     // MARK: image picker 추가
     let picker = UIImagePickerController()
     private var imageData: UIImage?
     var cropView = UIView()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -158,6 +156,8 @@ extension RegisterViewController: UITableViewDelegate, UITableViewDataSource{
                 cell.itemTextField.text = registData[indexPath.row]
             case 2, 4, 5: // 레슨횟수, 레슨비 - ',' 적용, 숫자패드
                 cell.itemTextField.keyboardType = .numberPad
+                cell.itemTextField.inputView = nil
+                
             default:
                 fatalError()
             }
@@ -192,24 +192,6 @@ extension RegisterViewController: UITableViewDelegate, UITableViewDataSource{
         present(alert, animated: true, completion: nil)
     }
     
-    // MARK: phpickercontroller를 통해서 image 1개 선택
-    //    func openLibrary(){
-    //        var config = PHPickerConfiguration(photoLibrary: .shared())
-    //        config.selectionLimit = 1
-    //        config.filter = .images
-    //        let vc = PHPickerViewController(configuration: config)
-    //        vc.delegate = self
-    //        present(vc, animated: true)
-    //    }
-    //    // MARK: 카메라 기능
-    //    func openCamera(){
-    //        if (UIImagePickerController .isSourceTypeAvailable(.camera)) {
-    //            picker.sourceType = .camera
-    //            present(picker, animated: false, completion: nil)
-    //        }else {
-    //            print("Camera not available")
-    //        }
-    //    }
     // MARK: 로우 높이
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         // 이미지 섹션 높이 -> UIScreen 1/4 크기 확장
@@ -294,46 +276,35 @@ extension RegisterViewController: UITextFieldDelegate{
     }
 }
 
-// MARK: image phpicker를 사용해 image 선택하고, imageData에 담은 후 cell 생성시 데이터를  담는다.
-//extension RegisterViewController: PHPickerViewControllerDelegate{
-//    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-//        picker.dismiss(animated: true, completion: nil)
-//
-//        // 선택한 이미지를 가져와서 크롭합니다.
-//        let group = DispatchGroup()
-//        results.forEach { result in
-//            group.enter()
-//            result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] reading, error in
-//                defer {
-//                    group.leave()
-//                }
-//                guard let image = reading as? UIImage, error == nil else { return }
-//                let croppedImage = self?.cropToCircle(image: image)
-//                self?.imageData = croppedImage
-//            }
-//        }
-//        group.notify(queue: .main) {
-//            self.registerView.tableView.reloadData()
-//        }
-//    }
-//}
-
+extension RegisterViewController: CropViewControllerDelegate{
+    // 이미지를 크롭한 후 호출됩니다.
+    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+        imageData = image
+        registerView.tableView.reloadData()
+        cropViewController.dismiss(animated: true, completion: nil)
+    }
+}
 // MARK: 앨범 - 이미지 선택 후 디스플레이
 extension RegisterViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate{
-    func showImagePicker(){
+    func showImagePicker(sourceType: UIImagePickerController.SourceType){
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
+        imagePickerController.sourceType = sourceType
         present(imagePickerController, animated: true, completion: nil)
     }
     
+    // 앨범에서 이미지를 선택했을 때 호출됩니다.
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        picker.dismiss(animated: true, completion: nil)
-        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
-            return
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            let cropViewController = CropViewController(croppingStyle: .circular, image: image)
+            cropViewController.delegate = self
+            picker.pushViewController(cropViewController, animated: true)
         }
-        let cropViewController = CropViewController(croppingStyle: .circular, image: image)
-        cropViewController.delegate = self
-        present(cropViewController, animated: true, completion: nil)
+    }
+    
+    // 이미지 선택을 취소했을 때 호출됩니다.
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
     
     
