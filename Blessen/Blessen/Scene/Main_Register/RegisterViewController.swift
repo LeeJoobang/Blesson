@@ -15,7 +15,7 @@ class RegisterViewController: BaseViewController{
     
     var registerView = RegisterView()
     let registetList = ["이름", "주소", "연락처", "레슨시작일", "레슨횟수", "레슨비"]
-    let placeholderList = ["이름을 입력하세요.", "주소를 입력하세요.", "'-'를 제외하고 입력하세요.", "레슨시작일을 입력하세요.", "ex) 10 or 20", "ex)500000"]
+    let placeholderList = ["이름을 입력하세요.", "주소를 입력하세요.", "'-'를 제외하고 입력하세요.", "레슨시작일을 입력하세요.", "ex) 10 or 20", "ex)500,000"]
     var registData = Array(repeating: "", count: 6)
     let localRealm = try! Realm()
     var studentTasks: Results<Student>!
@@ -154,10 +154,16 @@ extension RegisterViewController: UITableViewDelegate, UITableViewDataSource{
                 datePicker.preferredDatePickerStyle = .inline
                 datePicker.addTarget(self, action: #selector(handleDatePicker), for: .valueChanged)
                 cell.itemTextField.text = registData[indexPath.row]
-            case 2, 4, 5: // 레슨횟수, 레슨비 - ',' 적용, 숫자패드
+            case 2, 4: // ,' 적용, 숫자패드
                 cell.itemTextField.keyboardType = .numberPad
                 cell.itemTextField.inputView = nil
-                
+            case 5: // 레슨비 - ',' 적용, 숫자패드
+                cell.itemTextField.keyboardType = .numberPad
+                cell.itemTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+                // 기존 입력된 값이 있다면 천 단위마다 콤마를 추가해줍니다.
+                if let lessonFee = Double(registData[indexPath.row]) {
+                    cell.itemTextField.text = formatCurrency(value: lessonFee)
+                }
             default:
                 fatalError()
             }
@@ -165,6 +171,37 @@ extension RegisterViewController: UITableViewDelegate, UITableViewDataSource{
         default:
             fatalError()
         }
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        if textField.tag == 5 {
+            if let inputText = textField.text?.replacingOccurrences(of: ",", with: ""),
+               let inputNumber = Double(inputText) {
+                let formattedNumber = formatCurrency(value: inputNumber)
+                textField.text = formattedNumber
+                registData[textField.tag] = formattedNumber
+            } else {
+                textField.text = nil
+                registData[textField.tag] = ""
+            }
+        } else {
+            if let inputText = textField.text {
+                registData[textField.tag] = inputText
+            } else {
+                registData[textField.tag] = ""
+            }
+        }
+    }
+
+    func formatCurrency(value: Double) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.groupingSeparator = ","
+        formatter.decimalSeparator = "."
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 0
+        let result = formatter.string(from: NSNumber(value: value)) ?? "0"
+        return result
     }
     
     @objc func imageButtonClicked(_ sender: UIButton) {
