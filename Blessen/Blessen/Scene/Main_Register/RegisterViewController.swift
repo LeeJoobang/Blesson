@@ -192,7 +192,7 @@ extension RegisterViewController: UITableViewDelegate, UITableViewDataSource{
             }
         }
     }
-
+    
     func formatCurrency(value: Double) -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -218,21 +218,6 @@ extension RegisterViewController: UITableViewDelegate, UITableViewDataSource{
                         // 권한요청 거부 + 재알림창
                         DispatchQueue.main.async {
                             let alert = UIAlertController(title: "앨범 권한이 거부되었습니다.", message: "앨범에 액세스하려면 권한을 허용해야합니다.", preferredStyle: .alert)
-                                    alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
-                                    alert.addAction(UIAlertAction(title: "설정", style: .default, handler: { action in
-                                        if let appSettings = URL(string: UIApplication.openSettingsURLString) {
-                                            UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
-                                        }
-                                    }))
-                                    self.present(alert, animated: true, completion: nil)
-
-                        }
-                    }
-                })
-            } else if status == .denied { // status denied
-                // 권한요청 거부 + 재알림창
-                DispatchQueue.main.async {
-                    let alert = UIAlertController(title: "앨범 권한이 거부되었습니다.", message: "앨범에 액세스하려면 권한을 허용해야합니다.", preferredStyle: .alert)
                             alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
                             alert.addAction(UIAlertAction(title: "설정", style: .default, handler: { action in
                                 if let appSettings = URL(string: UIApplication.openSettingsURLString) {
@@ -240,7 +225,22 @@ extension RegisterViewController: UITableViewDelegate, UITableViewDataSource{
                                 }
                             }))
                             self.present(alert, animated: true, completion: nil)
-
+                            
+                        }
+                    }
+                })
+            } else if status == .denied { // status denied
+                // 권한요청 거부 + 재알림창
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "앨범 권한이 거부되었습니다.", message: "앨범에 액세스하려면 권한을 허용해야합니다.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+                    alert.addAction(UIAlertAction(title: "설정", style: .default, handler: { action in
+                        if let appSettings = URL(string: UIApplication.openSettingsURLString) {
+                            UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
+                        }
+                    }))
+                    self.present(alert, animated: true, completion: nil)
+                    
                 }
             } else if status == .authorized { // 설정에서 사진 허용한 경우
                 self.showImagePicker(sourceType: .photoLibrary)
@@ -258,20 +258,6 @@ extension RegisterViewController: UITableViewDelegate, UITableViewDataSource{
                         // 권한요청 거부 + 재알림창
                         DispatchQueue.main.async {
                             let alert = UIAlertController(title: "카메라 권한이 거부되었습니다.", message: "카메라 액세스하려면 권한을 허용해야합니다.", preferredStyle: .alert)
-                                    alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
-                                    alert.addAction(UIAlertAction(title: "설정", style: .default, handler: { action in
-                                        if let appSettings = URL(string: UIApplication.openSettingsURLString) {
-                                            UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
-                                        }
-                                    }))
-                                    self.present(alert, animated: true, completion: nil)
-                        }
-                    }
-                })
-            } else if status == .denied { // status denied
-                // 권한요청 거부 + 재알림창
-                DispatchQueue.main.async {
-                    let alert = UIAlertController(title: "카메라 권한이 거부되었습니다.", message: "카메라 액세스하려면 권한을 허용해야합니다.", preferredStyle: .alert)
                             alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
                             alert.addAction(UIAlertAction(title: "설정", style: .default, handler: { action in
                                 if let appSettings = URL(string: UIApplication.openSettingsURLString) {
@@ -279,7 +265,21 @@ extension RegisterViewController: UITableViewDelegate, UITableViewDataSource{
                                 }
                             }))
                             self.present(alert, animated: true, completion: nil)
-
+                        }
+                    }
+                })
+            } else if status == .denied { // status denied
+                // 권한요청 거부 + 재알림창
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "카메라 권한이 거부되었습니다.", message: "카메라 액세스하려면 권한을 허용해야합니다.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+                    alert.addAction(UIAlertAction(title: "설정", style: .default, handler: { action in
+                        if let appSettings = URL(string: UIApplication.openSettingsURLString) {
+                            UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
+                        }
+                    }))
+                    self.present(alert, animated: true, completion: nil)
+                    
                 }
             } else if status == .authorized { // 설정에서 사진 허용한 경우
                 self.showImagePicker(sourceType: .camera)
