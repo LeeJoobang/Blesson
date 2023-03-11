@@ -238,7 +238,10 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 0:
-            return 100
+            let screenHeight = UIScreen.main.bounds.height
+            let screenWidth = UIScreen.main.bounds.width
+            let cellHeight = screenHeight / 4
+            return cellHeight
         case 1:
             return 65
         case 2:
