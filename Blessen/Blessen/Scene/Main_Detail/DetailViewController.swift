@@ -1,10 +1,14 @@
 import UIKit
+import CropViewController
+import PhotosUI
+import AVFoundation
+
 import MessageUI
 
 import SnapKit
 import RealmSwift
 
-class DetailViewController: BaseViewController{
+class DetailViewController: BaseViewController, CropViewControllerDelegate{
     
     var detailView = DetailView()
     let detailList = ["이름", "주소", "연락처", "레슨시작일", "누적금액", "누적횟수", "레슨비"]
@@ -68,6 +72,8 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: DetailImageCell.reuseIdentifier, for: indexPath) as! DetailImageCell
             cell.idImageView.image = loadImageFromDocument(filename: "\(studentTask.objectID).jpg")
+            cell.imageButton.addTarget(self, action: #selector(imageButtonClicked(_:)), for: .touchUpInside)
+
             cell.idImageView.contentMode = .scaleAspectFit
 
             return cell
@@ -129,6 +135,103 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
             fatalError()
         }
     }
+//카메라 버튼 이미지 수정
+    @objc func imageButtonClicked(_ sender: UIButton) {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let albumAction = UIAlertAction(title: "사진앨범", style: .default) { _ in
+            let status = PHPhotoLibrary.authorizationStatus()
+            if status == .notDetermined {
+                PHPhotoLibrary.requestAuthorization({ (newStatus) in
+                    if newStatus == PHAuthorizationStatus.authorized {
+                        // 권한 허용됨
+                        self.showImagePicker(sourceType: .photoLibrary)
+                    } else {
+                        // 권한요청 거부 + 재알림창
+                        DispatchQueue.main.async {
+                            let alert = UIAlertController(title: "앨범 권한이 거부되었습니다.", message: "앨범에 액세스하려면 권한을 허용해야합니다.", preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+                            alert.addAction(UIAlertAction(title: "설정", style: .default, handler: { action in
+                                if let appSettings = URL(string: UIApplication.openSettingsURLString) {
+                                    UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
+                                }
+                            }))
+                            self.present(alert, animated: true, completion: nil)
+                            
+                        }
+                    }
+                })
+            } else if status == .denied { // status denied
+                // 권한요청 거부 + 재알림창
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "앨범 권한이 거부되었습니다.", message: "앨범에 액세스하려면 권한을 허용해야합니다.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+                    alert.addAction(UIAlertAction(title: "설정", style: .default, handler: { action in
+                        if let appSettings = URL(string: UIApplication.openSettingsURLString) {
+                            UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
+                        }
+                    }))
+                    self.present(alert, animated: true, completion: nil)
+                    
+                }
+            } else if status == .authorized { // 설정에서 사진 허용한 경우
+                self.showImagePicker(sourceType: .photoLibrary)
+            }
+        }
+        
+        let cameraAction = UIAlertAction(title: "카메라", style: .default) { _ in
+            let status = PHPhotoLibrary.authorizationStatus()
+            if status == .notDetermined {
+                PHPhotoLibrary.requestAuthorization({ (newStatus) in
+                    if newStatus == PHAuthorizationStatus.authorized {
+                        // 권한 허용됨
+                        self.showImagePicker(sourceType: .camera)
+                    } else {
+                        // 권한요청 거부 + 재알림창
+                        DispatchQueue.main.async {
+                            let alert = UIAlertController(title: "카메라 권한이 거부되었습니다.", message: "카메라 액세스하려면 권한을 허용해야합니다.", preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+                            alert.addAction(UIAlertAction(title: "설정", style: .default, handler: { action in
+                                if let appSettings = URL(string: UIApplication.openSettingsURLString) {
+                                    UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
+                                }
+                            }))
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                    }
+                })
+            } else if status == .denied { // status denied
+                // 권한요청 거부 + 재알림창
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "카메라 권한이 거부되었습니다.", message: "카메라 액세스하려면 권한을 허용해야합니다.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+                    alert.addAction(UIAlertAction(title: "설정", style: .default, handler: { action in
+                        if let appSettings = URL(string: UIApplication.openSettingsURLString) {
+                            UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
+                        }
+                    }))
+                    self.present(alert, animated: true, completion: nil)
+                    
+                }
+            } else if status == .authorized { // 설정에서 사진 허용한 경우
+                self.showImagePicker(sourceType: .camera)
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        
+        alert.addAction(albumAction)
+        alert.addAction(cameraAction)
+        alert.addAction(cancelAction)
+        
+        if let popoverController = alert.popoverPresentationController {
+            popoverController.sourceView = sender
+            popoverController.sourceRect = sender.bounds
+        }
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
     // MARK: +버튼 클릭 - progress +1 증가, realm(progress) data update
     @objc func plusButtonClicked(){
          let progressTasks = self.localRealm.objects(Progress.self)
@@ -319,4 +422,56 @@ extension DetailViewController: MFMessageComposeViewControllerDelegate{
             dismiss(animated: true, completion: nil)
         }
     }
+}
+
+
+extension DetailViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate{
+    func showImagePicker(sourceType: UIImagePickerController.SourceType){
+        
+        DispatchQueue.main.async {
+            let imagePickerController = UIImagePickerController()
+            imagePickerController.delegate = self
+            imagePickerController.sourceType = sourceType
+            self.present(imagePickerController, animated: true, completion: nil)
+        }
+    }
+    
+    // 앨범에서 이미지를 선택했을 때 호출됩니다.
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            let cropViewController = CropViewController(croppingStyle: .circular, image: image)
+            cropViewController.delegate = self
+            picker.pushViewController(cropViewController, animated: true)
+        }
+    }
+    
+    // 이미지 선택을 취소했을 때 호출됩니다.
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
+    private func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func fetchImage(for asset: PHAsset, completion: @escaping (UIImage?) -> Void) {
+        let options = PHImageRequestOptions()
+        options.deliveryMode = .highQualityFormat
+        options.isNetworkAccessAllowed = true
+        options.isSynchronous = false
+        
+        let imageSize = CGSize(width: 200, height: 200)
+        let imageManager = PHImageManager.default()
+        imageManager.requestImage(for: asset, targetSize: imageSize, contentMode: .aspectFit, options: options) { (image, info) in
+            guard let image = image else {
+                completion(nil)
+                return
+            }
+            completion(image)
+        }
+    }
+    
 }
