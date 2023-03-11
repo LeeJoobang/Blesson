@@ -68,7 +68,8 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: DetailImageCell.reuseIdentifier, for: indexPath) as! DetailImageCell
             cell.idImageView.image = loadImageFromDocument(filename: "\(studentTask.objectID).jpg")
-            cell.idImageView.contentMode = .scaleToFill
+            cell.idImageView.contentMode = .scaleAspectFit
+
             return cell
         //학생 디테일 정보
         case 1:
