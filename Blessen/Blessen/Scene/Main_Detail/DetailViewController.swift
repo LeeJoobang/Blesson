@@ -68,7 +68,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
-        // MARK: 추가된 이미지(카메라, 앨범) loadImageFromDocument
+        // MARK: 추가된 이미지(카메라, 앨범) loadImageFromDocument 
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: DetailImageCell.reuseIdentifier, for: indexPath) as! DetailImageCell
             cell.idImageView.image = loadImageFromDocument(filename: "\(studentTask.objectID).jpg")
